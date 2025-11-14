@@ -1,1 +1,3 @@
 # SpringClean-Frontend
+
+npm start
