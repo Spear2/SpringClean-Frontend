@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ServicesPageStyle.css";
 import cleanerImage from "../../assets/banana.jpg";
+import { Link } from "react-router-dom";
 
 const ServicesPage = () => {
   const [serviceType, setServiceType] = useState("");
@@ -77,7 +78,9 @@ const ServicesPage = () => {
               <br />
               Recommended for: small spaces, light maintenance
             </p>
-            <button className="book-button">Book Now!</button>
+            <Link to="/login/Customer">
+              <button className="book-button">Book Now!</button>
+            </Link>
           </div>
         )}
 
@@ -105,7 +108,9 @@ const ServicesPage = () => {
               <br />
               Recommended for: regular household cleaning (weekly or bi-weekly)
             </p>
-            <button className="book-button">Book Now!</button>
+            <Link to="/login/Customer">
+              <button className="book-button">Book Now!</button>
+            </Link>
           </div>
         )}
 
@@ -128,7 +133,9 @@ const ServicesPage = () => {
               Recommended for: general cleaning days, move-ins/outs, or monthly
               deep cleans
             </p>
-            <button className="book-button">Book Now!</button>
+            <Link to="/login/Customer">
+              <button className="book-button">Book Now!</button>
+            </Link>
           </div>
         )}
 
@@ -141,7 +148,9 @@ const ServicesPage = () => {
               schedule, build your profile, and grow your reputation with
               satisfied customers.
             </p>
-            <button className="book-button">Register Now!</button>
+            <Link to="/Register">
+              <button className="book-button">Register Now!</button>{" "}
+            </Link>
           </div>
         )}
       </div>

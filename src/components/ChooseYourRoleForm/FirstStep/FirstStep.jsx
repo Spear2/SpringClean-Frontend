@@ -4,6 +4,7 @@ import RoleButton from "../RoleButton/RoleButton";
 import cleanerIcon from "../../../assets/broom.ico";
 import customerIcon from "../../../assets/user-solid-full.svg";
 import StepJourney from "../Journey/StepJourney";
+import { Link } from "react-router-dom";
 
 export default function FirstStep({
   onNext,
@@ -45,7 +46,10 @@ export default function FirstStep({
         />
       </div>
 
-      <div>
+      <div style={{ display: "flex", gap: "30px" }}>
+        <Link to="/">
+          <button className="back-button">Back</button>
+        </Link>
         <button className="next-button" onClick={handleNext} disabled={!role}>
           Next →
         </button>
