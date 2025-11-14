@@ -9,6 +9,7 @@ import StepJourney from "../../components/ChooseYourRoleForm/Journey/StepJourney
 
 import "./RegisterPage.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function ChooseYourUser() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -23,7 +24,6 @@ export default function ChooseYourUser() {
 
   return (
     <div className="choose-user-page">
-      <NavBar />
       <StepJourney currentStep={currentStep} />
       {currentStep === 1 && (
         <FirstStep
@@ -34,7 +34,7 @@ export default function ChooseYourUser() {
         />
       )}
 
-      {currentStep === 2 && formData.role === "cleaner" &&(
+      {currentStep === 2 && formData.role === "cleaner" && (
         <CleanerForm
           onNext={nextStep}
           onBack={prevStep}
@@ -42,7 +42,7 @@ export default function ChooseYourUser() {
           formData={formData}
         />
       )}
-      {currentStep === 2 && formData.role === "customer" &&(
+      {currentStep === 2 && formData.role === "customer" && (
         <CustomerForm
           onNext={nextStep}
           onBack={prevStep}
