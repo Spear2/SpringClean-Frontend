@@ -1,0 +1,84 @@
+.navbar-cleaner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003366; /* matches your homepage header */
+  color: white;
+  padding: 15px 40px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Logo */
+.navbar-logo .logo-text {
+  font-weight: 700;
+  font-size: 1.5em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navbar-logo .logo-text:hover {
+  color: #00c853;
+}
+
+/* Nav links */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1em;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #00c853;
+  transform: scale(1.05);
+}
+
+/* Right-side user info */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.navbar-name {
+  font-size: 0.95em;
+  color: #f1f1f1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-cleaner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 20px;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .navbar-user {
+    margin-top: 15px;
+    align-self: center;
+  }
+}

@@ -24,14 +24,16 @@ const CustomerLoginPage = () => {
         }
       );
 
-      if (response.ok) {
-        const data = await response.json();
-        alert("Login Successfuly", data);
-      } else {
-        const err = await response.json();
-        alert(err.message || "Invalid Credentials");
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Invalid credentials");
+        return;
       }
+
+      alert("Login Successful: " + data.message);
     } catch (error) {
+      console.error("Frontend error:", error);
       alert("Something is wrong!");
     }
   };
