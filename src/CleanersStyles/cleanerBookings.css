@@ -1,0 +1,165 @@
+.cleaner-bookings-page {
+  font-family: "Poppins", sans-serif;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+}
+
+/* Container */
+.bookings-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  background-color: #f4f1f1;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Title */
+.bookings-title {
+  text-align: center;
+  color: #003366;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.bookings-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* Table */
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.bookings-table th {
+  background-color: #003366;
+  color: #fff;
+  padding: 15px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.bookings-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+  background-color: #ffffff;
+}
+
+.bookings-table tr:nth-child(even) {
+  background-color: #f3f6fa;
+}
+
+.bookings-table tr:hover {
+  background-color: #e8f0fe;
+  transition: background-color 0.3s ease;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+.status-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.canceled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bookings-table thead {
+    display: none;
+  }
+
+  .bookings-table tr {
+    display: block;
+    margin-bottom: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .bookings-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .bookings-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #003366;
+  }
+}
+
+.status {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status.accepted {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Buttons */
+.accept-btn, .reject-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0 4px;
+  transition: all 0.3s;
+}
+
+.accept-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.accept-btn:hover {
+  background-color: #218838;
+}
+
+.reject-btn:hover {
+  background-color: #c82333;
+}

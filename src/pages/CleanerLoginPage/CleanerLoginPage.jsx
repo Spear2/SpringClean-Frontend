@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./CleanerLoginPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 
 const CleanerLoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const navigate = useNavigate();
 
   const handleLogin = async () =>{
     if(!email || !password){
@@ -15,7 +17,7 @@ const CleanerLoginPage = () => {
     const payload = { email, password };
 
     try{
-      const response = await fetch("http://localhost:8080/api/company-cleaners/Cleanerlogin", {
+      const response = await fetch("http://localhost:8080/api/company-cleaners/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -24,6 +26,7 @@ const CleanerLoginPage = () => {
       if(response.ok) {
         const data = await response.json();
         alert("Login Successfuly", data);
+        navigate("/cleaner")
         
       }else{
         const err = await response.json();
