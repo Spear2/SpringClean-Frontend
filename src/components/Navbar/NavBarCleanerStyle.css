@@ -4,17 +4,20 @@
   align-items: center;
   background-color: #003366; /* matches your homepage header */
   color: white;
-  padding: 15px 40px;
-  font-family: 'Poppins', sans-serif;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+  font-family: "Nunito", sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 10%;
+  width: 100%;
 }
 
 /* Logo */
 .navbar-logo .logo-text {
-  font-weight: 700;
-  font-size: 1.5em;
+  font-weight: 800;
+  font-size: 2rem;
   color: #ffffff;
   text-decoration: none;
+  font-family: "Cal Sans", sans-serif;
 }
 
 .navbar-logo .logo-text:hover {
@@ -23,11 +26,11 @@
 
 /* Nav links */
 .navbar-links {
-  list-style: none;
   display: flex;
-  gap: 25px;
-  margin: 0;
-  padding: 0;
+  gap: 20px;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  list-style: none;
 }
 
 .navbar-links a {
