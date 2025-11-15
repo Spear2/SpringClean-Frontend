@@ -1,5 +1,4 @@
-/* HomePage.css */
-
+/* Existing styles */
 .homepage {
   width: 100%;
   min-height: 100vh;
@@ -9,7 +8,6 @@
   padding: 0;
 }
 
-/* Force sections to stack vertically without overlap */
 .homepage section {
   width: 100%;
   position: relative;
@@ -17,35 +15,54 @@
   clear: both;
 }
 
-/* Ensure each section takes full viewport */
 #home,
 #services,
 #aboutus {
   min-height: 100vh;
   width: 100%;
+  opacity: 0; /* start hidden */
+  transform: translateY(50px); /* start slightly below */
+  animation: fadeInUp 1s forwards; /* fade-in animation */
 }
 
-/* Prevent any absolute positioning issues */
+/* Delay each section for a stagger effect */
+#services {
+  animation-delay: 0.3s;
+}
+
+#aboutus {
+  animation-delay: 0.6s;
+}
+
 .homepage > section {
   position: relative;
   z-index: auto;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Clear any floats */
 .homepage::after {
   content: "";
   display: table;
   clear: both;
 }
 
-/* Reset body if needed */
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+}
+
+/* ---------- ANIMATION ---------- */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
