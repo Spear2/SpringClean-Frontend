@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import "./NavBarCleanerStyle.css";
+import useCleaner from "../../Hooks/useCleaner";
+import { useAuth } from "../../auth/useAuth"
 
 export default function NavbarCleaner() {
+
+  const cleaner = useCleaner();
+  const { logout } = useAuth();
+
+  if(!cleaner) return <p>Loading...</p>;
+
   return (
     <nav className="navbar-cleaner">
       <div className="navbar-logo">
@@ -24,8 +32,9 @@ export default function NavbarCleaner() {
           alt="Cleaner avatar"
           className="navbar-avatar"
         />
-        <span className="navbar-name">Hi, Cleaner!</span>
+        <span className="navbar-name">Hi, {cleaner.companyName}!</span>
       </div>
+      <button className="logout-btn" onClick={logout}>Logout</button>
     </nav>
   );
 }
