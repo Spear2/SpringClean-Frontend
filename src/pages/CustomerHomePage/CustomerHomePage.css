@@ -1,0 +1,117 @@
+h1{
+  font-size: 60px;
+}
+
+span{
+  font-size: 25px;
+  font-family: "Nunito", sans-serif;
+
+}
+
+.top-content {
+  text-align: center;
+  color: #1c4274;
+  margin-bottom: 30px;
+  padding-top: 70px;
+}
+
+.top-content h1 {
+  font-size: 3rem;        /* Bigger, like booking summary */
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.top-content span {
+  font-size: 1.25rem;     /* Slightly bigger, clearer */
+  color: #333;
+  font-family: "Nunito", sans-serif;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;             
+  justify-content: center;     
+  align-items: flex-start;     
+  gap: 20px;                   
+}
+
+.card-container {
+  width: 300px;         
+  height: 350px;        
+  background-color: white;
+  border: 2px solid #1c4274;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+  padding: 0;
+  margin: 10px;
+}
+
+.cleaner-img {
+  width: 100%;
+  height: 150px;            
+  object-fit: cover;       
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-content {
+  padding: 10px 15px 5px 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-content h2 {
+  font-size: 18px;
+  font-family: "Nunito", sans-serif;
+  color: #1c4274;
+  margin: 8px 0 4px 0;      
+  font-weight: 700;
+}
+
+.card-content p {
+  font-size: 1.1rem;
+  font-family: "Nunito", sans-serif;
+  color: #1c4274;
+  line-height: 1.1;
+}
+
+.card-btn {
+  background-color: #1c4274;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 25px;
+  margin: 25px auto 12px auto; 
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: fit-content;
+  transition: background-color 0.2s ease;
+}
+
+.card-btn:hover {
+  background-color: #2d5a9e;
+}
+
+.btn-viewhistory{
+  align-content: flex-end;
+  background-color: #1c4274;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 25px;
+  margin: 25px auto 12px auto; 
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: fit-content;
+  transition: background-color 0.2s ease;
+}
+
+.btn-viewhistory:hover{
+  background-color: #2d5a9e;
+}
+

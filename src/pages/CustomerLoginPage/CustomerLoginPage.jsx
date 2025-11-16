@@ -1,10 +1,11 @@
 import "./CustomerLoginPage.css";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CustomerLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -32,6 +33,7 @@ const CustomerLoginPage = () => {
       }
 
       alert("Login Successful: " + data.message);
+      navigate("/customer/home");
     } catch (error) {
       console.error("Frontend error:", error);
       alert("Something is wrong!");
