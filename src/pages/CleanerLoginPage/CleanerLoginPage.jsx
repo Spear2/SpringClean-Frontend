@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./CleanerLoginPage.css";
 import { Link, useNavigate  } from "react-router-dom";
+import { useAuth } from "../../auth/useAuth";
 
 const CleanerLoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async () =>{
     if(!email || !password){
@@ -26,6 +28,17 @@ const CleanerLoginPage = () => {
       if(response.ok) {
         const data = await response.json();
         alert("Login Successfuly", data);
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("cleanerId", data.cleanerId);
+        localStorage.setItem("type", "cleaner");
+
+        login({
+          id: data.cleanerId,
+          token: data.token,
+          type: "cleaner",
+        });
+        
         navigate("/cleaner")
         
       }else{
