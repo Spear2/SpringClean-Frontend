@@ -8,6 +8,7 @@ import CleanerLoginPage from "./pages/CleanerLoginPage/CleanerLoginPage";
 import CustomerLoginPage from "./pages/CustomerLoginPage/CustomerLoginPage";
 import ChooseYourRole from "./pages/ChooseYourRole/ChooseYourRole";
 import CompanyCleaner from "./CompanyCleaner";
+import Customer from "./Customer";
 
 const AppRoutes = () => {
   return (
@@ -28,15 +29,15 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Customer protected routes
+      {/* Customer protected routes */}
       <Route
         path="/customer/*"
         element={
           <ProtectedRoute requiredType="customer">
-            <CustomerDashboard />
+            <Customer />
           </ProtectedRoute>
         }
-      /> */}
+      />
     </Routes>
   );
 };

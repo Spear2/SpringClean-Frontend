@@ -1,0 +1,291 @@
+/* ==============================
+   Booking Summary Container
+   ============================== */
+ .booking-summary-container {
+  width: 95%;          /* use most of the page width */
+  max-width: 1200px;   /* optional: limits width on very large screens */
+  margin: 20px auto;   /* centers container and gives top/bottom margin */
+  padding: 20px;       /* inner padding */
+  background-color: #f9f9f9;
+  border-radius: 12px; /* subtle rounding for style */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+  
+  .summary-card {
+  width: 1000px; /* Adjusted to fit nicely on the page */
+  max-width: 1000px; /* Optional: limits card width on large screens */
+  background-color: #ffffff;
+  border: 2px solid #1c4274;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto; /* Space between cards and center alignment */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Nunito", sans-serif;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers cards horizontally */
+  padding: 0;
+  margin: 0;
+}
+
+
+/* ==============================
+   Header / Top Section
+   ============================== */
+.settings-header {
+  padding: 1rem 2rem;
+  text-align: center;
+  color: #1c4274;
+  font-family: "Nunito", sans-serif;
+}
+
+.settings-header h1 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.settings-header p {
+  font-size: 1rem;
+  color: #333333;
+}
+
+.btn-back-arrow {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: #1c4274;
+  transition: color 0.2s ease;
+}
+
+.btn-back-arrow:hover {
+  color: #007bff;
+}
+
+/* ==============================
+   Booking Info
+   ============================== */
+.summary-card h2 {
+  color: #1c4274;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.booking-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333333;
+}
+.booking-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+.summary-card p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333333;
+}
+
+/* ==============================
+   Booking Action Buttons
+   ============================== */
+.btn-edit,
+.btn-cancel,
+.btn-view {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-edit {
+  background-color: #2d5a9e;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #1c4274;
+}
+
+.btn-cancel {
+  background-color: #d9534f;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #c9302c;
+}
+
+.btn-view {
+  background-color: #195236;
+  color: white;
+}
+
+.btn-view:hover {
+  background-color: #123524;
+}
+
+/* ==============================
+   Modal Overlay & Content
+   ============================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #333;
+}
+
+.modal-content p {
+  text-align: center;
+  color: #555;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.btn-save {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-save:hover {
+  background: #218838;
+}
+
+.btn-close {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-close:hover {
+  background: #b02a37;
+}
+
+/* ==============================
+   Filter Section
+   ============================== */
+.filter-container {
+  display: flex;
+  justify-content: flex-end; /* pushes the entire filter group to the right */
+  align-items: center;
+  margin: 1rem 0 1.5rem 0;
+  border-radius: 8px;
+  gap: 0.4rem; /* smaller gap between label and select */
+}
+
+.filter-group {
+  display: flex;
+  gap: 0.4rem; /* small gap between label and select */
+  align-items: center;
+}
+
+.filter-container label {
+  font-weight: 700;
+  color: #1c4274;
+  margin: 0; /* remove any default margins */
+  white-space: nowrap; /* prevent label from wrapping */
+}
+
+.filter-container select {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0; /* remove default margin */
+}
+
+.filter-container:hover{
+  color: #1c4274;
+}
+
+/* ==============================
+   Booking Page Alignment
+   ============================== */
+.booking-page {
+  text-align: right;
+}
+
+.summary-list .no-bookings{
+  font-family: "Nunito", sans-serif;
+}

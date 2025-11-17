@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 10px 20px;
+  background-color: #1c4274;
+  color: white;
+  z-index: 1000;
+  height: 10%;
+}
+
+.title-link {
+  font-size: 2rem;
+  font-family: "Cal Sans", sans-serif;
+  text-decoration: none;
+  color: white;
+  font-weight: 800;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #aae858;
+}
+
+.nav-links a.focus {
+  color: #aae858;
+}
+/* Dropdown positioned below header - works for all screen sizes */
+.dropdown-menu {
+  position: fixed;
+  top: 60px; /* header height */
+  right: 20px; /* adjust to align with Account link */
+  background-color: rgb(241, 243, 242);
+  color: black;
+  min-width: 150px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.dropdown-menu .menu-item {
+  padding: 10px;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu .menu-item:hover {
+  background-color: #f4f5f4;
+}
+
+.dropdown-menu .sign-out {
+  color: #ef3f30;
+  border-top: 1px solid #ddd;
+}
+
+
+/* 🔽 Hamburger icon (hidden by default) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+/* Dropdown positioned below header - works for all screen sizes */
+.dropdown-menu {
+  position: fixed;
+  top: 60px; /* header height */
+  right: 20px; /* adjust to align with Account link */
+  background-color: rgb(241, 243, 242);
+  color: black;
+  min-width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Menu items */
+.dropdown-menu .menu-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+/* 🌟 Hover effect */
+.dropdown-menu .menu-item:hover {
+  background-color: #e8f1ff; /* soft light blue highlight */
+  color: #1c4274; /* match your theme color */
+  padding-left: 20px; /* subtle slide animation */
+}
+
+/* Optional: active/focus effect for keyboard users */
+.dropdown-menu .menu-item:active,
+.dropdown-menu .menu-item:focus {
+  background-color: #dbe8ff;
+  outline: none;
+}
+
+.dropdown-menu .sign-out {
+  color: #ef3f30;
+  border-top: 1px solid #ddd;
+}
+
+.dropdown-menu .sign-out:hover {
+  background-color: #ffeaea;
+  color: #d12a1a;
+}
+
+
+/* 📱 Mobile styles */
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #1c4274;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    padding: 20px 0;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  
+}
