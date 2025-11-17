@@ -1,40 +1,53 @@
 import "./CustomerLoginPage.css";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
+import { useAuth } from "../../auth/useAuth";
 
 const CustomerLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    if (!email || !password) {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLogin = async () =>{
+    if(!email || !password){
       alert("Please fill the field");
       return;
     }
 
     const payload = { email, password };
 
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/customers/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+    try{
+      const response = await fetch("http://localhost:8080/api/customers/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      const data = await response.json();
+      if(response.ok) {
+        const data = await response.json();
+        alert("Login Successfuly", data);
 
-      if (!response.ok) {
-        alert(data.message || "Invalid credentials");
-        return;
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("cleanerId", data.customerId);
+        localStorage.setItem("type2", "customer");
+
+        login({
+          id: data.customerId,
+          token: data.token,
+          type: "customer",
+        });
+        
+        navigate("/customer")
+        
+      }else{
+        const err = await response.json();
+        alert(err.message || "Invalid Credentials");
       }
-
-      alert("Login Successful: " + data.message);
-    } catch (error) {
-      console.error("Frontend error:", error);
+    }catch(error){
       alert("Something is wrong!");
+
     }
   };
 
