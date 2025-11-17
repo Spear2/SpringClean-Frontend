@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import "./NavBarCleanerStyle.css";
 import useCleaner from "../../Hooks/useCleaner";
-import { useAuth } from "../../auth/useAuth"
+import { useAuth } from "../../auth/useAuth";
 
 export default function NavbarCleaner() {
-
   const cleaner = useCleaner();
   const { logout } = useAuth();
 
-  if(!cleaner) return <p>Loading...</p>;
+  if (!cleaner) return <p>Loading...</p>;
 
   return (
     <nav className="navbar-cleaner">
@@ -19,11 +18,21 @@ export default function NavbarCleaner() {
       </div>
 
       <ul className="navbar-links">
-        <li><Link to="/cleaner">Dashboard</Link></li>
-        <li><Link to="/cleaner/bookings">Bookings</Link></li>
-        <li><Link to="/cleaner/schedule">Schedule</Link></li>
-        <li><Link to="/cleaner/payments">Payments</Link></li>
-        <li><Link to="/cleaner/profile">Profile</Link></li>
+        <li>
+          <Link to="/cleaner">Dashboard</Link>
+        </li>
+        <li>
+          <Link to="/cleaner/bookings">Bookings</Link>
+        </li>
+        <li>
+          <Link to="/cleaner/schedule">Schedule</Link>
+        </li>
+        <li>
+          <Link to="/cleaner/payments">Payments</Link>
+        </li>
+        <li>
+          <Link to="/cleaner/profile">Profile</Link>
+        </li>
       </ul>
 
       <div className="navbar-user">
@@ -34,7 +43,6 @@ export default function NavbarCleaner() {
         />
         <span className="navbar-name">Hi, {cleaner.companyName}!</span>
       </div>
-      <button className="logout-btn" onClick={logout}>Logout</button>
     </nav>
   );
 }

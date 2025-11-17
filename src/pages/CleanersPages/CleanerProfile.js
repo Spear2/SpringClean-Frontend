@@ -1,7 +1,12 @@
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
 import "../../CleanersStyles/cleanerProfile.css";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../auth/useAuth";
+import SideBarCleaner from "../../components/SideBarCleaner/SideBarCleaner";
+import { Sidebar } from "lucide-react";
 
 export default function CleanerProfile() {
+  const { logout } = useAuth();
   const company = {
     name: "SpringClean Co.",
     address: "123 Clean Street, Quezon City, Philippines",
@@ -19,38 +24,9 @@ export default function CleanerProfile() {
   return (
     <div className="company-profile-page">
       <NavbarCleaner />
-      <div className="profile-container">
-        <div className="profile-card">
-          <h1>{company.name}</h1>
-
-          <div className="profile-details">
-            <p><strong>📍 Address:</strong> {company.address}</p>
-            <p><strong>📧 Email:</strong> {company.email}</p>
-            <p><strong>📞 Contact:</strong> {company.contact}</p>
-          </div>
-
-          <h2 className="cleaner-list-title">Our Cleaners</h2>
-          <ul className="cleaner-list">
-            {cleaners.map((cleaner) => (
-              <li key={cleaner.id} className="cleaner-item">
-                <span className="cleaner-name">{cleaner.name}</span>
-                <span
-                  className={`cleaner-status ${
-                    cleaner.status === "Available"
-                      ? "status-available"
-                      : cleaner.status === "On Duty"
-                      ? "status-onduty"
-                      : "status-dayoff"
-                  }`}
-                >
-                  {cleaner.status}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          <button className="profile-edit-btn">Edit Company Info</button>
-        </div>
+      <div className="content-wrapper">
+        <SideBarCleaner />
+        <div className="profile-container"></div>
       </div>
     </div>
   );
