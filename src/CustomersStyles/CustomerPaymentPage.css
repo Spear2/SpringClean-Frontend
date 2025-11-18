@@ -1,12 +1,6 @@
-body{
-    background-color: #fff;         /* white background */
-    color: #1c4274;                 /* dark blue text */
-    background-color: #f9f9f9;      /* light gray card */
-    color: #000408; 
-}
 
 /* Container for payment methods and inputs */
-.payment-container {
+.cpp-payment-container {
   max-width: 900px;
   margin: 2rem auto;
   padding: 1rem 1.5rem;
@@ -18,7 +12,7 @@ body{
 }
 
 /* Payment methods container */
-.payment-options {
+.cpp-payment-options {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -26,7 +20,7 @@ body{
 }
 
 /* Single payment card */
-.payment-card {
+.cpp-payment-card {
   flex: 1;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -38,12 +32,12 @@ body{
   background-color: #f9f9f9;
 }
 
-.payment-card:hover {
+.cpp-payment-card:hover {
   border-color: #007bff;
   box-shadow: 0 3px 10px rgba(0,123,255,0.3);
 }
 
-.payment-card.selected {
+.cpp-payment-card.selected {
   border-color: #007bff;
   box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
   background-color: #e9f0ff;
@@ -56,9 +50,9 @@ body{
 }
 
 /* Inputs and labels */
-.payment-container input[type="text"],
-.payment-container input[type="email"],
-.payment-container input[type="password"] {
+.cpp-payment-container input[type="text"],
+.cpp-payment-container input[type="email"],
+.cpp-payment-container input[type="password"] {
   width: 100%;
   padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
@@ -69,14 +63,14 @@ body{
   transition: border-color 0.3s ease;
 }
 
-.payment-container input[type="text"]:focus,
-.payment-container input[type="email"]:focus,
-.payment-container input[type="password"]:focus {
+.cpp-payment-container input[type="text"]:focus,
+.cpp-payment-container input[type="email"]:focus,
+.cpp-payment-container input[type="password"]:focus {
   border-color: #007bff;
   outline: none;
 }
 
-.payment-container label {
+.cpp-payment-container label {
   font-weight: 600;
   margin-bottom: 0.25rem;
   display: block;
@@ -85,7 +79,7 @@ body{
 }
 
 /* Checkbox label */
-.checkbox-label {
+.cpp-checkbox-label {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -95,7 +89,7 @@ body{
   line-height: 1.2;
 }
 
-.checkbox-label input[type="checkbox"] {
+.cpp-checkbox-label input[type="checkbox"] {
   margin: 5px;
   width: 18px;
   height: 18px;
@@ -104,7 +98,7 @@ body{
 }
 
 /* Pay button */
-.payment-container button {
+.cpp-payment-container button {
   width: 100%;
   padding: 0.75rem;
   background-color: #007bff;
@@ -117,12 +111,12 @@ body{
   transition: background-color 0.3s ease;
 }
 
-.payment-container button:hover {
+.cpp-payment-container button:hover {
   background-color: #0056b3;
 }
 
 /* Modal overlay */
-.modal-overlay {
+.cpp-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.45);
@@ -134,7 +128,7 @@ body{
 }
 
 /* Modal box */
-.modal-overlay .modal-content {
+.cpp-modal-overlay .cpp-modal-content {
   width: 90%;           /* responsive width */
   max-width: 400px;     /* caps the width */
   min-width: 280px;     /* prevents too small */
@@ -149,7 +143,7 @@ body{
 }
 
 /* Modal header */
-.modal-content h2 {
+.cpp-modal-content h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-weight: 700;
@@ -157,27 +151,27 @@ body{
 }
 
 /* Modal list */
-.modal-content ul {
+.cpp-modal-content ul {
   list-style: none;
   padding-left: 0;
   margin: 0.5rem 0 1.5rem;
   color: #000408;
 }
 
-.modal-content ul li {
+.cpp-modal-content ul li {
   padding: 0.25rem 0;
   border-bottom: 1px solid #eee;
   font-size: 0.95rem;
 }
 
 /* Modal buttons container */
-.modal-content > div {
+.cpp-modal-content > div {
   display: flex;
   justify-content: space-between;
 }
 
 /* Modal buttons */
-.modal-content button {
+.cpp-modal-content button {
   flex: 1;
   margin: 0 0.25rem;
   padding: 0.6rem 1.2rem;
@@ -190,19 +184,19 @@ body{
   color: white;
 }
 
-.modal-content button:first-child {
+.cpp-modal-content button:first-child {
   background-color: #28a745; /* Confirm green */
 }
 
-.modal-content button:first-child:hover {
+.cpp-modal-content button:first-child:hover {
   background-color: #218838;
 }
 
-.modal-content button:last-child {
+.cpp-modal-content button:last-child {
   background-color: #dc3545; /* Cancel red */
 }
 
-.modal-content button:last-child:hover {
+.cpp-modal-content button:last-child:hover {
   background-color: #c82333;
 }
 
@@ -239,7 +233,7 @@ body{
 }
 
 /* Payment container */
-.payment-container {
+.cpp-payment-container {
   max-width: 900px;
   margin: 0 auto 3rem auto;
   padding: 1.5rem 2rem;
@@ -284,10 +278,10 @@ body{
 }
 
 /* Form inputs */
-.payment-container input[type="text"],
-.payment-container input[type="email"],
-.payment-container input[type="password"],
-.payment-container input[type="tel"] {
+.cpp-payment-container input[type="text"],
+.cpp-payment-container input[type="email"],
+.cpp-payment-container input[type="password"],
+.cpp-payment-container input[type="tel"] {
   width: 100%;
   padding: 0.6rem 0.9rem;
   border: 1.5px solid #1c4274;
@@ -297,7 +291,7 @@ body{
   transition: border-color 0.3s ease;
 }
 
-.payment-container .error-message {
+.cpp-payment-container .cpp-error-message {
   color: #dc3545; /* bootstrap-style red */
   font-size: 0.9rem;
   margin-top: 0.25rem;

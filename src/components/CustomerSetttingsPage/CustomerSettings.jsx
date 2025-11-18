@@ -52,12 +52,12 @@ export default function CustomerSettings() {
   </div>
 
         {/* ⚙️ Settings Container */}
-        <div className="settings-container">
-          <div className="settings-card">
+        <div className="ccs-settings-container">
+          <div className="ccs-settings-card">
             {/* 🔔 Notification Preferences */}
-            <section className="settings-section">
+            <section className="ccs-settings-section">
               <h2>Notifications</h2>
-              <div className="toggle-row">
+              <div className="ccs-toggle-row">
                 <label>Email Notifications</label>
                 <input
                   type="checkbox"
@@ -65,7 +65,7 @@ export default function CustomerSettings() {
                   onChange={() => handleToggle("emailNotifications")}
                 />
               </div>
-              <div className="toggle-row">
+              <div className="ccs-toggle-row">
                 <label>SMS Notifications</label>
                 <input
                   type="checkbox"
@@ -76,9 +76,9 @@ export default function CustomerSettings() {
             </section>
 
             {/* 🌙 Theme Preference */}
-            <section className="settings-section">
+            <section className="ccs-settings-section">
               <h2>Appearance</h2>
-              <div className="toggle-row">
+              <div className="ccs-toggle-row">
                 <label>Dark Mode</label>
                 <input
                   type="checkbox"
@@ -89,9 +89,9 @@ export default function CustomerSettings() {
             </section>
 
             {/* 🔑 Password Update */}
-            <section className="settings-section">
+            <section className="ccs-settings-section">
               <h2>Change Password</h2>
-              <div className="input-row">
+              <div className="ccs-input-row">
                 <label>Current Password</label>
                 <input
                   type="password"
@@ -101,7 +101,7 @@ export default function CustomerSettings() {
                   placeholder="Enter current password"
                 />
               </div>
-              <div className="input-row">
+              <div className="ccs-input-row">
                 <label>New Password</label>
                 <input
                   type="password"
@@ -111,7 +111,7 @@ export default function CustomerSettings() {
                   placeholder="Enter new password"
                 />
               </div>
-              <div className="input-row">
+              <div className="ccs-input-row">
                 <label>Confirm New Password</label>
                 <input
                   type="password"
@@ -124,11 +124,11 @@ export default function CustomerSettings() {
             </section>
 
             {/* ✅ Buttons */}
-            <div className="settings-actions">
-              <button className="save-btn" onClick={handleSave}>
+            <div className="ccs-settings-actions">
+              <button className="ccs-save-btn" onClick={handleSave}>
                 Save Changes
               </button>
-              <button className="back-btn" onClick={handleBack}>
+              <button className="ccs-back-btn" onClick={handleBack}>
                 Back to Home
               </button>
             </div>
