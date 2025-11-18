@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
 
-/* =============== BASE STYLES =============== */
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* full viewport height */
+body{
+  font-family: "Nunito", sans-serif;
 }
 
 .main-wrapper {
@@ -16,7 +13,7 @@ body {
   padding: 1rem;
 }
 
-.settings-container {
+.ccs-settings-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -24,7 +21,7 @@ body {
   padding: 2rem 0;
 }
 
-.settings-card {
+.ccs-settings-card {
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -32,11 +29,11 @@ body {
   padding: 2rem;
 }
 
-.settings-section {
+.ccs-settings-section {
   margin-bottom: 1.8rem;
 }
 
-.settings-section h2 {
+.ccs-settings-section h2 {
   color: #1c4274;
   font-size: 1.2rem;
   margin-bottom: 0.8rem;
@@ -44,38 +41,38 @@ body {
   padding-bottom: 0.3rem;
 }
 
-.toggle-row {
+.ccs-toggle-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.8rem;
 }
 
-.input-row {
+.ccs-input-row {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.8rem;
 }
 
-.input-row label {
+.ccs-input-row label {
   margin-bottom: 0.3rem;
   font-weight: 600;
 }
 
-.input-row input {
+.ccs-input-row input {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 0.95rem;
 }
 
-.settings-actions {
+.ccs-settings-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 1.2rem;
 }
 
-button {
+.ccs button {
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 6px;
@@ -84,22 +81,34 @@ button {
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.save-btn {
+.ccs-save-btn {
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
   background-color: #1c4274;
+  width: 120px;
+  height: 60px;
+  border-radius: 20px;
   color: white;
 }
 
-.save-btn:hover {
+.ccs-save-btn:hover {
   background-color: #345f9d;
 }
 
-.back-btn {
-  background-color: #ccc;
-  color: #222;
+.ccs-back-btn {
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #ca2424;
+  width: 120px;
+  height: 60px;
+  border-radius: 20px;
+  color: #f8f7f7;
 }
 
-.back-btn:hover {
-  background-color: #bbb;
+.ccs-back-btn:hover {
+  background-color: #e42f2f;
 }
 
 .settings-header {
@@ -138,29 +147,6 @@ body.dark-mode .top-content {
   background-color: #181818; /* dark background */
   color: #eaeaea;
   border-bottom: 1px solid #333;
-}
-
-/* Headings inside top-content */
-.top-content h1 {
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.top-content span {
-  display: block;
-  font-size: 1rem;
-}
-
-/* Dark mode for top-content */
-body.dark-mode .top-content {
-  background-color: #181818; /* match settings container dark bg */
-  color: #eaeaea;
-  border-bottom: 1px solid #333; /* subtle dark border */
-}
-
-body.dark-mode .top-content h1,
-body.dark-mode .top-content span {
-  color: #eaeaea;
 }
 
 /* =============== DARK MODE STYLES =============== */
@@ -261,3 +247,4 @@ body.dark-mode .booking-summary-container{
   color: #eaeaea;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
 }
+

@@ -1,9 +1,6 @@
-body{
-    background-color: #f4f7fb;
-}
 
 /* Main Container */
-.profile-page-container {
+.ccpr-profile-page-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -13,7 +10,7 @@ body{
 }
 
 /* Uniform Box */
-.uniform-box {
+.ccpr-uniform-box {
   width: 100%;
   max-width: 1100px;
   height: 700px;
@@ -24,14 +21,14 @@ body{
 }
 
 /* Layout */
-.profile-layout {
+.ccpr-profile-layout {
   display: flex;
   height: 100%;
   width: 100%;
 }
 
 /* Left Side */
-.profile-left {
+.ccpr-profile-left {
   flex: 1;
   background: #f9fafc;
   display: flex;
@@ -42,7 +39,7 @@ body{
   border: 2px solid #132c4d;
 }
 
-.profile-image-box {
+.ccpr-profile-image-box {
   width: 180px;
   height: 180px;
   border-radius: 12px;
@@ -53,13 +50,13 @@ body{
   align-items: center;
 }
 
-.profile-image {
+.ccpr-profile-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.upload-label {
+.ccpr-upload-label {
   background-color: #1c4274;
   color: white;
   border-radius: 6px;
@@ -68,15 +65,15 @@ body{
   font-size: 0.9rem;
   width: 280px;
 }
-.upload-label:hover {
+.ccpr-upload-label:hover {
   background-color: #345f9d;
 }
-.upload-label input {
+.ccpr-upload-label input {
   display: none;
 }
 
 /* Right Side */
-.profile-right {
+.ccpr-profile-right {
   background: #f9fafc;
   flex: 2;
   padding: 50px 60px;
@@ -86,35 +83,35 @@ body{
   border: 2px solid #132c4d;
 }
 
-.profile-fields {
+.ccpr-profile-fields {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
 
-.field-row {
+.ccpr-field-row {
   display: flex;
   justify-content: space-between;
   gap: 25px;
 }
 
-.field-row.single {
+.ccpr-field-row.single {
   flex-direction: column;
 }
 
-.field-item {
+.ccpr-field-item {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.field-item label {
+.ccpr-field-item label {
   font-weight: 600;
   margin-bottom: 6px;
   color: #1c4274;
 }
 
-.field-item input {
+.ccpr-field-item input {
   border: 1px solid #ccc;
   border-radius: 30px;
   padding: 10px 15px;
@@ -123,14 +120,14 @@ body{
 }
 
 /* Buttons */
-.profile-buttons {
+.ccpr-profile-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
   margin-top: 15px;
 }
 
-.edit-btn {
+.ccpr-edit-btn {
   background-color: #1c4274;
   color: #fff;
   padding: 0.6rem 1.5rem;
@@ -138,11 +135,11 @@ body{
   border: none;
   cursor: pointer;
 }
-.edit-btn:hover {
+.ccpr-edit-btn:hover {
   background-color: #345f9d;
 }
 
-.profile-buttons .back-btn  {
+.ccpr-profile-buttons .ccpr-back-btn  {
   background-color: #b12020;
   color: #fff;
   padding: 0.6rem 1.5rem;
@@ -150,12 +147,12 @@ body{
   border: none;
   cursor: pointer;
 }
-.profile-buttons .back-btn  {
+.ccpr-profile-buttons .ccpr-back-btn  {
   background-color: #d43d3d;
 }
 
 /* Modal Overlay */
-.modal-overlay {
+.ccpr-modal-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -166,7 +163,7 @@ body{
 }
 
 /* Modal Content */
-.modal-content {
+.ccpr-modal-content {
   width: 100%;
   max-width: 1100px;
   height: 700px;
@@ -178,8 +175,6 @@ body{
 
 .top-content {
   text-align: center;
-  margin: 1rem 0 3rem;
-  background: #f4f7fb;
 }
 
 .top-content h1 {

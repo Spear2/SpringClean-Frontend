@@ -11,13 +11,13 @@ export default function CleanerCardComponent({ name, loc, rate, img }) {
   };
 
   return (
-    <div className="card-container">
+    <div className="chp-card-container">
       <img src={img} alt={name} className="cleaner-img" />
-      <div className="card-content">
+      <div className="chp-card-content">
         <h2>Company: {name}</h2>
         <p>Location: {loc}</p>
         <p>Ratings: {rate}</p>
-        <button className="card-btn" onClick={handleBookingClick}>
+        <button className="chp-card-btn" onClick={handleBookingClick}>
           Book Now
         </button>
       </div>

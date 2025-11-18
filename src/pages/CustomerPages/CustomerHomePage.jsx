@@ -1,7 +1,7 @@
-import HomeBar from "../../components/Navbar/NavBarCustomer";
+import HomeBar from "../../components/Homebar/HomeBar";
 import CleanerCardComponent from "../../components/CustomerHomePage/CleanerCardComponent";
 import { useNavigate } from "react-router-dom";
-import '../../CustomersStyles/CustomerHomePage.css';
+import './CustomerHomePage.css';
 
 
 
@@ -37,7 +37,7 @@ export default function CustomerHomePage() {
         </header>
 
         {/* Cleaner Cards */}
-        <div className="card-wrapper">
+        <div className="chp-card-wrapper">
           {cleaners.map((cleaner, index) => (
             <CleanerCardComponent
               key={index}

@@ -126,8 +126,8 @@ export default function CustomerPayment({ onConfirm }) {
         <span>Choose your preferred payment method.</span>
       </header>
 
-      <section className="payment-container" aria-label="Payment options and details">
-        <div className="payment-options" role="list">
+      <section className="cpp-payment-container" aria-label="Payment options and details">
+        <div className="cpp-payment-options" role="list">
           {paymentMethods.map((method) => (
             <div
               key={method.id}
@@ -146,7 +146,7 @@ export default function CustomerPayment({ onConfirm }) {
           ))}
         </div>
 
-        <label htmlFor="amount" className="visually-hidden">
+        <label htmlFor="amount" className="cpp-visually-hidden">
           Amount
         </label>
         <input
@@ -159,14 +159,14 @@ export default function CustomerPayment({ onConfirm }) {
           aria-describedby={errors.amount ? "amount-error" : undefined}
         />
         {errors.amount && (
-          <small id="amount-error" className="error-message">
+          <small id="amount-error" className="cpp-error-message">
             {errors.amount}
           </small>
         )}
 
         {selectedMethodObj &&
           selectedMethodObj.fields.map((field) => (
-            <div key={field.name} className="field-group">
+            <div key={field.name} className="cpp-field-group">
               <label htmlFor={field.name}>{field.label}</label>
               <input
                 id={field.name}
@@ -178,14 +178,14 @@ export default function CustomerPayment({ onConfirm }) {
                 aria-describedby={errors[field.name] ? `${field.name}-error` : undefined}
               />
               {errors[field.name] && (
-                <small id={`${field.name}-error`} className="error-message">
+                <small id={`${field.name}-error`} className="cpp-error-message">
                   {errors[field.name]}
                 </small>
               )}
             </div>
           ))}
 
-        <label className="checkbox-label">
+        <label className="cpp-checkbox-label">
           <input
             type="checkbox"
             checked={agreed}
@@ -196,19 +196,19 @@ export default function CustomerPayment({ onConfirm }) {
           I agree to the terms and conditions applied.
         </label>
         {errors.agreed && (
-          <small id="agree-error" className="error-message">
+          <small id="agree-error" className="cpp-error-message">
             {errors.agreed}
           </small>
         )}
 
-        <button className="pay-btn" onClick={handlePayClick}>
+        <button className="cpp-pay-btn" onClick={handlePayClick}>
           Pay
         </button>
       </section>
 
       {showModal && selectedMethodObj && (
-        <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-payment-title">
-          <div className="modal-content">
+        <div className="cpp-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-payment-title">
+          <div className="cpp-modal-content">
             <h2 id="confirm-payment-title">Confirm Payment</h2>
             <ul>
               <li>
@@ -223,7 +223,7 @@ export default function CustomerPayment({ onConfirm }) {
                 </li>
               ))}
             </ul>
-            <div className="modal-actions">
+            <div className="cpp-modal-actions">
               <button onClick={handleConfirmPayment}>Confirm</button>
               <button onClick={handleCancel}>Cancel</button>
             </div>

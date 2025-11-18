@@ -27,7 +27,7 @@ span{
   font-family: "Nunito", sans-serif;
 }
 
-.card-wrapper {
+.chp-card-wrapper {
   display: flex;
   flex-wrap: wrap;             
   justify-content: center;     
@@ -35,7 +35,7 @@ span{
   gap: 20px;                   
 }
 
-.card-container {
+.chp-card-container {
   width: 300px;         
   height: 350px;        
   background-color: white;
@@ -59,7 +59,7 @@ span{
   border-top-right-radius: 10px;
 }
 
-.card-content {
+.chp-card-content {
   padding: 10px 15px 5px 15px;
   flex-grow: 1;
   display: flex;
@@ -67,7 +67,7 @@ span{
   justify-content: flex-start;
 }
 
-.card-content h2 {
+.chp-card-content h2 {
   font-size: 18px;
   font-family: "Nunito", sans-serif;
   color: #1c4274;
@@ -75,14 +75,14 @@ span{
   font-weight: 700;
 }
 
-.card-content p {
+.chp-card-content p {
   font-size: 1.1rem;
   font-family: "Nunito", sans-serif;
   color: #1c4274;
   line-height: 1.1;
 }
 
-.card-btn {
+.chp-card-btn {
   background-color: #1c4274;
   color: white;
   border-radius: 20px;
@@ -94,7 +94,7 @@ span{
   transition: background-color 0.2s ease;
 }
 
-.card-btn:hover {
+.chp-card-btn:hover {
   background-color: #2d5a9e;
 }
 
@@ -114,3 +114,4 @@ span{
 .btn-viewhistory:hover{
   background-color: #2d5a9e;
 }
+
