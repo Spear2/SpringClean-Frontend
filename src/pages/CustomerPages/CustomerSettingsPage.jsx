@@ -1,16 +1,12 @@
-import CustomerSettings from "../../components/CustomerSettingsPage/CustomerSettings";
-
-
-
+import CustomerSettings from "../../components/CustomerSetttingsPage/CustomerSettings";
 import HomeBar from "../../components/Navbar/NavBarCustomer";
-import '../../CustomersStyles/CustomerSettingsPage.css';
+import "../../CustomersStyles/CustomerSettingsPage.css";
 
-export default function CustomerSettingsPage(){
-
-    return(
-        <>
-        <HomeBar/>
-        <CustomerSettings/>
-        </>
-    )
+export default function CustomerSettingsPage() {
+  return (
+    <>
+      <HomeBar />
+      <CustomerSettings />
+    </>
+  );
 }

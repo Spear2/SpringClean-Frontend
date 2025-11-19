@@ -1,7 +1,7 @@
 import { useState } from "react";
-import HomeBar from "../../components/Homebar/HomeBar";
+import HomeBar from "../../components/Navbar/NavBarCustomer";
 import BookingCard from "../../components/CustomerBookingSummary/BookingCard";
-import "./CustomerBookingSummary.css";
+import "../../CustomersStyles/CustomerBookingSummary.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function CustomerBookingSummary() {
@@ -9,14 +9,12 @@ export default function CustomerBookingSummary() {
   const location = useLocation();
   const incomingBooking = location.state?.newBooking;
 
-
   const backHome = () => navigate("/customer/home");
 
   const [summary, setSummary] = useState(() => {
-  const saved = JSON.parse(localStorage.getItem("bookings")) || [];
-  return incomingBooking ? [...saved, incomingBooking] : saved;
-});
-
+    const saved = JSON.parse(localStorage.getItem("bookings")) || [];
+    return incomingBooking ? [...saved, incomingBooking] : saved;
+  });
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
@@ -28,11 +26,15 @@ export default function CustomerBookingSummary() {
 
   const sortBookings = (bookings) => {
     const order = { Pending: 1, Confirmed: 2, Completed: 3 };
-    return [...bookings].sort((a, b) => (order[a.status] || 99) - (order[b.status] || 99));
+    return [...bookings].sort(
+      (a, b) => (order[a.status] || 99) - (order[b.status] || 99)
+    );
   };
 
   const filteredBookings = sortBookings(
-    summary.filter((item) => (filterStatus === "All" ? true : item.status === filterStatus))
+    summary.filter((item) =>
+      filterStatus === "All" ? true : item.status === filterStatus
+    )
   );
 
   const getBookingById = (id) => summary.find((b) => b.id === id);
@@ -75,20 +77,20 @@ export default function CustomerBookingSummary() {
   };
 
   const saveEdit = () => {
-  const newDateTime = formatDateTimeForSave(newDate, newTime);
+    const newDateTime = formatDateTimeForSave(newDate, newTime);
 
-  setSummary((prev) => {
-    const updated = prev.map((b) =>
-      b.id === selectedBookingId ? { ...b, date: newDateTime } : b
-    );
-    localStorage.setItem("bookings", JSON.stringify(updated));
-    return updated;
-  });
+    setSummary((prev) => {
+      const updated = prev.map((b) =>
+        b.id === selectedBookingId ? { ...b, date: newDateTime } : b
+      );
+      localStorage.setItem("bookings", JSON.stringify(updated));
+      return updated;
+    });
 
-  // Close the modal and reset selected booking
-  setShowEditModal(false);
-  setSelectedBookingId(null);
-};
+    // Close the modal and reset selected booking
+    setShowEditModal(false);
+    setSelectedBookingId(null);
+  };
 
   const handleViewHistory = (id) => {
     setSelectedBookingId(id);
@@ -101,23 +103,30 @@ export default function CustomerBookingSummary() {
   };
 
   const confirmCancel = () => {
-  setSummary((prev) => {
-    const updated = prev.filter((b) => b.id !== selectedBookingId);
-    localStorage.setItem("bookings", JSON.stringify(updated));
-    return updated;
-  });
-};
+    setSummary((prev) => {
+      const updated = prev.filter((b) => b.id !== selectedBookingId);
+      localStorage.setItem("bookings", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
-  const selectedBooking = selectedBookingId ? getBookingById(selectedBookingId) : null;
+  const selectedBooking = selectedBookingId
+    ? getBookingById(selectedBookingId)
+    : null;
 
   return (
     <>
       <HomeBar />
       <div className="main-wrapper">
         <header className="settings-header" style={{ textAlign: "left" }}>
-          <button className="btn-back-arrow" onClick={backHome}>←</button>
+          <button className="btn-back-arrow" onClick={backHome}>
+            ←
+          </button>
           <h1>Booking History</h1>
-          <p>View and manage all your past and upcoming cleaning bookings in one place.</p>
+          <p>
+            View and manage all your past and upcoming cleaning bookings in one
+            place.
+          </p>
         </header>
 
         <div className="cbc-booking-summary-container">
@@ -164,12 +173,27 @@ export default function CustomerBookingSummary() {
           <div className="cbc-modal-content">
             <h2>Edit Booking</h2>
             <label>Date:</label>
-            <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+            <input
+              type="date"
+              value={newDate}
+              onChange={(e) => setNewDate(e.target.value)}
+            />
             <label>Time:</label>
-            <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
+            <input
+              type="time"
+              value={newTime}
+              onChange={(e) => setNewTime(e.target.value)}
+            />
             <div className="cbc-modal-actions">
-              <button className="cbc-btn-save" onClick={saveEdit}>Save</button>
-              <button className="cbc-btn-close" onClick={() => setShowEditModal(false)}>Cancel</button>
+              <button className="cbc-btn-save" onClick={saveEdit}>
+                Save
+              </button>
+              <button
+                className="cbc-btn-close"
+                onClick={() => setShowEditModal(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -179,12 +203,25 @@ export default function CustomerBookingSummary() {
         <div className="cbc-modal-overlay">
           <div className="cbc-modal-content">
             <h2>Booking Details</h2>
-            <p><strong>Cleaner:</strong> {selectedBooking.cleaner}</p>
-            <p><strong>Date:</strong> {selectedBooking.date}</p>
-            <p><strong>Location:</strong> {selectedBooking.location}</p>
-            <p><strong>Status:</strong> {selectedBooking.status}</p>
+            <p>
+              <strong>Cleaner:</strong> {selectedBooking.cleaner}
+            </p>
+            <p>
+              <strong>Date:</strong> {selectedBooking.date}
+            </p>
+            <p>
+              <strong>Location:</strong> {selectedBooking.location}
+            </p>
+            <p>
+              <strong>Status:</strong> {selectedBooking.status}
+            </p>
             <div className="cbc-modal-actions">
-              <button className="cbc-btn-close" onClick={() => setShowHistoryModal(false)}>Close</button>
+              <button
+                className="cbc-btn-close"
+                onClick={() => setShowHistoryModal(false)}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
@@ -200,8 +237,15 @@ export default function CustomerBookingSummary() {
               <strong>{selectedBooking.date}</strong>?
             </p>
             <div className="modal-actions">
-              <button className="cbc-btn-save" onClick={confirmCancel}>Yes, Cancel</button>
-              <button className="cbc-btn-close" onClick={() => setShowCancelModal(false)}>No, Go Back</button>
+              <button className="cbc-btn-save" onClick={confirmCancel}>
+                Yes, Cancel
+              </button>
+              <button
+                className="cbc-btn-close"
+                onClick={() => setShowCancelModal(false)}
+              >
+                No, Go Back
+              </button>
             </div>
           </div>
         </div>

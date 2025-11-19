@@ -1,7 +1,7 @@
 import { useState } from "react";
 import HomeBar from "../../components/Navbar/NavBarCustomer";
 import CustomerPayment from "../../components/CustomerPayment/CustomerPayment";
-import '../../CustomersStyles/CustomerPaymentPage.css';
+import "../../CustomersStyles/CustomerPaymentPage.css";
 
 export default function CustomerPaymentPage() {
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
@@ -18,9 +18,7 @@ export default function CustomerPaymentPage() {
   return (
     <>
       <HomeBar />
-      <CustomerPayment onConfirm={handlePaymentConfirm}/>
-
-
+      <CustomerPayment onConfirm={handlePaymentConfirm} />
     </>
   );
 }
