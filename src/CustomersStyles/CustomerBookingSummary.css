@@ -1,7 +1,7 @@
 /* ==============================
    Booking Summary Container
    ============================== */
- .booking-summary-container {
+ .cbc-booking-summary-container {
   width: 95%;          /* use most of the page width */
   max-width: 1200px;   /* optional: limits width on very large screens */
   margin: 20px auto;   /* centers container and gives top/bottom margin */
@@ -14,7 +14,7 @@
   gap: 20px;
 }
   
-  .summary-card {
+  .cbc-summary-card {
   width: 1000px; /* Adjusted to fit nicely on the page */
   max-width: 1000px; /* Optional: limits card width on large screens */
   background-color: #ffffff;
@@ -28,11 +28,11 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.summary-card:hover {
+.cbc-summary-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
-.summary-list {
+.cbc-summary-list {
   display: flex;
   flex-direction: column;
   align-items: center; /* Centers cards horizontally */
@@ -62,7 +62,7 @@
   color: #333333;
 }
 
-.btn-back-arrow {
+.cbc-btn-back-arrow {
   background: none;
   border: none;
   font-size: 2.5rem;
@@ -71,30 +71,30 @@
   transition: color 0.2s ease;
 }
 
-.btn-back-arrow:hover {
+.cbc-btn-back-arrow:hover {
   color: #007bff;
 }
 
 /* ==============================
    Booking Info
    ============================== */
-.summary-card h2 {
+.cbc-summary-card h2 {
   color: #1c4274;
   margin-bottom: 10px;
   font-size: 1.3rem;
 }
 
-.booking-info p {
+.cbc-booking-info p {
   margin: 5px 0;
   font-size: 1rem;
   color: #333333;
 }
-.booking-actions {
+.cbc-booking-actions {
   margin-top: 15px;
   display: flex;
   gap: 10px; /* Space between buttons */
 }
-.summary-card p {
+.cbc-summary-card p {
   margin: 5px 0;
   font-size: 1rem;
   color: #333333;
@@ -103,9 +103,9 @@
 /* ==============================
    Booking Action Buttons
    ============================== */
-.btn-edit,
-.btn-cancel,
-.btn-view {
+.cbc-btn-edit,
+.cbc-btn-cancel,
+.cbc-btn-view {
   border: none;
   border-radius: 8px;
   padding: 8px 15px;
@@ -114,37 +114,37 @@
   transition: background-color 0.2s ease;
 }
 
-.btn-edit {
+.cbc-btn-edit {
   background-color: #2d5a9e;
   color: white;
 }
 
-.btn-edit:hover {
+.cbc-btn-edit:hover {
   background-color: #1c4274;
 }
 
-.btn-cancel {
+.cbc-btn-cancel {
   background-color: #d9534f;
   color: white;
 }
 
-.btn-cancel:hover {
+.cbc-btn-cancel:hover {
   background-color: #c9302c;
 }
 
-.btn-view {
+.cbc-btn-view {
   background-color: #195236;
   color: white;
 }
 
-.btn-view:hover {
+.cbc-btn-view:hover {
   background-color: #123524;
 }
 
 /* ==============================
    Modal Overlay & Content
    ============================== */
-.modal-overlay {
+.cbc-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
@@ -155,7 +155,7 @@
   z-index: 3000;
 }
 
-.modal-content {
+.cbc-odal-content {
   background: #fff;
   padding: 2rem;
   border-radius: 14px;
@@ -176,27 +176,27 @@
   }
 }
 
-.modal-content h2 {
+.cbc-modal-content h2 {
   margin-bottom: 1rem;
   text-align: center;
   color: #333;
 }
 
-.modal-content p {
+.cbc-modal-content p {
   text-align: center;
   color: #555;
   margin: 1rem 0;
   line-height: 1.5;
 }
 
-.modal-content label {
+.cbc-modal-content label {
   display: block;
   margin-top: 1rem;
   font-weight: 600;
   color: #444;
 }
 
-.modal-content input {
+.cbc-modal-content input {
   width: 100%;
   padding: 0.6rem;
   margin-top: 0.4rem;
@@ -205,13 +205,13 @@
   font-size: 1rem;
 }
 
-.modal-actions {
+.cbc-modal-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
 }
 
-.btn-save {
+.cbc-btn-save {
   background: #28a745;
   color: white;
   border: none;
@@ -221,11 +221,11 @@
   transition: 0.3s ease;
 }
 
-.btn-save:hover {
+.cbc-btn-save:hover {
   background: #218838;
 }
 
-.btn-close {
+.cbc-btn-close {
   background: #dc3545;
   color: white;
   border: none;
@@ -235,14 +235,14 @@
   transition: 0.3s ease;
 }
 
-.btn-close:hover {
+.cbc-btn-close:hover {
   background: #b02a37;
 }
 
 /* ==============================
    Filter Section
    ============================== */
-.filter-container {
+.cbc-filter-container {
   display: flex;
   justify-content: flex-end; /* pushes the entire filter group to the right */
   align-items: center;
@@ -251,20 +251,20 @@
   gap: 0.4rem; /* smaller gap between label and select */
 }
 
-.filter-group {
+.cbc-filter-group {
   display: flex;
   gap: 0.4rem; /* small gap between label and select */
   align-items: center;
 }
 
-.filter-container label {
+.cbc-filter-container label {
   font-weight: 700;
   color: #1c4274;
   margin: 0; /* remove any default margins */
   white-space: nowrap; /* prevent label from wrapping */
 }
 
-.filter-container select {
+.cbc-filter-container select {
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -275,17 +275,17 @@
   margin: 0; /* remove default margin */
 }
 
-.filter-container:hover{
+.cbc-filter-container:hover{
   color: #1c4274;
 }
 
 /* ==============================
    Booking Page Alignment
    ============================== */
-.booking-page {
+.cbc-booking-page {
   text-align: right;
 }
 
-.summary-list .no-bookings{
+.cbc-summary-list .cbc-no-bookings{
   font-family: "Nunito", sans-serif;
 }

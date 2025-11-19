@@ -57,13 +57,13 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="main-wrapper">
-      <header className="settings-header">
+    <div className="cbf-main-wrapper">
+      <header className="cbf-settings-header">
         <h1>Booking Form</h1>
         <span>Book your cleaning in just a few clicks — we’ll handle the rest!</span>
       </header>
 
-      <div className="form-container">
+      <div className="cbf-form-container">
         <label>
           Selected Cleaner:
           <input type="text" value={formData.cleaner} readOnly />
@@ -83,7 +83,7 @@ export default function BookingForm() {
             onChange={handleChange}
             placeholder="Enter your full home address"
           />
-          {errors.address && <p className="error-text">{errors.address}</p>}
+          {errors.address && <p className="cbf-error-text">{errors.address}</p>}
         </label>
 
         <label>
@@ -94,7 +94,7 @@ export default function BookingForm() {
             value={formData.date}
             onChange={handleChange}
           />
-          {errors.date && <p className="error-text">{errors.date}</p>}
+          {errors.date && <p className="cbf-error-text">{errors.date}</p>}
         </label>
 
         <label>
@@ -105,7 +105,7 @@ export default function BookingForm() {
             value={formData.time}
             onChange={handleChange}
           />
-          {errors.time && <p className="error-text">{errors.time}</p>}
+          {errors.time && <p className="cbf-error-text">{errors.time}</p>}
         </label>
 
         <label>
@@ -120,7 +120,7 @@ export default function BookingForm() {
             onChange={handleChange}
             placeholder="Enter hours"
           />
-          {errors.hours && <p className="error-text">{errors.hours}</p>}
+          {errors.hours && <p className="cbf-error-text">{errors.hours}</p>}
         </label>
 
         <label>
@@ -135,10 +135,10 @@ export default function BookingForm() {
             onChange={handleChange}
             placeholder="Enter minutes"
           />
-          {errors.minutes && <p className="error-text">{errors.minutes}</p>}
+          {errors.minutes && <p className="cbf-error-text">{errors.minutes}</p>}
         </label>
 
-        <button className="btn-submit" onClick={submitBooking}>
+        <button className="cbf-btn-submit" onClick={submitBooking}>
           Submit Booking
         </button>
       </div>
