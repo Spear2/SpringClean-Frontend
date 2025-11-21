@@ -1,13 +1,15 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useCustomer from "../../Hooks/useCustomer";
 
 export default function BookingForm() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cleanerName, cleanerLocation } = location.state || {};
-
+  const { companyCleanerId, cleanerName, cleanerLocation } = location.state || {};
+  const customer = useCustomer();
   // ✅ formData initialized safely
   const [formData, setFormData] = useState({
+    cleanerId: companyCleanerId || "",
     date: "",
     time: "",
     hours: "",
@@ -37,35 +39,67 @@ export default function BookingForm() {
     return Object.keys(newErrors).length === 0;
   };
 
+  if(!customer){
+    return <div>Loading customer data...</div>;
+  }
+
+
   // Submit booking
-  const submitBooking = () => {
+  const submitBooking = async () => {
     if (!validateForm()) return;
 
+    if (!customer || !customer.customerId) {
+      alert("Customer data not loaded yet. Try again.");
+      return;
+    }
+
+    
+
     const bookingData = {
-      ...formData,
-      status: "Pending",
-      id: Date.now(),
-      date: `${formData.date} - ${formData.time}`, // store as single string
+      cleanerId: Number(formData.cleanerId),
+      address: formData.address,
+      date: formData.date,          // already "YYYY-MM-DD"
+      time: formData.time,          // already "HH:mm"
+      hours: Number(formData.hours),
+      minutes: Number(formData.minutes),
     };
 
-    // Save booking to localStorage
-    const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
-    localStorage.setItem("bookings", JSON.stringify([...existingBookings, bookingData]));
+    try {
+      const response = await fetch(`http://localhost:8080/api/bookings/${customer.customerId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bookingData),
+      });
 
-    // Navigate to payment page
-    navigate("/customer/payment", { state: { newBooking: bookingData } });
+      if (!response.ok) {
+        throw new Error("Failed to save booking");
+      }
+
+      const savedBooking = await response.json();
+
+      // Redirect to payment page with saved booking
+      navigate("/customer/payments", { state: { newBooking: savedBooking } });
+
+    } catch (err) {
+      
+      alert("Failed to submit booking. Please try again!");
+    }
   };
 
   return (
     <div className="cbf-main-wrapper">
+      
       <header className="cbf-settings-header">
-        <h1>Booking Form</h1>
+        <h1>Booking Form {companyCleanerId}</h1>
         <span>Book your cleaning in just a few clicks — we’ll handle the rest!</span>
       </header>
 
       <div className="cbf-form-container">
+
         <label>
-          Selected Cleaner:
+          Selected Cleaner: 
           <input type="text" value={formData.cleaner} readOnly />
         </label>
 
@@ -141,6 +175,7 @@ export default function BookingForm() {
         <button className="cbf-btn-submit" onClick={submitBooking}>
           Submit Booking
         </button>
+
       </div>
     </div>
   );

@@ -29,16 +29,11 @@ const CustomerLoginPage = () => {
         const data = await response.json();
         alert("Login Successfuly", data);
 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("cleanerId", data.customerId);
-        localStorage.setItem("type2", "customer");
-
         login({
           id: data.customerId,
           token: data.token,
           type: "customer",
         });
-        
         navigate("/customer")
         
       }else{
