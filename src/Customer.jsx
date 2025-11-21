@@ -11,8 +11,8 @@ export default function Customer() {
   return (
     <Routes>
       <Route path="/" element={<CustomerHomePage />} />
-      <Route path="bookings" element={<CustomerBookingPage />} />
-      <Route path="summary" element={<CustomerBookingSummary />} />
+      <Route path="booking" element={<CustomerBookingPage />} />
+      <Route path="bookingSummary" element={<CustomerBookingSummary />} />
       <Route path="payments" element={<CustomerPaymentPage />} />
       <Route path="profile" element={<CustomerProfilePage />} />
       <Route path="settings" element={<CustomerSettingsPage />} />

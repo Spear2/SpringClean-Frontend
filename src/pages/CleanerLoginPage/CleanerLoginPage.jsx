@@ -29,9 +29,6 @@ const CleanerLoginPage = () => {
         const data = await response.json();
         alert("Login Successfuly", data);
 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("cleanerId", data.cleanerId);
-        localStorage.setItem("type", "cleaner");
 
         login({
           id: data.cleanerId,

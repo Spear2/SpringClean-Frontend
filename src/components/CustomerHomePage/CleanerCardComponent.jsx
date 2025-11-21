@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
-
-export default function CleanerCardComponent({ name, loc, rate, img }) {
+import useCleaner from "../../Hooks/useCleaner";
+export default function CleanerCardComponent({ index, name, loc, rate, img }) {
   const navigate = useNavigate();
+ 
 
   const handleBookingClick = () => {
     // Pass selected cleaner data via navigation state
     navigate("/customer/booking", {
-      state: { cleanerName: name, cleanerLocation: loc },
+      state: { companyCleanerId:index, cleanerName: name, cleanerLocation: loc },
     });
   };
 

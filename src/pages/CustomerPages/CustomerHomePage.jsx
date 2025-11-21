@@ -2,8 +2,12 @@ import HomeBar from "../../components/Navbar/NavBarCustomer";
 import CleanerCardComponent from "../../components/CustomerHomePage/CleanerCardComponent";
 import { useNavigate } from "react-router-dom";
 import "../../CustomersStyles/CustomerHomePage.css";
+import { useState, useEffect } from "react";
+
 
 export default function CustomerHomePage() {
+
+  const [companyCleaner, setCompanyCleaner] = useState([]);
   const cleaners = [
     {
       name: "Sparkle PH",
@@ -63,6 +67,16 @@ export default function CustomerHomePage() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetch('http://localhost:8080/api/company-cleaners')
+    .then((res) => res.json())
+    .then((data) => setCompanyCleaner(data))
+    .catch((err) => {
+      console.error("Error Fetching cleaners: ", err);
+    });
+  }, [])
+
+
   const handleViewHistory = () => {
     navigate("/customer/bookingSummary");
   };
@@ -83,14 +97,19 @@ export default function CustomerHomePage() {
 
         {/* Cleaner Cards */}
         <div className="chp-card-wrapper">
-          {cleaners.map((cleaner, index) => (
-            <CleanerCardComponent
-              key={index}
-              name={cleaner.name}
-              loc={cleaner.loc}
-              rate={cleaner.rate}
-              img={cleaner.img}
-            />
+          {companyCleaner.map((com) => (
+            cleaners.map((cleaner, i) => (
+              com.companyCleanerId == i ? (
+                <CleanerCardComponent
+                  key={com.companyCleanerId}
+                  index={com.companyCleanerId}
+                  name={com.companyName}
+                  loc={cleaner.loc}
+                  rate={cleaner.rate}
+                  img={cleaner.img}
+                />
+              ): null
+            ))
           ))}
         </div>
       </div>
