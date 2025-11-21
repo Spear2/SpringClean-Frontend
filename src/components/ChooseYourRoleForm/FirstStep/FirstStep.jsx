@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import RoleButton from "../RoleButton/RoleButton";
 import cleanerIcon from "../../../assets/broom.ico";
 import customerIcon from "../../../assets/user-solid-full.svg";
+import companyIcon from "../../../assets/building.png";
 import StepJourney from "../Journey/StepJourney";
 import { Link } from "react-router-dom";
 
@@ -120,6 +121,12 @@ export default function FirstStep({
           label="Customer"
           onClick={() => setRole("customer")}
           active={role === "customer"}
+        />
+        <RoleButton
+          icon={companyIcon}
+          label="Company"
+          onClick={() => setRole("company")}
+          active={role === "company"}
         />
       </div>
 
