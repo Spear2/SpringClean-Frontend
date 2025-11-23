@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import "./SecondStep.css";
 
-export default function CompanyForm() {
+export default function CompanyForm({
+  onNext,
+  onBack,
+  updateFormData,
+  formData,
+}) {
   const [selectedCompany, setSelectedCompany] = useState("");
 
   const companies = [
@@ -10,10 +15,17 @@ export default function CompanyForm() {
     { id: 3, name: "Epstein's Island Cleaners" },
   ];
 
+  const handleSubmit = () => {
+    if (!selectedCompany) {
+      alert("Please Enter All required fields!");
+      return;
+    }
+  };
+
   return (
     <div className="form-container">
       <div className="description">
-        <h1>Company Information</h1>
+        <h1>Create Cleaner Account</h1>
         <p>Please select your company from the list below.</p>
       </div>
 
@@ -36,8 +48,12 @@ export default function CompanyForm() {
       </div>
 
       <div className="button-group">
-        <button className="back-button">Back</button>
-        <button className="next-button">Next</button>
+        <button className="back-button" onClick={onBack}>
+          ← Back
+        </button>
+        <button className="next-button" onClick={handleSubmit}>
+          Next →
+        </button>
       </div>
     </div>
   );

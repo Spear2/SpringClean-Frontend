@@ -16,6 +16,9 @@ const ChooseYourRole = () => {
           <Link to="/login/cleaner" className="role-btn cleaner-btn">
             Cleaner
           </Link>
+          <Link to="/login/company" className="role-btn company-btn">
+            Company
+          </Link>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import ProtectedRoute from "./auth/ProtectedRoute"
+import ProtectedRoute from "./auth/ProtectedRoute";
 import HomePage from "./pages/HomePage/HomePage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import CleanerLoginPage from "./pages/CleanerLoginPage/CleanerLoginPage";
@@ -9,6 +9,7 @@ import CustomerLoginPage from "./pages/CustomerLoginPage/CustomerLoginPage";
 import ChooseYourRole from "./pages/ChooseYourRole/ChooseYourRole";
 import CompanyCleaner from "./CompanyCleaner";
 import Customer from "./Customer";
+import CompanyLoginPage from "./pages/CompanyLoginPage/CompanyLoginPage";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
       <Route path="/Register" element={<RegisterPage />} />
       <Route path="/login/cleaner" element={<CleanerLoginPage />} />
       <Route path="/login/Customer" element={<CustomerLoginPage />} />
+      <Route path="/login/company" element={<CompanyLoginPage />} />
       <Route path="/login/ChooseYourRole" element={<ChooseYourRole />} />
 
       {/* Cleaner protected routes */}
