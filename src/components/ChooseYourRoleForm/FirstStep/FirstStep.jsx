@@ -32,9 +32,7 @@ export default function FirstStep({
       background: "white",
       borderRadius: "30px",
       padding: "40px",
-
       minWidth: "400px",
-
       minHeight: "45vh",
       display: "flex",
       flexDirection: "column",
@@ -63,6 +61,7 @@ export default function FirstStep({
       justifyContent: "center",
       gap: "30px",
       flexWrap: "wrap",
+      padding: "20px",
     },
     navButtons: {
       display: "flex",
@@ -111,7 +110,7 @@ export default function FirstStep({
       <div style={styles.roleButtons}>
         <RoleButton
           icon={cleanerIcon}
-          label="Cleaner"
+          label="Company"
           onClick={() => setRole("cleaner")}
           active={role === "cleaner"}
         />
@@ -124,7 +123,7 @@ export default function FirstStep({
         />
         <RoleButton
           icon={companyIcon}
-          label="Company"
+          label="Cleaner"
           onClick={() => setRole("company")}
           active={role === "company"}
         />

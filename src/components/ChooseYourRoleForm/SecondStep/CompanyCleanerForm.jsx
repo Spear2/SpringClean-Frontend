@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./SecondStep.css";
 import ErrorMessage from "./ErrorMessage";
 
-export default function CleanerForm({
+export default function CompanyCleanerForm({
   onNext,
   onBack,
   updateFormData,
@@ -75,7 +75,7 @@ export default function CleanerForm({
   return (
     <div className="form-container">
       <div className="description">
-        <h1>Create Cleaner Account</h1>
+        <h1>Create Company Account</h1>
         <p>Join our network of professional cleaners</p>
       </div>
 
