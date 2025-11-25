@@ -41,7 +41,7 @@
   flex-direction: column;
   gap: 20px;
 }
-
+    
 /* Animation */
 @keyframes fadeIn {
   from {

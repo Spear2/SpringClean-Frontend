@@ -110,7 +110,7 @@ export default function FirstStep({
       <div style={styles.roleButtons}>
         <RoleButton
           icon={cleanerIcon}
-          label="Company"
+          label="Cleaner"
           onClick={() => setRole("cleaner")}
           active={role === "cleaner"}
         />
@@ -123,7 +123,7 @@ export default function FirstStep({
         />
         <RoleButton
           icon={companyIcon}
-          label="Cleaner"
+          label="Company"
           onClick={() => setRole("company")}
           active={role === "company"}
         />
