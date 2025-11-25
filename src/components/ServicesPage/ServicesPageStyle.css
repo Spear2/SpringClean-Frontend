@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Cal+Sans&family=Nunito:wght@400;600;800&display=swap");
 
 .services-page-hero {
-  min-height: 100vh;
+  min-height: 950px;
   display: flex;
   flex-direction: row; /* side-by-side layout */
   justify-content: space-between;
@@ -175,12 +175,11 @@
 }
 
 /* RESPONSIVE DESIGN */
-@media (max-width: 1000px) {
+@media (max-width: 764px) {
   .services-page-hero {
     flex-direction: column;
     text-align: center;
     padding: 40px;
-    gap: 30px;
   }
 
   .services-content {

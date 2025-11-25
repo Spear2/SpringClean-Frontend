@@ -10,6 +10,26 @@
   font-family: "Nunito", sans-serif;
 }
 
+.role-btn {
+  background-color: #aae858;
+  color: #1c4274;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 30px;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.role-btn:hover {
+  background-color: #1c4274;
+  color: #aae858;
+  transform: scale(1.05);
+}
+
 /* Centered container */
 .role-container {
   background-color: white;
@@ -41,7 +61,7 @@
   flex-direction: column;
   gap: 20px;
 }
-    
+
 /* Animation */
 @keyframes fadeIn {
   from {
