@@ -8,10 +8,10 @@ export default function ErrorMessage({ message }) {
       style={{
         backgroundColor: "#ffe5e5",
         color: "#d10000",
-        padding: "12px 16px",
+        padding: "10px 10px",
         borderRadius: "8px",
         marginTop: "12px",
-        fontSize: "14px",
+        fontSize: "0.5rem",
         border: "1px solid #ffb3b3",
         display: "flex",
         alignItems: "center",

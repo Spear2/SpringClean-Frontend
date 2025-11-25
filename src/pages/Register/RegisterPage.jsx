@@ -1,7 +1,7 @@
 import React from "react";
 import FirstStep from "../../components/ChooseYourRoleForm/FirstStep/FirstStep";
 import SecondStep from "../../components/ChooseYourRoleForm/SecondStep/SecondStep";
-import CompanyCleanerForm from "../../components/ChooseYourRoleForm/SecondStep/CompanyCleanerForm";
+import CleanerForm from "../../components/ChooseYourRoleForm/SecondStep/CleanerForm";
 import CustomerForm from "../../components/ChooseYourRoleForm/SecondStep/CustomerForm";
 import ThirdStep from "../../components/ChooseYourRoleForm/ThirdStep/ThirdStep";
 import NavBar from "../../components/Navbar/NavBar";
@@ -36,7 +36,7 @@ export default function ChooseYourUser() {
       )}
 
       {currentStep === 2 && formData.role === "cleaner" && (
-        <CompanyCleanerForm
+        <CleanerForm
           onNext={nextStep}
           onBack={prevStep}
           updateFormData={updateFormData}
