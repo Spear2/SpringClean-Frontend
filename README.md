@@ -15,7 +15,7 @@ Installations:
 git clone https://github.com/your-username/your-repo.git
 
 # Navigate into the project folder
-cd your-repo
+cd SpringClean-Frontend
 
 # Install dependencies
 npm install
