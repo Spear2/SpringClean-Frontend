@@ -1,16 +1,12 @@
 import React from "react";
-import FirstStep from "../../components/ChooseYourRoleForm/FirstStep/FirstStep";
-import SecondStep from "../../components/ChooseYourRoleForm/SecondStep/SecondStep";
 import CleanerForm from "../../components/ChooseYourRoleForm/SecondStep/CleanerForm";
 import CustomerForm from "../../components/ChooseYourRoleForm/SecondStep/CustomerForm";
 import ThirdStep from "../../components/ChooseYourRoleForm/ThirdStep/ThirdStep";
-import NavBar from "../../components/Navbar/NavBar";
 import StepJourney from "../../components/ChooseYourRoleForm/Journey/StepJourney";
 import CompanyForm from "../../components/ChooseYourRoleForm/SecondStep/CompanyForm";
-
+import FirstStep from "../../components/ChooseYourRoleForm/FirstStep/FirstStep";
 import "./RegisterPage.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function ChooseYourUser() {
   const [currentStep, setCurrentStep] = useState(1);
