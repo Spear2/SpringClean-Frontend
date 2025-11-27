@@ -10,6 +10,26 @@
   font-family: "Nunito", sans-serif;
 }
 
+.role-btn {
+  background-color: #aae858;
+  color: #1c4274;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 30px;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.role-btn:hover {
+  background-color: #1c4274;
+  color: #aae858;
+  transform: scale(1.05);
+}
+
 /* Centered container */
 .role-container {
   background-color: white;
@@ -40,40 +60,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.role-btn {
-  display: block;
-  text-decoration: none;
-  padding: 15px 20px;
-  border-radius: 30px;
-  font-size: 1.3rem;
-  font-family: "Cal Sans", sans-serif;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Customer button */
-.customer-btn {
-  background: linear-gradient(135deg, #aae858, #8dd63f);
-  color: #1c4274;
-}
-
-.customer-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(170, 232, 88, 0.4);
-}
-
-/* Cleaner button */
-.cleaner-btn {
-  background: linear-gradient(135deg, #1c4274, #0f2847);
-  color: #aae858;
-}
-
-.cleaner-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(28, 66, 116, 0.4);
 }
 
 /* Animation */

@@ -6,6 +6,7 @@ import CustomerForm from "../../components/ChooseYourRoleForm/SecondStep/Custome
 import ThirdStep from "../../components/ChooseYourRoleForm/ThirdStep/ThirdStep";
 import NavBar from "../../components/Navbar/NavBar";
 import StepJourney from "../../components/ChooseYourRoleForm/Journey/StepJourney";
+import CompanyForm from "../../components/ChooseYourRoleForm/SecondStep/CompanyForm";
 
 import "./RegisterPage.css";
 import { useState } from "react";
@@ -44,6 +45,14 @@ export default function ChooseYourUser() {
       )}
       {currentStep === 2 && formData.role === "customer" && (
         <CustomerForm
+          onNext={nextStep}
+          onBack={prevStep}
+          updateFormData={updateFormData}
+          formData={formData}
+        />
+      )}
+      {currentStep === 2 && formData.role === "company" && (
+        <CompanyForm
           onNext={nextStep}
           onBack={prevStep}
           updateFormData={updateFormData}

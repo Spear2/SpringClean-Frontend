@@ -1,4 +1,4 @@
-.role-btn {
+.RoleBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,13 +15,13 @@
   transition: all 0.3s ease;
 }
 
-.role-btn:hover {
+.RoleBtn:hover {
   background-color: #1c4274;
   color: #aae858;
   transform: scale(1.05);
 }
 
-.role-btn.active {
+.RoleBtn.active {
   background-color: #1c4274;
   color: #aae858;
 }
