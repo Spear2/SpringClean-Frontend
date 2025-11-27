@@ -7,6 +7,13 @@ export default function BookingForm() {
   const location = useLocation();
   const { companyCleanerId, cleanerName, cleanerLocation } = location.state || {};
   const customer = useCustomer();
+
+  const cleaningServices = [
+    { type: "General Cleaning", pricePerHour: 200 },
+    { type: "Deep Cleaning", pricePerHour: 350 },
+    { type: "Move-in/Move-out Cleaning", pricePerHour: 500 },
+    { type: "Post-Construction Cleaning", pricePerHour: 650 }
+  ];
   // ✅ formData initialized safely
   const [formData, setFormData] = useState({
     cleanerId: companyCleanerId || "",
@@ -14,9 +21,11 @@ export default function BookingForm() {
     time: "",
     hours: "",
     minutes: "",
+    serviceType: "",
+    price: 0,
     cleaner: cleanerName || "",
     cleanerLocation: cleanerLocation || "",
-    address: "", // this is the user's address
+    address: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -27,6 +36,19 @@ export default function BookingForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  useEffect(() => {
+    const service = cleaningServices.find(s => s.type === formData.serviceType);
+    if (!service || !formData.hours) {
+      setFormData(prev => ({ ...prev, price: 0 }));
+      return;
+    }
+
+    const totalHours = Number(formData.hours) + Number(formData.minutes) / 60;
+    const totalPrice = totalHours * service.pricePerHour;
+
+    setFormData(prev => ({ ...prev, price: totalPrice.toFixed(2) }));
+  }, [formData.serviceType, formData.hours, formData.minutes]);
+
   // Validate form before submission
   const validateForm = () => {
     const newErrors = {};
@@ -35,6 +57,9 @@ export default function BookingForm() {
     if (!formData.hours) newErrors.hours = "Please enter duration in hours.";
     if (!formData.minutes) newErrors.minutes = "Please enter duration in minutes.";
     if (!formData.address) newErrors.address = "Please enter your address.";
+    if (!formData.serviceType) {
+      newErrors.serviceType = "Please select a cleaning service.";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -52,17 +77,18 @@ export default function BookingForm() {
       alert("Customer data not loaded yet. Try again.");
       return;
     }
-
     
-
     const bookingData = {
-      cleanerId: Number(formData.cleanerId),
-      address: formData.address,
-      date: formData.date,          // already "YYYY-MM-DD"
-      time: formData.time,          // already "HH:mm"
-      hours: Number(formData.hours),
-      minutes: Number(formData.minutes),
-    };
+    cleanerId: Number(formData.cleanerId),
+    address: formData.address,
+    date: formData.date,
+    time: formData.time,
+    hours: Number(formData.hours),
+    minutes: Number(formData.minutes),
+    serviceType: formData.serviceType,
+    totalPrice: Number(formData.price),
+  };
+
 
     try {
       const response = await fetch(`http://localhost:8080/api/bookings/${customer.customerId}`, {
@@ -78,7 +104,7 @@ export default function BookingForm() {
       }
 
       const savedBooking = await response.json();
-
+      localStorage.setItem("currentBooking", JSON.stringify(savedBooking));
       // Redirect to payment page with saved booking
       navigate("/customer/payments", { state: { newBooking: savedBooking } });
 
@@ -87,6 +113,9 @@ export default function BookingForm() {
       alert("Failed to submit booking. Please try again!");
     }
   };
+
+  
+
 
   return (
     <div className="cbf-main-wrapper">
@@ -106,6 +135,19 @@ export default function BookingForm() {
         <label>
           Cleaner’s Location:
           <input type="text" value={formData.cleanerLocation} readOnly />
+        </label>
+
+        <label>
+          Type of Cleaning Service:
+          <select name="serviceType" value={formData.serviceType} onChange={handleChange}>
+            <option value="">-- Select Service --</option>
+            {cleaningServices.map((service, index) => (
+              <option key={index} value={service.type}>
+                {service.type} (₱{service.pricePerHour}/hr)
+              </option>
+            ))}
+          </select>
+          {errors.serviceType && <p className="cbf-error-text">{errors.serviceType}</p>}
         </label>
 
         <label>
@@ -170,6 +212,10 @@ export default function BookingForm() {
             placeholder="Enter minutes"
           />
           {errors.minutes && <p className="cbf-error-text">{errors.minutes}</p>}
+        </label>
+        <label>
+          Total Price:
+          <input type="text" value={`₱${formData.price}`} readOnly />
         </label>
 
         <button className="cbf-btn-submit" onClick={submitBooking}>

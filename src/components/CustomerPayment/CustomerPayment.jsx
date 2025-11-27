@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function CustomerPayment({ onConfirm }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const paymentMethods = [
     {
@@ -46,22 +47,29 @@ export default function CustomerPayment({ onConfirm }) {
       ],
     },
   ];
+  const { newBooking} = location.state || {};
 
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [formData, setFormData] = useState({});
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(newBooking.totalPrice || "");
   const [agreed, setAgreed] = useState(false);
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   const selectedMethodObj = paymentMethods.find((m) => m.id === selectedMethod);
+  
+    // const { companyCleanerId, cleanerName, cleanerLocation } = location.state || {};
 
+  if (!newBooking) {
+    newBooking = JSON.parse(localStorage.getItem("currentBooking"));
+  }
   const handleSelectMethod = (id) => {
     setSelectedMethod(id);
     setFormData({});
     setErrors({});
   };
 
+  console.log("Booking ID:", newBooking?.bookingId);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -97,25 +105,58 @@ export default function CustomerPayment({ onConfirm }) {
       setShowModal(true);
     }
   };
+  const handleConfirmPayment = async () => {
+    
 
-  const handleConfirmPayment = () => {
-  // Get existing booking details
-  const booking = JSON.parse(localStorage.getItem("bookingDetails")) || {};
+    const paymentData = {
+      bookingId: newBooking.bookingId,
+      amount: Number(amount),
+      method: selectedMethodObj.label
+    };
 
-  // Combine with payment info
-  const bookingSummary = {
-    ...booking,
-    paymentMethod: selectedMethodObj.label,
-    amount,
-    status: "Pending",
+    try {
+      const response = await fetch("http://localhost:8080/api/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (!response.ok) throw new Error("Payment failed");
+
+      const paymentResult = await response.json();
+      
+
+      navigate("/customer/bookingSummary", {
+        state: {
+          newBooking,
+          payment: paymentResult
+        }
+      });
+
+    } catch (err) {
+      alert("Payment failed. Try again.");
+    }
   };
 
-  // Save combined info
-  localStorage.setItem("bookingSummary", JSON.stringify(bookingSummary));
 
-  setShowModal(false);
-  navigate("/customer/bookingSummary");
-};
+//   const handleConfirmPayment = () => {
+//   // Get existing booking details
+//   const booking = JSON.parse(localStorage.getItem("bookingDetails")) || {};
+
+//   // Combine with payment info
+//   const bookingSummary = {
+//     ...booking,
+//     paymentMethod: selectedMethodObj.label,
+//     amount,
+//     status: "Pending",
+//   };
+
+//   // Save combined info
+//   localStorage.setItem("bookingSummary", JSON.stringify(bookingSummary));
+
+//   setShowModal(false);
+//   navigate("/customer/bookingSummary");
+// };
 
   const handleCancel = () => setShowModal(false);
 
@@ -156,7 +197,7 @@ export default function CustomerPayment({ onConfirm }) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           aria-invalid={!!errors.amount}
-          aria-describedby={errors.amount ? "amount-error" : undefined}
+          aria-describedby={errors.amount ? "amount-error" : undefined} readOnly
         />
         {errors.amount && (
           <small id="amount-error" className="cpp-error-message">
