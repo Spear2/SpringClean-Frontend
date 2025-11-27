@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./NavBarCustomerStyle.css";
 import { useAuth } from "../../auth/useAuth";
+import useCustomer from "../../Hooks/useCustomer";
 
 export default function NavBarCustomer() {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const auth = useAuth();
+  const customer = useCustomer();
 
-  if (!auth.user) return null; // or "Loading..."
+  if (!customer) return null; // or "Loading..."
+
+  if (!auth.user) return null; // or "Loading..." 
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
@@ -27,7 +31,7 @@ export default function NavBarCustomer() {
           <Link to="/customer#aboutus">About Us</Link>
 
           <button className="account-btn" onClick={toggleDropdown}>
-            {auth.user.name || "Account"}
+            {customer.lastName || "Account"}
           </button>
         </div>
 
