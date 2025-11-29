@@ -69,7 +69,7 @@ export default function CustomerPayment({ onConfirm }) {
     setErrors({});
   };
 
-  console.log("Booking ID:", newBooking?.bookingId);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -121,8 +121,11 @@ export default function CustomerPayment({ onConfirm }) {
         body: JSON.stringify(paymentData),
       });
 
-      if (!response.ok) throw new Error("Payment failed");
-
+      if (!response.ok){
+        throw new Error("Payment failed");
+        console.log("Payment failed");  
+      }
+      console.log("Payment successful");
       const paymentResult = await response.json();
       
 
@@ -138,25 +141,6 @@ export default function CustomerPayment({ onConfirm }) {
     }
   };
 
-
-//   const handleConfirmPayment = () => {
-//   // Get existing booking details
-//   const booking = JSON.parse(localStorage.getItem("bookingDetails")) || {};
-
-//   // Combine with payment info
-//   const bookingSummary = {
-//     ...booking,
-//     paymentMethod: selectedMethodObj.label,
-//     amount,
-//     status: "Pending",
-//   };
-
-//   // Save combined info
-//   localStorage.setItem("bookingSummary", JSON.stringify(bookingSummary));
-
-//   setShowModal(false);
-//   navigate("/customer/bookingSummary");
-// };
 
   const handleCancel = () => setShowModal(false);
 

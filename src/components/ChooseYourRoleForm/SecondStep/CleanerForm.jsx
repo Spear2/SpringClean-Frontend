@@ -8,7 +8,7 @@ export default function CompanyForm({
   updateFormData,
   formData,
 }) {
-  const [company_id, setCompany_id] = useState();
+  const [companyCleanerId, setCompanyCleanerId] = useState("");
   const [companyCleaners, setCompanyCleaners] = useState([]);
   const [cleanerName, setCleanerName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,17 +18,13 @@ export default function CompanyForm({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const companies = [
-    { id: 1, name: "The Great Wall Cleaning Co." },
-    { id: 2, name: "Trump's Cleaning Services" },
-    { id: 3, name: "Epstein's Island Cleaners" },
-  ];
-
 
 
   const handleSubmit = async () => {
+
+    console.log(companyCleanerId, cleanerName, email, phoneNumber, address, password, confirmPassword);
     if (
-      !company_id ||
+      !companyCleanerId ||
       !cleanerName ||
       !email ||
       !phoneNumber ||
@@ -54,7 +50,7 @@ export default function CompanyForm({
       return;
     }
     
-    const payload = { cleanerName, email, password, phoneNumber, address, company_id };
+    const payload = { cleanerName, email, password, phoneNumber, address, companyCleanerId };
 
     try{
       const res = await fetch(
@@ -99,8 +95,8 @@ export default function CompanyForm({
       <div className="form-fields">
         <select
           className="form-select"
-          value={company_id}
-          onChange={(e) => setCompany_id(e.target.value)}
+          value={companyCleanerId}
+          onChange={(e) => setCompanyCleanerId(e.target.value)}
         >
           <option value="" disabled>
             Choose a company
@@ -108,7 +104,7 @@ export default function CompanyForm({
 
           {companyCleaners.map((company) => (
             <option key={company.companyCleanerId} value={company.companyCleanerId}>
-              {company.companyName}
+              {company.companyName} {company.companyCleanerId}
             </option>
           ))}
         </select>
