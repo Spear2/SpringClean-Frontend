@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useCleaner from "../../Hooks/useCleaner";
+import useCleaner from "../../Hooks/useCompany";
 export default function CleanerCardComponent({ index, name, loc, rate, img }) {
   const navigate = useNavigate();
  

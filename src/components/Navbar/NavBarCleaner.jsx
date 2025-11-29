@@ -1,37 +1,37 @@
 import { Link } from "react-router-dom";
 import "./NavBarCleanerStyle.css";
-import useCleaner from "../../Hooks/useCleaner";
+import useCompany from "../../Hooks/useCompany";
 import { useAuth } from "../../auth/useAuth";
 
 export default function NavbarCleaner() {
-  const cleaner = useCleaner();
+  const company = useCompany();
   const { logout } = useAuth();
 
-  if (!cleaner) return <p>Loading...</p>;
-
+  if (!company) return <p>Loading...</p>;
+  
   return (
     <nav className="navbar-cleaner">
       <div className="navbar-logo">
-        <Link to="/cleaner">
+        <Link to="/company">
           <span className="logo-text">SpringClean</span>
         </Link>
       </div>
 
       <ul className="navbar-links">
         <li>
-          <Link to="/cleaner">Dashboard</Link>
+          <Link to="/company">Dashboard</Link>
         </li>
         <li>
-          <Link to="/cleaner/bookings">Bookings</Link>
+          <Link to="/company/bookings">Bookings</Link>
         </li>
         <li>
-          <Link to="/cleaner/schedule">Schedule</Link>
+          <Link to="/company/schedule">Schedule</Link>
         </li>
         <li>
-          <Link to="/cleaner/payments">Payments</Link>
+          <Link to="/company/payments">Payments</Link>
         </li>
         <li>
-          <Link to="/cleaner/profile">Profile</Link>
+          <Link to="/company/profile">Profile</Link>
         </li>
       </ul>
 
@@ -41,7 +41,7 @@ export default function NavbarCleaner() {
           alt="Cleaner avatar"
           className="navbar-avatar"
         />
-        <span className="navbar-name">Hi, {cleaner.companyName}!</span>
+        <span className="navbar-name">Hi, {company.companyName}!</span>
       </div>
     </nav>
   );
