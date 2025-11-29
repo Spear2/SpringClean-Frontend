@@ -23,9 +23,9 @@ const AppRoutes = () => {
 
       {/* Cleaner protected routes */}
       <Route
-        path="/cleaner/*"
+        path="/company/*"
         element={
-          <ProtectedRoute requiredType="cleaner">
+          <ProtectedRoute requiredType="company">
             <CompanyCleaner />
           </ProtectedRoute>
         }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import "./SecondStep.css";
 import ErrorMessage from "./ErrorMessage";
 
@@ -8,10 +8,11 @@ export default function CompanyForm({
   updateFormData,
   formData,
 }) {
-  const [selectedCompany, setSelectedCompany] = useState("");
+  const [company_id, setCompany_id] = useState();
+  const [companyCleaners, setCompanyCleaners] = useState([]);
   const [cleanerName, setCleanerName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,12 +24,14 @@ export default function CompanyForm({
     { id: 3, name: "Epstein's Island Cleaners" },
   ];
 
-  const handleSubmit = () => {
+
+
+  const handleSubmit = async () => {
     if (
-      !selectedCompany ||
+      !company_id ||
       !cleanerName ||
       !email ||
-      !phone ||
+      !phoneNumber ||
       !address ||
       !password ||
       !confirmPassword
@@ -46,11 +49,45 @@ export default function CompanyForm({
       return;
     }
 
-    if (!/^09\d{9}$/.test(phone)) {
+    if (!/^09\d{9}$/.test(phoneNumber)) {
       setError("Please enter a valid PH phone number (e.g., 09123456789).");
       return;
     }
+    
+    const payload = { cleanerName, email, password, phoneNumber, address, company_id };
+
+    try{
+      const res = await fetch(
+        "http://localhost:8080/api/cleaners/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        alert(err.message || "Cleaner registration failed!");
+        return;
+      }
+      alert("Cleaner registered successfully!");
+      onNext();
+    } catch (error) {
+      alert("Something went wrong!");
+    }
+
   };
+  
+  useEffect(() => {
+    fetch('http://localhost:8080/api/company-cleaners')
+    .then((res) => res.json())
+    .then((data) => {
+      setCompanyCleaners(data);
+    })
+    .catch((err) => {
+      console.error("Error Fetching companies: ", err);
+    });
+  }, []);
 
   return (
     <div className="form-container">
@@ -62,16 +99,16 @@ export default function CompanyForm({
       <div className="form-fields">
         <select
           className="form-select"
-          value={selectedCompany}
-          onChange={(e) => setSelectedCompany(e.target.value)}
+          value={company_id}
+          onChange={(e) => setCompany_id(e.target.value)}
         >
           <option value="" disabled>
             Choose a company
           </option>
 
-          {companies.map((company) => (
-            <option key={company.id} value={company.name}>
-              {company.name}
+          {companyCleaners.map((company) => (
+            <option key={company.companyCleanerId} value={company.companyCleanerId}>
+              {company.companyName}
             </option>
           ))}
         </select>
@@ -90,8 +127,8 @@ export default function CompanyForm({
         <input
           type="text"
           placeholder="Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
         />
         <input
           type="text"

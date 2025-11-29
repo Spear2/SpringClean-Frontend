@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import CleanerDashboard from "./pages/CleanersPages/CleanersDashboard";
-import CleanerBookings from "./pages/CleanersPages/CleanerBookings";
-import CleanerSchedule from "./pages/CleanersPages/CleanersSchedule";
-import CleanerPayments from "./pages/CleanersPages/CleanerPayments";
-import CleanerProfile from "./pages/CleanersPages/CleanerProfile";
+import CleanerDashboard from "./pages/CompanyPages/CleanersDashboard";
+import CleanerBookings from "./pages/CompanyPages/CleanerBookings";
+import CleanerSchedule from "./pages/CompanyPages/CleanersSchedule";
+import CleanerPayments from "./pages/CompanyPages/CleanerPayments";
+import CleanerProfile from "./pages/CompanyPages/CleanerProfile";
 
 export default function CompanyCleaner() {
   return (

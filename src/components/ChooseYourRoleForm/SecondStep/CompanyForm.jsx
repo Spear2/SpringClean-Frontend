@@ -60,11 +60,11 @@ export default function CompanyCleanerForm({
 
       if (!res.ok) {
         const err = await res.json();
-        alert(err.message || "Cleaner registration failed!");
+        alert(err.message || "Company registration failed!");
         return;
       }
 
-      alert("Cleaner registered successfully!");
+      alert("Company registered successfully!");
       onNext();
     } catch (error) {
       console.error(error);
