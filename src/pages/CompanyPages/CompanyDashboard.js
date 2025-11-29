@@ -8,8 +8,12 @@ export default function CleanersDashboard() {
 
       <div className="dashboard-container">
         <header className="dashboard-header">
-          <h1>Welcome Back, <span className="highlight">Cleaner!</span></h1>
-          <p>Here’s your quick overview for today’s performance and bookings.</p>
+          <h1>
+            Welcome Back, <span className="highlight">Cleaner!</span>
+          </h1>
+          <p>
+            Here’s your quick overview for today’s performance and bookings.
+          </p>
         </header>
 
         <div className="dashboard-cards">
@@ -48,19 +52,25 @@ export default function CleanersDashboard() {
                 <td>Maria Santos</td>
                 <td>Oct 29, 2025</td>
                 <td>Home Cleaning</td>
-                <td><span className="status pending">Pending</span></td>
+                <td>
+                  <span className="status pending">Pending</span>
+                </td>
               </tr>
               <tr>
                 <td>John Cruz</td>
                 <td>Oct 30, 2025</td>
                 <td>Office Cleaning</td>
-                <td><span className="status completed">Completed</span></td>
+                <td>
+                  <span className="status completed">Completed</span>
+                </td>
               </tr>
               <tr>
                 <td>Ana Dela Cruz</td>
                 <td>Oct 31, 2025</td>
                 <td>Deep Cleaning</td>
-                <td><span className="status in-progress">In Progress</span></td>
+                <td>
+                  <span className="status in-progress">In Progress</span>
+                </td>
               </tr>
             </tbody>
           </table>

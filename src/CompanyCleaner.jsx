@@ -1,19 +1,19 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import CleanerDashboard from "./pages/CompanyPages/CleanersDashboard";
-import CleanerBookings from "./pages/CompanyPages/CleanerBookings";
-import CleanerSchedule from "./pages/CompanyPages/CleanersSchedule";
-import CleanerPayments from "./pages/CompanyPages/CleanerPayments";
-import CleanerProfile from "./pages/CompanyPages/CleanerProfile";
+import CompanyDashboard from "./pages/CompanyPages/CompanyDashboard";
+import CompanyBookings from "./pages/CompanyPages/CompanyBookings";
+import CompanySchedule from "./pages/CompanyPages/CompanySchedule";
+import CompanyPayments from "./pages/CompanyPages/CompanyPayments";
+import CompanyProfile from "./pages/CompanyPages/CompanyProfile";
 
-export default function CompanyCleaner() {
+export default function CompanyCompany() {
   return (
     <Routes>
-      <Route path="/" element={<CleanerDashboard />} />
-      <Route path="bookings" element={<CleanerBookings />} />
-      <Route path="schedule" element={<CleanerSchedule />} />
-      <Route path="payments" element={<CleanerPayments />} />
-      <Route path="profile" element={<CleanerProfile />} />
+      <Route path="/" element={CompanyDashboard} />
+      <Route path="bookings" element={<CompanyBookings />} />
+      <Route path="schedule" element={<CompanySchedule />} />
+      <Route path="payments" element={<CompanyPayments />} />
+      <Route path="profile" element={<CompanyProfile />} />
     </Routes>
   );
 }
