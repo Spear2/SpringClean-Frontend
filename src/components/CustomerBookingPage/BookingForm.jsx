@@ -9,14 +9,13 @@ export default function BookingForm() {
   const customer = useCustomer();
 
   const cleaningServices = [
-    { type: "General Cleaning", pricePerHour: 200 },
-    { type: "Deep Cleaning", pricePerHour: 350 },
-    { type: "Move-in/Move-out Cleaning", pricePerHour: 500 },
-    { type: "Post-Construction Cleaning", pricePerHour: 650 }
+    { type: "Basic", pricePerHour: 200 },
+    { type: "Standard", pricePerHour: 350 },
+    { type: "Premium", pricePerHour: 500 },
   ];
   // ✅ formData initialized safely
   const [formData, setFormData] = useState({
-    cleanerId: companyCleanerId || "",
+    companyCleanerId: companyCleanerId || "",
     date: "",
     time: "",
     hours: "",
@@ -79,14 +78,14 @@ export default function BookingForm() {
     }
     
     const bookingData = {
-    cleanerId: Number(formData.cleanerId),
+    companyCleanerId: Number(formData.companyCleanerId),
     address: formData.address,
     date: formData.date,
     time: formData.time,
     hours: Number(formData.hours),
     minutes: Number(formData.minutes),
     serviceType: formData.serviceType,
-    totalPrice: Number(formData.price),
+    totalPrice: formData.price
   };
 
 
@@ -100,6 +99,8 @@ export default function BookingForm() {
       });
 
       if (!response.ok) {
+        const errorMessage = await response.text();
+        alert(`${errorMessage}`);
         throw new Error("Failed to save booking");
       }
 
@@ -110,7 +111,6 @@ export default function BookingForm() {
 
     } catch (err) {
       
-      alert("Failed to submit booking. Please try again!");
     }
   };
 

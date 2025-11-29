@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useCustomer from "../../Hooks/useCustomer";
 
 export default function CustomerProfile() {
   const navigate = useNavigate();
+
+  const customer = useCustomer();
 
   const [profile, setProfile] = useState({
     firstName: "Jane",
@@ -16,8 +19,17 @@ export default function CustomerProfile() {
   const [editData, setEditData] = useState({ ...profile });
   const [isEditing, setIsEditing] = useState(false);
 
+  if (!customer) return null; // or "Loading..."
+
   const handleEdit = () => {
-    setEditData({ ...profile });
+    setEditData({
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      email: customer.email,
+      phoneNumber: customer.phoneNumber,
+      address: customer.address,
+      photo: customer.photo || "https://cdn-icons-png.flaticon.com/512/219/219970.png"
+    });
     setIsEditing(true);
   };
 
@@ -29,10 +41,42 @@ export default function CustomerProfile() {
     }
   };
 
-  const handleSave = () => {
-    setProfile({ ...editData });
-    setIsEditing(false);
-    alert("Profile updated successfully!");
+  const handleSave = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/customers/${customer.customerId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName: editData.firstName,
+            lastName: editData.lastName,
+            email: editData.email,
+            phoneNumber: editData.phoneNumber,
+            address: editData.address,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        alert("Update failed.");
+        return;
+      }
+
+      const updated = await res.json();
+
+      // Refresh frontend values
+      customer.firstName = updated.firstName;
+      customer.lastName = updated.lastName;
+      customer.email = updated.email;
+      customer.phoneNumber = updated.phoneNumber;
+      customer.address = updated.address;
+
+      alert("Profile updated successfully!");
+      setIsEditing(false);
+    } catch (e) {
+      alert("Failed to update customer.");
+    }
   };
 
   const handleCancel = () => {
@@ -40,145 +84,177 @@ export default function CustomerProfile() {
   };
 
   const handleBack = () => {
-    navigate("/customer/home");
+    navigate("/customer");
   };
 
-  return (
+ return (
     <>
-    <div className="top-content">
+      <div className="top-content">
         <h1>Manage Profile</h1>
         <span>View and manage profile information up to date.</span>
-    </div>
-    <div className="ccpr-profile-page-container">
-      <div className="ccpr-profile-layout">
-        {/* LEFT SIDE - Profile Image */}
-        <div className="ccpr-profile-left">
-          <div className="ccpr-profile-image-box">
-            <img src={profile.photo} alt="Profile" className="ccpr-profile-image" />
-          </div>
-        </div>
-
-        {/* RIGHT SIDE - Info Fields */}
-        <div className="ccpr-profile-right">
-          <div className="ccpr-profile-fields">
-            <div className="ccpr-field-row">
-              <div className="ccpr-field-item">
-                <label>First Name</label>
-                <input type="text" value={profile.firstName} readOnly />
-              </div>
-              <div className="ccpr-field-item">
-                <label>Last Name</label>
-                <input type="text" value={profile.lastName} readOnly />
-              </div>
-            </div>
-
-            <div className="ccpr-field-row">
-              <div className="ccpr-field-item">
-                <label>Email Address</label>
-                <input type="email" value={profile.email} readOnly />
-              </div>
-              <div className="ccpr-field-item">
-                <label>Phone Number</label>
-                <input type="tel" value={profile.phone} readOnly />
-              </div>
-            </div>
-
-            <div className="ccpr-field-row single">
-              <div className="field-item">
-                <label>Address</label>
-                <input type="text" value={profile.address} readOnly />
-              </div>
-            </div>
-
-            <div className="ccpr-profile-buttons">
-              <button className="ccpr-edit-btn" onClick={handleEdit}>Edit Profile</button>
-              <button className="ccpr-back-btn" onClick={handleBack}>Back to Home</button>
-            </div>
-          </div>
-        </div>
       </div>
 
-      {/* ✨ EDIT MODAL */}
-      {isEditing && (
-  <div className="ccpr-modal-overlay">
-    {/* Use same uniform-box used by the main page so modal looks identical */}
-    <div className="ccpr-uniform-box">
-      <div className="ccpr-profile-layout">
-        {/* LEFT - image + upload (same as page) */}
-        <div className="ccpr-profile-left">
-          <div className="ccpr-profile-image-box">
-            <img src={editData.photo} alt="Edit" className="ccpr-profile-image" />
+      <div className="ccpr-profile-page-container">
+        <div className="ccpr-profile-layout">
+
+          {/* LEFT SIDE IMAGE */}
+          <div className="ccpr-profile-left">
+            <div className="ccpr-profile-image-box">
+              <img
+                src={
+                  customer.photo ||
+                  "https://cdn-icons-png.flaticon.com/512/219/219970.png"
+                }
+                alt="Profile"
+                className="ccpr-profile-image"
+              />
+            </div>
           </div>
 
-          <label className="ccpr-upload-label">
-            Change Photo
-            <input type="file" accept="image/*" onChange={handlePhotoChange} />
-          </label>
+          {/* RIGHT SIDE DETAILS */}
+          <div className="ccpr-profile-right">
+            <div className="ccpr-profile-fields">
+              <div className="ccpr-field-row">
+                <div className="ccpr-field-item">
+                  <label>First Name</label>
+                  <input type="text" value={customer.firstName} readOnly />
+                </div>
+                <div className="ccpr-field-item">
+                  <label>Last Name</label>
+                  <input type="text" value={customer.lastName} readOnly />
+                </div>
+              </div>
+
+              <div className="ccpr-field-row">
+                <div className="ccpr-field-item">
+                  <label>Email</label>
+                  <input type="email" value={customer.email} readOnly />
+                </div>
+                <div className="ccpr-field-item">
+                  <label>Phone</label>
+                  <input type="tel" value={customer.phoneNumber} readOnly />
+                </div>
+              </div>
+
+              <div className="ccpr-field-row single">
+                <div className="ccpr-field-item">
+                  <label>Address</label>
+                  <input type="text" value={customer.address} readOnly />
+                </div>
+              </div>
+
+              <div className="ccpr-profile-buttons">
+                <button className="ccpr-edit-btn" onClick={handleEdit}>
+                  Edit Profile
+                </button>
+                <button className="ccpr-back-btn" onClick={handleBack}>
+                  Back to Home
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* RIGHT - editable fields (same structure as page but inputs editable) */}
-        <div className="ccpr-profile-right">
-          <div className="ccpr-profile-fields">
-            <div className="ccpr-field-row">
-              <div className="ccpr-field-item">
-                <label>First Name</label>
-                <input
-                  type="text"
-                  value={editData.firstName}
-                  onChange={(e) => setEditData({ ...editData, firstName: e.target.value })}
-                />
-              </div>
-              <div className="ccpr-field-item">
-                <label>Last Name</label>
-                <input
-                  type="text"
-                  value={editData.lastName}
-                  onChange={(e) => setEditData({ ...editData, lastName: e.target.value })}
-                />
-              </div>
-            </div>
+        {/* EDIT MODAL */}
+        {isEditing && (
+          <div className="ccpr-modal-overlay">
+            <div className="ccpr-uniform-box">
 
-            <div className="ccpr-field-row">
-              <div className="ccpr-field-item">
-                <label>Email Address</label>
-                <input
-                  type="email"
-                  value={editData.email}
-                  onChange={(e) => setEditData({ ...editData, email: e.target.value })}
-                />
-              </div>
-              <div className="ccpr-field-item">
-                <label>Phone Number</label>
-                <input
-                  type="tel"
-                  value={editData.phone}
-                  onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
-                />
-              </div>
-            </div>
+              <div className="ccpr-profile-layout">
 
-            <div className="ccpr-field-row single">
-              <div className="ccpr-field-item">
-                <label>Address</label>
-                <input
-                  type="text"
-                  value={editData.address}
-                  onChange={(e) => setEditData({ ...editData, address: e.target.value })}
-                />
+                {/* LEFT EDIT IMAGE */}
+                <div className="ccpr-profile-left">
+                  <div className="ccpr-profile-image-box">
+                    <img src={editData.photo} alt="Edit" className="ccpr-profile-image" />
+                  </div>
+                  <label className="ccpr-upload-label">
+                    Change Photo
+                    <input type="file" accept="image/*" onChange={handlePhotoChange} />
+                  </label>
+                </div>
+
+                {/* RIGHT EDIT FIELDS */}
+                <div className="ccpr-profile-right">
+                  <div className="ccpr-profile-fields">
+
+                    <div className="ccpr-field-row">
+                      <div className="ccpr-field-item">
+                        <label>First Name</label>
+                        <input
+                          type="text"
+                          value={editData.firstName}
+                          onChange={(e) =>
+                            setEditData({ ...editData, firstName: e.target.value })
+                          }
+                        />
+                      </div>
+
+                      <div className="ccpr-field-item">
+                        <label>Last Name</label>
+                        <input
+                          type="text"
+                          value={editData.lastName}
+                          onChange={(e) =>
+                            setEditData({ ...editData, lastName: e.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="ccpr-field-row">
+                      <div className="ccpr-field-item">
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          value={editData.email}
+                          onChange={(e) =>
+                            setEditData({ ...editData, email: e.target.value })
+                          }
+                        />
+                      </div>
+
+                      <div className="ccpr-field-item">
+                        <label>Phone Number</label>
+                        <input
+                          type="tel"
+                          value={editData.phoneNumber}
+                          onChange={(e) =>
+                            setEditData({ ...editData, phoneNumber: e.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="ccpr-field-row single">
+                      <div className="ccpr-field-item">
+                        <label>Address</label>
+                        <input
+                          type="text"
+                          value={editData.address}
+                          onChange={(e) =>
+                            setEditData({ ...editData, address: e.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="ccpr-profile-buttons">
+                    <button className="ccpr-edit-btn" onClick={handleSave}>
+                      Save Changes
+                    </button>
+                    <button className="ccpr-back-btn" onClick={handleCancel}>
+                      Cancel
+                    </button>
+                  </div>
+
+                </div>
               </div>
+
             </div>
           </div>
-
-          <div className="ccpr-profile-buttons">
-            <button className="ccpr-edit-btn" onClick={handleSave}>Save Changes</button>
-            <button className="ccpr-back-btn" onClick={handleCancel}>Cancel</button>
-          </div>
-        </div>
+        )}
       </div>
-    </div>
-  </div>
-)}
-    </div>
     </>
   );
 }
