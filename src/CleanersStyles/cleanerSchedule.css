@@ -1,13 +1,29 @@
-.schedule-container {
-  padding: 30px;
+.cleaner-schedule-page{
+  background: #f5f8fa;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
 }
 
-.schedule-title {
+/* General page container */
+.schedule-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Schedule title */
+.cleaner-schedule-page .schedule-title {
   text-align: center;
-  color: #004d40;
+  color: #003366;
+  font-size: 2em;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
+/* Placeholder for empty schedule */
 .schedule-placeholder {
   background-color: #fafafa;
   padding: 40px;
@@ -25,3 +41,125 @@
   margin-top: 15px;
   color: #00796b;
 }
+
+/* Table container for horizontal scrolling */
+.schedule-table-wrapper {
+  overflow-x: auto;
+}
+
+/* Schedule table styles */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.schedule-table th {
+  background-color: #188a53;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+}
+
+.schedule-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+  background-color: #ffffff;
+}
+
+.schedule-table tr:nth-child(even) {
+  background-color: #f3f6fa;
+}
+
+.schedule-table tr:hover {
+  background-color: #e8f0fe;
+  transition: background-color 0.3s ease;
+}
+
+/* Ensure the calendar toolbar is visible */
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+/* Button group styling */
+.rbc-btn-group button {
+  background-color: #074d1c; /* default button color */
+  color: #fff;               /* text color */
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect for all buttons */
+.rbc-btn-group button:hover {
+  background-color: #0b721c;
+  color: #fff;
+}
+
+/* Today button */
+.rbc-toolbar button.rbc-today {
+  background-color: #0a571c; /* Today button base color */
+  color: #fff;
+}
+
+.rbc-toolbar button.rbc-today:hover {
+  background-color: #0c7a2f; /* Today button hover */
+  color: #fff;
+}
+
+/* Active view button (Month/Week/Day) */
+.rbc-btn-group button.rbc-active {
+  background-color: #0a571c; /* active button base color */
+  color: #fff;
+}
+
+.rbc-btn-group button.rbc-active:hover {
+  background-color: #0c7a2f; /* active button hover */
+  color: #fff;
+}
+
+/* Optional: spacing between button groups */
+.rbc-toolbar .rbc-btn-group + .rbc-btn-group {
+  margin-left: 10px;
+}
+
+
+/* Optional: Responsive table for mobile */
+@media (max-width: 768px) {
+  .schedule-table thead {
+    display: none;
+  }
+
+  .schedule-table tr {
+    display: block;
+    margin-bottom: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .schedule-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  .schedule-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #003366;
+  }
+}
+

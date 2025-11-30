@@ -2,10 +2,16 @@ import { Link } from "react-router-dom";
 import "./NavBarCleanerStyle.css";
 import useCompany from "../../Hooks/useCompany";
 import { useAuth } from "../../auth/useAuth";
+import React, { useState } from "react";
+
 
 export default function NavbarCleaner() {
   const company = useCompany();
   const { logout } = useAuth();
+
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggleMenu = () => setIsOpen(!isOpen);
 
   if (!company) return <p>Loading...</p>;
   
@@ -17,7 +23,7 @@ export default function NavbarCleaner() {
         </Link>
       </div>
 
-      <ul className="navbar-links">
+      <ul className={`navbar-links ${isOpen ? "open" : ""}`}>
         <li>
           <Link to="/company">Dashboard</Link>
         </li>
@@ -35,13 +41,18 @@ export default function NavbarCleaner() {
         </li>
       </ul>
 
-      <div className="navbar-user">
+      {/* <div className="navbar-user">
         <img
           src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png"
           alt="Cleaner avatar"
           className="navbar-avatar"
         />
         <span className="navbar-name">Hi, {company.companyName}!</span>
+      </div> */}
+      <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </nav>
   );

@@ -15,11 +15,11 @@
 
 .payments-title {
   text-align: center;
-  font-size: 28px;
-  color: #00796b;
-  font-weight: 600;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+  color: #003366;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .table-wrapper {
@@ -35,7 +35,7 @@
 
 .payments-table th,
 .payments-table td {
-  padding: 14px;
+  padding: 12px;
   text-align: center;
 }
 
@@ -57,21 +57,21 @@
 
 
 .status-completed {
-  color: #2e7d32;
-  background: #c8e6c9;
+  color: #f8faf8;
+  background-color: #5cb85c;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 6px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9em;
 }
 
 .status-pending {
-  color: #ef6c00;
-  background: #ffe0b2;
+  color: #7a600b;
+  background: #faf9cf;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9em;
 }
 
 .payment-summary {
