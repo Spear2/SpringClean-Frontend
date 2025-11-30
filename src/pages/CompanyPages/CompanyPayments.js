@@ -54,14 +54,15 @@ export default function CleanerPayments() {
                   <td>₱{payment.amount.toLocaleString()}</td>
                   <td>{payment.date}</td>
                   <td>{payment.customer}</td>
-                  <td
-                    className={
+                  <td>
+                    <span className={
                       payment.status === "Completed"
                         ? "status-completed"
                         : "status-pending"
                     }
-                  >
+                    >
                     {payment.status}
+                    </span>
                   </td>
                 </tr>
               ))}

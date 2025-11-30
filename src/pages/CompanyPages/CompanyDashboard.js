@@ -37,7 +37,7 @@ export default function CleanersDashboard() {
         </div>
 
         <div className="recent-activity">
-          <h2>Recent Bookings</h2>
+          <h1 className="dashboard-title">Recent Bookings</h1>
           <table>
             <thead>
               <tr>

@@ -4,6 +4,13 @@
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
+.dashboard-title {
+  text-align: center;
+  color: #003366;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
 .dashboard-header {
   text-align: center;

@@ -13,26 +13,26 @@ export default function SideBarCleaner() {
     <div className="sidebar">
       <nav className="menu">
         <ul className="menu-tabs">
-          <Link style={{ textDecoration: "none" }}>
+          <Link to="/company/profile" style={{ textDecoration: "none" }}>
             <li>
               <User size={18} style={{ marginRight: "10px" }} />
               Profile
             </li>
           </Link>
 
-          <Link style={{ textDecoration: "none" }}>
+          <Link to="/company/account" style={{ textDecoration: "none" }}>
             <li>
               <NotebookPen size={18} style={{ marginRight: "10px" }} />
               Account
             </li>
           </Link>
 
-          <Link style={{ textDecoration: "none" }}>
+          {/* <Link to="/company/appearance" style={{ textDecoration: "none" }}>
             <li>
               <Palette size={18} style={{ marginRight: "10px" }} />
               Appearance
             </li>
-          </Link>
+          </Link> */}
 
           <Link
             style={{ textDecoration: "none" }}
