@@ -1,7 +1,13 @@
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
 import "../../CleanersStyles/cleanersPayments.css";
-
+import { useState, useEffect} from "react";
+import useCompany from "../../Hooks/useCompany"
 export default function CleanerPayments() {
+
+  const [paymentList, setPaymentList] = useState([]);
+  
+  
+    const company = useCompany();
   const payments = [
     {
       id: "#1001",
@@ -26,9 +32,27 @@ export default function CleanerPayments() {
     },
   ];
 
-  const totalEarnings = payments
-    .filter((p) => p.status === "Completed")
+  const totalEarnings = paymentList
+    .filter((p) => p.status === "Paid")
     .reduce((sum, p) => sum + p.amount, 0);
+
+    const fetchPayments = async () => {
+      if (!company?.companyCleanerId) return;
+
+      try {
+        const res = await fetch(
+          `http://localhost:8080/api/payments/company/${company.companyCleanerId}/payments`
+        );
+        const data = await res.json();
+        setPaymentList(data);
+      } catch (error) {
+        console.error("Failed to fetch payments:", error);
+      }
+    };
+
+    useEffect(() => {
+      fetchPayments();
+    }, [company]);
 
   return (
     <div className="cleaner-payments-page">
@@ -48,25 +72,17 @@ export default function CleanerPayments() {
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment, index) => (
-                <tr key={index}>
-                  <td>{payment.id}</td>
-                  <td>₱{payment.amount.toLocaleString()}</td>
-                  <td>{payment.date}</td>
-                  <td>{payment.customer}</td>
-                  <td>
-                    <span className={
-                      payment.status === "Completed"
-                        ? "status-completed"
-                        : "status-pending"
-                    }
-                    >
-                    {payment.status}
-                    </span>
-                  </td>
+              {paymentList.map(pay => (
+                <tr key={pay.paymentId}>
+                  <td>{pay.paymentId}</td>
+                  <td>₱{pay.amount}</td>
+                  <td>{pay.paidAt.split('T')[0]}</td>
+                  <td>{pay.customerFirstName} {pay.customerLastName}</td>
+                  <td><span className="status paid">{pay.status}</span></td>
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
 

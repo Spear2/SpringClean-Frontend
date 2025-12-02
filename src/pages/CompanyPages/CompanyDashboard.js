@@ -1,7 +1,39 @@
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
 import "../../CleanersStyles/cleanerDashboard.css";
+import { useState, useEffect } from "react"
+import useCompany from "../../Hooks/useCompany"
 
 export default function CleanersDashboard() {
+
+
+  const [bookings, setBookings] = useState([]);
+
+
+  const company = useCompany();
+  const fetchBookings = async () => {
+      if (!company || !company.companyCleanerId) return;
+  
+      try {
+        const res = await fetch(`http://localhost:8080/api/bookings/company/${company.companyCleanerId}/bookings`);
+        if (!res.ok) {
+          throw new Error("Network error while fetching bookings");
+        }
+        const data = await res.json();
+        setBookings(data);
+  
+  
+      } catch (error) {
+        console.error("Failed to fetch bookings:", error);
+  
+      } 
+    };
+
+    useEffect(() => {
+        if (company && company.companyCleanerId) {
+          fetchBookings();
+        }
+      }, [company]);
+
   return (
     <div>
       <NavbarCleaner />
@@ -48,14 +80,18 @@ export default function CleanersDashboard() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Maria Santos</td>
-                <td>Oct 29, 2025</td>
-                <td>Home Cleaning</td>
-                <td>
-                  <span className="status pending">Pending</span>
-                </td>
-              </tr>
+              {bookings.map((booking) => (
+                <tr>
+                  
+                    <td>{booking.customerFirstName} {booking.customerLastName}</td>
+                    <td>{booking.date}</td>
+                    <td>{booking.serviceType}</td>
+                    <td>
+                      <span className="status paid">{booking.status}</span>
+                    </td>
+                    
+                </tr>
+              ))}
               <tr>
                 <td>John Cruz</td>
                 <td>Oct 30, 2025</td>
