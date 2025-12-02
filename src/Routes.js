@@ -9,6 +9,7 @@ import CustomerLoginPage from "./pages/CustomerLoginPage/CustomerLoginPage";
 import ChooseYourRole from "./pages/ChooseYourRole/ChooseYourRole";
 import CompanyCleaner from "./CompanyCleaner";
 import Customer from "./Customer";
+import Cleaner from "./Cleaner";
 import CompanyLoginPage from "./pages/CompanyLoginPage/CompanyLoginPage";
 
 const AppRoutes = () => {
@@ -21,7 +22,7 @@ const AppRoutes = () => {
       <Route path="/login/company" element={<CompanyLoginPage />} />
       <Route path="/login/ChooseYourRole" element={<ChooseYourRole />} />
 
-      {/* Cleaner protected routes */}
+      {/* company protected routes */}
       <Route
         path="/company/*"
         element={
@@ -37,6 +38,16 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute requiredType="customer">
             <Customer />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Customer protected routes */}
+      <Route
+        path="/cleaner/*"
+        element={
+          <ProtectedRoute requiredType="cleaner">
+            <Cleaner />
           </ProtectedRoute>
         }
       />

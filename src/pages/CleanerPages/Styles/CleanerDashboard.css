@@ -1,0 +1,373 @@
+@import url("https://fonts.googleapis.com/css2?family=Cal+Sans&family=Nunito:wght@400;600;800&display=swap");
+
+/* --- GLOBAL RESET & BASE STYLES --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  background-color: #bfdff5; /* Main bg color */
+  color: #1c4274;
+}
+
+/* --- DASHBOARD LAYOUT --- */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #bfdff5;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+  width: 250px;
+  background-color: #1c4274;
+  color: #fff;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.sidebar-header h2 {
+  font-family: "Cal Sans", sans-serif;
+  font-size: 2rem;
+  color: #aae858;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.sidebar-header h2 span {
+  color: #fff;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: transparent;
+  border: none;
+  color: #bfdff5;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  text-align: left;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #aae858;
+  color: #1c4274;
+  font-weight: 700;
+}
+
+/* Main Content Area */
+.dashboard-content {
+  flex: 1;
+  padding: 40px 60px;
+  overflow-y: auto;
+}
+
+/* Header */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header-greeting h1 {
+  font-family: "Cal Sans", sans-serif;
+  font-size: 2.5rem;
+  margin: 0 0 10px 0;
+}
+
+.hero-subtitle {
+  font-family: "Nunito", sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.profile-badge img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #1c4274;
+  background-color: #aae858;
+}
+
+/* --- STATS GRID --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: #aae858; /* Acccent Color */
+  padding: 25px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 15px rgba(28, 66, 116, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  background-color: #1c4274;
+  color: #aae858;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-info h3 {
+  font-family: "Cal Sans", sans-serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.stat-info p {
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 2px;
+  background-color: #1c4274;
+  opacity: 0.1;
+  margin: 40px 0;
+  border-radius: 2px;
+}
+
+/* --- JOBS SECTION --- */
+.section-title {
+  font-family: "Cal Sans", sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+.jobs-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.job-card {
+  background-color: #f0f8ff; /* AliceBlue from original CSS */
+  border: 2px solid #1c4274;
+  border-radius: 25px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card:hover {
+  box-shadow: 0 8px 25px rgba(28, 66, 116, 0.15);
+  transform: scale(1.02);
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.job-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1c4274;
+}
+
+.job-status {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.job-status.upcoming {
+  background-color: #bfdff5;
+  color: #1c4274;
+}
+
+.job-status.pending {
+  background-color: #ffeaa7;
+  color: #d35400;
+}
+
+.job-body h3 {
+  font-family: "Cal Sans", sans-serif;
+  font-size: 1.4rem;
+  margin: 0 0 5px 0;
+}
+
+.job-type {
+  font-style: italic;
+  margin-bottom: 15px;
+  opacity: 0.8;
+}
+
+.job-address {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.job-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(28, 66, 116, 0.1);
+  padding-top: 15px;
+}
+
+.job-price {
+  font-family: "Cal Sans", sans-serif;
+  font-size: 1.4rem;
+  color: #1c4274;
+}
+
+/* BUTTONS (Inherited style from your request) */
+.service-button {
+  background-color: #aae858;
+  color: #1c4274;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-family: "Cal Sans", sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.service-button.small {
+  padding: 8px 20px;
+  font-size: 0.9rem;
+}
+
+.service-button:hover {
+  background-color: #1c4274;
+  color: #aae858;
+}
+
+.book-button {
+  background-color: #1c4274;
+  color: #aae858;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-family: "Cal Sans", sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.book-button:hover {
+  background-color: #aae858;
+  color: #1c4274;
+  transform: scale(1.05);
+}
+
+/* ACTION BANNER */
+.action-banner {
+  margin-top: 40px;
+  background-color: #1c4274;
+  border-radius: 25px;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.action-banner h2 {
+  font-family: "Cal Sans", sans-serif;
+  color: #aae858;
+  margin: 0 0 5px 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    border-radius: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .nav-item span {
+    display: none; /* Hide text on mobile nav, keep icons */
+  }
+
+  .dashboard-content {
+    padding: 20px;
+  }
+
+  .action-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-header {
+    flex-direction: column-reverse;
+    gap: 20px;
+    text-align: center;
+  }
+}
