@@ -9,6 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import "../CleanerPages/Styles/CleanerDashboard.css";
+import useCleaner from "../../Hooks/useCleaner"
 
 export default function CleanerDashboard() {
   const [activeTab, setActiveTab] = useState("schedule");
@@ -45,6 +46,10 @@ export default function CleanerDashboard() {
     },
   ];
 
+  const cleaner = useCleaner();
+
+ if (!cleaner) return null; // or "Loading..."
+
   return (
     <div className="dashboard-container">
       {/* Sidebar / Mobile Nav */}
@@ -80,7 +85,7 @@ export default function CleanerDashboard() {
       <main className="dashboard-content">
         <header className="content-header">
           <div className="header-greeting">
-            <h1>Welcome back, Sarah!</h1>
+            <h1>Welcome back, {cleaner.cleanerName}!</h1>
             <p className="hero-subtitle">You have 2 jobs remaining today.</p>
           </div>
           <div className="profile-badge">

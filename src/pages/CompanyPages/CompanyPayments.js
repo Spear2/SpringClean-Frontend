@@ -78,7 +78,7 @@ export default function CleanerPayments() {
                   <td>₱{pay.amount}</td>
                   <td>{pay.paidAt.split('T')[0]}</td>
                   <td>{pay.customerFirstName} {pay.customerLastName}</td>
-                  <td><span className="status paid">{pay.status}</span></td>
+                  <td><span className={'status ${pay.status.toLowercase()}'}>{pay.status}</span></td>
                 </tr>
               ))}
             </tbody>
