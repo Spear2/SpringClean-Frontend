@@ -4,17 +4,16 @@ import useCompany from "../../Hooks/useCompany";
 import { useAuth } from "../../auth/useAuth";
 import React, { useState } from "react";
 
-
 export default function NavbarCleaner() {
   const company = useCompany();
   const { logout } = useAuth();
 
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const toggleMenu = () => setIsOpen(!isOpen);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   if (!company) return <p>Loading...</p>;
-  
+
   return (
     <nav className="navbar-cleaner">
       <div className="navbar-logo">
@@ -49,7 +48,10 @@ export default function NavbarCleaner() {
         />
         <span className="navbar-name">Hi, {company.companyName}!</span>
       </div> */}
-      <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
+      <div
+        className={`hamburger ${isOpen ? "active" : ""}`}
+        onClick={toggleMenu}
+      >
         <span></span>
         <span></span>
         <span></span>
