@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
-import "../../CleanersStyles/cleanerBookings.css";
+import "../../pages/CompanyPages/CompanyStyles/CompanyBookings.css";
 
 export default function CleanerBookings() {
   const serviceTypes = {
@@ -85,7 +85,7 @@ export default function CleanerBookings() {
       return count;
     }, 0);
 
-    return bookedCount + required <= cleaners.filter(c => c.employed).length;
+    return bookedCount + required <= cleaners.filter((c) => c.employed).length;
   };
 
   const handleAction = (id, action) => {
@@ -165,7 +165,9 @@ export default function CleanerBookings() {
                     <td>{booking.serviceType}</td>
 
                     <td>
-                      <span className={`status ${booking.status.toLowerCase()}`}>
+                      <span
+                        className={`status ${booking.status.toLowerCase()}`}
+                      >
                         {booking.status}
                       </span>
                     </td>
@@ -247,11 +249,13 @@ export default function CleanerBookings() {
                             assignedCleaners.filter((id) => id !== cleaner.id)
                           );
                         } else {
-                          setAssignedCleaners([...assignedCleaners, cleaner.id]);
+                          setAssignedCleaners([
+                            ...assignedCleaners,
+                            cleaner.id,
+                          ]);
                         }
                       }}
                     />
-
                     {cleaner.name}{" "}
                     {!cleaner.employed
                       ? "(Not Employed)"

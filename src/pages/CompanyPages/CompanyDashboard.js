@@ -1,38 +1,34 @@
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
-import "../../CleanersStyles/cleanerDashboard.css";
-import { useState, useEffect } from "react"
-import useCompany from "../../Hooks/useCompany"
+import "../../pages/CompanyPages/CompanyStyles/CompanyDashboard.css";
+import { useState, useEffect } from "react";
+import useCompany from "../../Hooks/useCompany";
 
 export default function CleanersDashboard() {
-
-
   const [bookings, setBookings] = useState([]);
-
 
   const company = useCompany();
   const fetchBookings = async () => {
-      if (!company || !company.companyCleanerId) return;
-  
-      try {
-        const res = await fetch(`http://localhost:8080/api/bookings/company/${company.companyCleanerId}/bookings`);
-        if (!res.ok) {
-          throw new Error("Network error while fetching bookings");
-        }
-        const data = await res.json();
-        setBookings(data);
-  
-  
-      } catch (error) {
-        console.error("Failed to fetch bookings:", error);
-  
-      } 
-    };
+    if (!company || !company.companyCleanerId) return;
 
-    useEffect(() => {
-        if (company && company.companyCleanerId) {
-          fetchBookings();
-        }
-      }, [company]);
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/bookings/company/${company.companyCleanerId}/bookings`
+      );
+      if (!res.ok) {
+        throw new Error("Network error while fetching bookings");
+      }
+      const data = await res.json();
+      setBookings(data);
+    } catch (error) {
+      console.error("Failed to fetch bookings:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (company && company.companyCleanerId) {
+      fetchBookings();
+    }
+  }, [company]);
 
   return (
     <div>
@@ -82,14 +78,14 @@ export default function CleanersDashboard() {
             <tbody>
               {bookings.map((booking) => (
                 <tr>
-                  
-                    <td>{booking.customerFirstName} {booking.customerLastName}</td>
-                    <td>{booking.date}</td>
-                    <td>{booking.serviceType}</td>
-                    <td>
-                      <span className="status paid">{booking.status}</span>
-                    </td>
-                    
+                  <td>
+                    {booking.customerFirstName} {booking.customerLastName}
+                  </td>
+                  <td>{booking.date}</td>
+                  <td>{booking.serviceType}</td>
+                  <td>
+                    <span className="status paid">{booking.status}</span>
+                  </td>
                 </tr>
               ))}
               <tr>

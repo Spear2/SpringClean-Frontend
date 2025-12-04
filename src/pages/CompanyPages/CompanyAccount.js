@@ -1,16 +1,8 @@
 import { useState } from "react";
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
 import SideBarCleaner from "../../components/SideBarCleaner/SideBarCleaner";
-import {
-  Mail,
-  Lock,
-  User,
-  Bell,
-  Globe,
-  Shield,
-  Trash2,
-} from "lucide-react";
-import "../../CleanersStyles/cleanerAccount.css";
+import { Mail, Lock, User, Bell, Globe, Shield, Trash2 } from "lucide-react";
+import "../../pages/CompanyPages/CompanyStyles/CompanyAccount.css";
 
 export default function CompanyAccount() {
   const [showPasswordModal, setShowPasswordModal] = useState(false);

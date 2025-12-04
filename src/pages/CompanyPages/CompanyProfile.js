@@ -1,7 +1,18 @@
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
 import SideBarCleaner from "../../components/SideBarCleaner/SideBarCleaner";
-import { Building, MapPin, Phone, Globe, UserCheck, Wrench, Info, Users, Mail, Sparkles } from "lucide-react";
-import "../../CleanersStyles/cleanerProfile.css";
+import {
+  Building,
+  MapPin,
+  Phone,
+  Globe,
+  UserCheck,
+  Wrench,
+  Info,
+  Users,
+  Mail,
+  Sparkles,
+} from "lucide-react";
+import "../../pages/CompanyPages/CompanyStyles/CompanyProfile.css";
 
 export default function CleanerProfile() {
   const company = {
@@ -38,7 +49,6 @@ export default function CleanerProfile() {
       <div className="content-wrapper">
         <SideBarCleaner />
         <div className="company-profile-container">
-
           {/* Header */}
           <header className="profile-header">
             <div className="profile-photo-wrapper">
@@ -46,7 +56,9 @@ export default function CleanerProfile() {
               <div className="profile-photo-placeholder">SC</div>
             </div>
             <div className="profile-title">
-              <h1><span className="highlight">{company.name}</span></h1>
+              <h1>
+                <span className="highlight">{company.name}</span>
+              </h1>
               <p className="tagline">{company.tagline}</p>
             </div>
           </header>
@@ -62,7 +74,9 @@ export default function CleanerProfile() {
 
               {/* Why Us */}
               <div className="section why-us">
-                <h3><UserCheck className="icon" /> WHY US</h3>
+                <h3>
+                  <UserCheck className="icon" /> WHY US
+                </h3>
                 <ul>
                   {company.whyUs.map((point, idx) => (
                     <li key={idx}>{point}</li>
@@ -74,21 +88,54 @@ export default function CleanerProfile() {
             <div className="right-column">
               {/* Company Info */}
               <div className="section company-info">
-                <h3><Info className="icon" />Company Details</h3>
+                <h3>
+                  <Info className="icon" />
+                  Company Details
+                </h3>
                 <ul>
-                  <li><Building className="small-icon" /><strong>LEGAL NAME of FIRM: </strong>{company.legalName}</li>
-                  <li><MapPin className="small-icon" /><strong>Headquarter Address: </strong>{company.address}</li>
-                  <li><Globe className="small-icon" /><strong>Website: </strong>{company.website}</li>
-                  <li><Users className="small-icon" /><strong>Total Number of Employees: </strong>{company.employees}</li>
-                  <li><Sparkles className="small-icon" /><strong>Business Type: </strong>{company.businessType}</li>
-                  <li><Phone className="small-icon" /><strong>Phone Number: </strong>{company.phone}</li>
-                  <li><Mail className="small-icon" /><strong>Email: </strong>{company.email}</li>
+                  <li>
+                    <Building className="small-icon" />
+                    <strong>LEGAL NAME of FIRM: </strong>
+                    {company.legalName}
+                  </li>
+                  <li>
+                    <MapPin className="small-icon" />
+                    <strong>Headquarter Address: </strong>
+                    {company.address}
+                  </li>
+                  <li>
+                    <Globe className="small-icon" />
+                    <strong>Website: </strong>
+                    {company.website}
+                  </li>
+                  <li>
+                    <Users className="small-icon" />
+                    <strong>Total Number of Employees: </strong>
+                    {company.employees}
+                  </li>
+                  <li>
+                    <Sparkles className="small-icon" />
+                    <strong>Business Type: </strong>
+                    {company.businessType}
+                  </li>
+                  <li>
+                    <Phone className="small-icon" />
+                    <strong>Phone Number: </strong>
+                    {company.phone}
+                  </li>
+                  <li>
+                    <Mail className="small-icon" />
+                    <strong>Email: </strong>
+                    {company.email}
+                  </li>
                 </ul>
               </div>
 
               {/* Our Service */}
               <div className="section our-service">
-                <h3><Wrench className="icon" /> OUR SERVICE</h3>
+                <h3>
+                  <Wrench className="icon" /> OUR SERVICE
+                </h3>
                 <ul>
                   {company.services.map((service, idx) => (
                     <li key={idx}>{service}</li>

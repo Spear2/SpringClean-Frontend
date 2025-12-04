@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { parse, format, startOfWeek, getDay } from "date-fns";
-import "../../CleanersStyles/cleanerSchedule.css";
+import "../../pages/CompanyPages/CompanyStyles/CompanySchedule.css";
 
 export default function CleanersSchedule() {
   const cleaners = ["Cleaner 1", "Cleaner 2", "Cleaner 3", "Cleaner 4"];
@@ -37,8 +37,16 @@ export default function CleanersSchedule() {
 
   // Convert bookings to calendar events
   const events = bookings.map((b) => {
-    const start = parse(`${b.date} ${b.startTime}`, "MMM d, yyyy HH:mm", new Date());
-    const end = parse(`${b.date} ${b.endTime}`, "MMM d, yyyy HH:mm", new Date());
+    const start = parse(
+      `${b.date} ${b.startTime}`,
+      "MMM d, yyyy HH:mm",
+      new Date()
+    );
+    const end = parse(
+      `${b.date} ${b.endTime}`,
+      "MMM d, yyyy HH:mm",
+      new Date()
+    );
     return {
       id: b.id,
       title: `${b.task} (${b.cleaner}) ${b.startTime}-${b.endTime}`,
@@ -49,7 +57,13 @@ export default function CleanersSchedule() {
   });
 
   const locales = {};
-  const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales });
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+  });
 
   const colorMap = {
     "Cleaner 1": "#28a745",
@@ -61,7 +75,6 @@ export default function CleanersSchedule() {
   // Controlled date state for navigation
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentView, setCurrentView] = useState("month");
-
 
   const minDate = new Date(new Date().getFullYear() - 1, 0, 1);
   const maxDate = new Date(new Date().getFullYear() + 1, 11, 31);
@@ -79,7 +92,7 @@ export default function CleanersSchedule() {
           endAccessor="end"
           date={currentDate}
           onNavigate={(date) => setCurrentDate(date)}
-          view={currentView}            // <-- controlled view
+          view={currentView} // <-- controlled view
           onView={(view) => setCurrentView(view)} // <-- updates view
           style={{ height: 700 }}
           views={["month", "week", "day"]}
