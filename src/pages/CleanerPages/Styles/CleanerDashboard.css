@@ -2,26 +2,135 @@
   padding: 0px;
   margin: 0px;
   background-color: #bfdff5;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .dashboard-header {
-  text-align: center;
-  padding: 30px 0;
-  background-color: #aae858;
+  text-align: left;
+  padding: 10px 30px;
   font-family: "Cal Sans", sans-serif;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 3px solid #1c4274;
+  display: flex;
+  justify-content: space-between;
+  background-color: #bfdff5; /* Ensure header matches bg */
 }
 
 .dashboard-header h1 {
   color: #1c4274;
+  margin: 0;
 }
 
-.kpi-grid {
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
-  justify-content: center;
-  align-items: center;
+/* 1. Change the Body to stack vertically (KPIs on top of Content) */
+.dashboard-body {
+  display: flex;
+  flex-direction: column; /* CHANGED: Was row */
+  padding: 30px;
+  gap: 30px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 2. Change the KPI container to a Horizontal Row */
+.kpi-sidebar {
+  display: flex;
+  flex-direction: row; /* CHANGED: Was column */
+  width: 100%; /* CHANGED: Full width instead of 320px */
   gap: 20px;
+  flex-shrink: 0; /* Keeps it from getting squished */
+  margin-top: 0; /* REMOVED: No longer need the alignment margin */
+}
+
+/* Optional: Make the individual KPI cards stretch to fill the width */
+.kpi-sidebar > * {
+  flex: 1;
+}
+
+/* 3. The Content Area fills the remaining bottom space */
+/* 3. The Content Area Wrapper */
+.dashboard-content {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  border-top: 4px solid #aae858;
+
+  /* LAYOUT: Put items side-by-side */
+  display: flex;
+  flex-direction: row;
+  gap: 30px; /* Space between Bookings and Chart */
+
+  /* IMPORTANT: Remove width: 50%. Let it fill the container */
+  width: 100%;
+
+  /* Stop the whole white box from scrolling. We will scroll inside the columns. */
+  overflow: hidden;
+}
+
+/* NEW: Create two equal columns */
+.half-section {
+  flex: 1; /* Each takes exactly 50% of the space */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prepare for internal scrolling */
+}
+
+/* Optional: Allow the bookings list specifically to scroll if it gets long */
+.scrollable-list {
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 10px; /* Make room for scrollbar */
+}
+
+.booking-tab-header {
+  font-family: "Cal Sans", sans-serif;
+  color: #1c4274;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #1c4274;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1000px) {
+  .dashboard-container {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto; /* Enable main page scrolling */
+  }
+
+  .dashboard-body {
+    padding: 15px; /* Smaller padding for mobile */
+    gap: 20px;
+    overflow: visible; /* Let content expand */
+  }
+
+  /* 2. Stack the KPIs vertically again */
+  .kpi-sidebar {
+    flex-direction: column; /* Stack cards on top of each other */
+  }
+
+  /* 3. Stack the Main Content (Bookings & Chart) */
+  .dashboard-content {
+    flex-direction: column; /* Stack Bookings on top of Chart */
+    height: auto; /* Let the white box grow to fit the stacked content */
+    overflow: visible;
+  }
+
+  /* 4. Reset the "Half Sections" to be Full Width */
+  .half-section {
+    width: 100%;
+    flex: none; /* Disable flex scaling */
+    margin-bottom: 40px; /* Add space between Bookings and Chart */
+  }
+
+  /* 5. Fix the Scrollable List */
+  /* On mobile, we usually show a fixed height list, or let it expand fully. 
+     Here we give it a max-height so the chart is still reachable */
+  .scrollable-list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
 }
