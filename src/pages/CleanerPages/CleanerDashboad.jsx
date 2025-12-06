@@ -47,7 +47,7 @@ export default function CleanerDashboard() {
   ];
 
   return (
-    <div className="dashboard-container">
+    <div className="CleanerDashboard-container">
       <NavBarCompany_Cleaner />
 
       <div className="dashboard-header">

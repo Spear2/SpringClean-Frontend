@@ -48,7 +48,7 @@ export default function CleanerBookings() {
       {/* Header aligned with the cards below */}
       <div className="dashboard-header">
         <div>
-          <h1>My Assigned Bookings</h1>
+          <h1>Bookings</h1>
         </div>
         <div>
           <h1 style={{ opacity: 0.5 }}>{assignedJobs.length} Jobs Assigned</h1>
