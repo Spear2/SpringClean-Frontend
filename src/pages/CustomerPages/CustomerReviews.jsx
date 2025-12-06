@@ -1,12 +1,11 @@
-import CustomerWallets from "../../components/CustomerWallet/CustomerWallets";
+import Reviews from "../../components/CustomerReviews/Reviews";
 import HomeBar from "../../components/Navbar/NavBarCustomer";
-import "../../CustomersStyles/CustomerSettingsPage.css";
 
 export default function CustomerSettingsPage() {
   return (
     <>
       <HomeBar />
-      <CustomerWallets/>
+      <Reviews/>
     </>
   );
 }
