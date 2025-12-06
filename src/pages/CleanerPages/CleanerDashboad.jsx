@@ -51,12 +51,8 @@ export default function CleanerDashboard() {
       <NavBarCompany_Cleaner />
 
       <div className="dashboard-header">
-        <div>
-          <h1>Welcome back, {cleaner.cleanerName}</h1>
-        </div>
-        <div>
-          <h1>Dashboard</h1>
-        </div>
+        <h1>Welcome back, {cleaner.cleanerName}</h1>
+        <h1>Dashboard</h1>
       </div>
 
       <div className="dashboard-body">
