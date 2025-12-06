@@ -27,8 +27,8 @@ export default function NavBarCustomer() {
 
         <div className={`nav-links ${isOpen ? "open" : ""}`}>
           <Link to="/customer">Home</Link>
-          <Link to="/customer#services">Services</Link>
-          <Link to="/customer#aboutus">About Us</Link>
+          <Link to="/customer/reviews">Reviews</Link>
+          <Link to="/customer/wallet">Wallet</Link>
 
           <button className="account-btn" onClick={toggleDropdown}>
             {customer.lastName || "Account"}

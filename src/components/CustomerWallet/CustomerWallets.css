@@ -1,0 +1,122 @@
+body{
+    font-family: "Nunito", sans-serif;
+}
+.wallet-main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* align to top */
+  align-items: center;
+  padding: 1rem;
+}
+
+.wallet-header {
+  text-align: center;
+  margin: 140px 0 35px 0; /* adjust spacing from top as needed */
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wallet-header h1 {
+  color: #1c4274;
+  font-weight: 700;
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.wallet-header span {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.wallet-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* PAYMENT METHOD TABS */
+.wallet-method-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+  justify-content: center;
+}
+
+.wallet-tab-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 0.95rem;
+
+}
+
+.wallet-tab-btn:hover {
+  background-color: #218838;
+}
+
+.wallet-tab-btn.active {
+  background-color: #0a571c;
+  color: white;
+}
+
+/* SINGLE BALANCE CARD */
+.wallet-balance-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.wallet-balance-card h2 {
+  font-size: 1.7rem;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
+.wallet-amount-display p {
+  color: #616060;
+}
+
+.wallet-amount-display h1 {
+  font-size: 2.8rem;
+  margin-top: 10px;
+  color: #083124;
+  font-weight: bolder;
+}
+
+/* HISTORY TABLE */
+.wallet-history h2 {
+  margin-bottom: 15px;
+}
+
+.wallet-history p {
+  color: #616060;
+}
+
+.wallet-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wallet-table th,
+.wallet-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.wallet-table tr:hover {
+  background-color: #f8f9fa;
+}

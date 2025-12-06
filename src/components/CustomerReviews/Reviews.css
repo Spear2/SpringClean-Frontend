@@ -1,0 +1,137 @@
+.review-wrapper {
+  max-width: 850px;
+  margin: 140px auto 40px auto;
+  padding: 20px;
+  font-family: "Nunito", sans-serif;
+}
+
+.review-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.review-header h1 {
+  color: #1c4274;
+  font-weight: 700;
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.review-header span {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Form */
+.review-form {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.review-select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+/* Stars */
+.star-rating {
+  font-size: 2rem;
+  margin: 10px 0 20px 0;
+}
+
+.star {
+  cursor: pointer;
+  color: #ccc;
+  transition: 0.2s;
+}
+
+.star.filled {
+  color: gold;
+}
+
+/* Text area */
+.review-text {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  resize: none;
+  font-size: 1rem;
+}
+
+.attachment-label {
+  font-weight: 600;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.review-submit-btn {
+  background-color: #218838;;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: 0.2s;
+}
+
+.review-submit-btn:hover {
+  background-color: #0a571c;
+}
+
+/* Success message */
+.review-success {
+  text-align: center;
+  background: #e8ffe9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  color: #0c7428;
+  font-weight: 600;
+}
+
+/* Review history */
+.review-history h2 {
+  margin-bottom: 15px;
+}
+
+.review-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  margin-bottom: 15px;
+}
+
+.review-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-stars {
+  color: gold;
+  margin: 8px 0;
+}
+
+.review-text-display {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.review-img {
+  width: 140px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
