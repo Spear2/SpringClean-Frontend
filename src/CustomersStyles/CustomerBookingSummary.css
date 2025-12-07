@@ -105,6 +105,7 @@
    ============================== */
 .cbc-btn-edit,
 .cbc-btn-cancel,
+.cbc-btn-pay,
 .cbc-btn-view {
   border: none;
   border-radius: 8px;
@@ -112,6 +113,14 @@
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.2s ease;
+}
+.cbc-btn-pay{
+  background-color: rgb(254, 198, 86);
+  color: #333;
+}
+
+.cbc-btn-pay:hover{
+  background-color: rgb(246, 181, 52);
 }
 
 .cbc-btn-edit {
