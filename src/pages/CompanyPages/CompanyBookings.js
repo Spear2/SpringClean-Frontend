@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import NavbarCleaner from "../../components/Navbar/NavBarCleaner";
 import "../../pages/CompanyPages/CompanyStyles/CompanyBookings.css";
 import { useAuth } from "../../auth/useAuth";
@@ -11,7 +11,8 @@ export default function CompanyBookings() {
   };
 
   const { user } = useAuth();
-  const loggedInCompany = user?.type === "company" ? user : null;
+  // Ensure we handle the user object correctly depending on how your auth returns it
+  const loggedInCompany = user?.type === "company" ? user : user;
 
   const [bookings, setBookings] = useState([]);
   const [cleaners, setCleaners] = useState([]);
@@ -20,10 +21,10 @@ export default function CompanyBookings() {
   const [assignedCleaners, setAssignedCleaners] = useState([]);
 
   /* ==========================
-     FETCH BOOKINGS
+      FETCH BOOKINGS
   ========================== */
   useEffect(() => {
-    if (!loggedInCompany) return;
+    if (!loggedInCompany?.id) return;
 
     fetch(`http://localhost:8080/api/bookings/company/${loggedInCompany.id}`)
       .then((res) => res.json())
@@ -31,7 +32,9 @@ export default function CompanyBookings() {
         setBookings(
           data.map((b) => ({
             id: b.bookingId,
-            customer: `${b.customerFirstName || ""} ${b.customerLastName || ""}`,
+            customer: `${b.customerFirstName || ""} ${
+              b.customerLastName || ""
+            }`,
             date: b.date,
             time: b.time,
             duration: b.hours,
@@ -45,49 +48,43 @@ export default function CompanyBookings() {
   }, [loggedInCompany]);
 
   /* ==========================
-     FETCH COMPANY CLEANERS
+      FETCH COMPANY CLEANERS
   ========================== */
   useEffect(() => {
-    if (!loggedInCompany) return;
+    if (!loggedInCompany?.id) return;
 
-    fetch(`http://localhost:8080/api/company-cleaners/${loggedInCompany.id}/cleaners`)
+    fetch(
+      `http://localhost:8080/api/company-cleaners/${loggedInCompany.id}/cleaners`
+    )
       .then((res) => res.json())
       .then(setCleaners)
       .catch((err) => console.error("Error loading cleaners:", err));
   }, [loggedInCompany]);
 
   const toDateTime = (date, time) => new Date(`${date} ${time}`);
+
   const isOverlapping = (startA, endA, startB, endB) =>
     startA < endB && endA > startB;
 
-  /* ==========================
-     AVAILABILITY CHECK
-  ========================== */
-  const canBook = (serviceType, date, time) => {
-    if (!cleaners.length) return false;
+  const isCleanerBooked = (cleanerId, date, time, duration) => {
+    const start = toDateTime(date, time);
+    const end = new Date(start.getTime() + parseInt(duration) * 60 * 60 * 1000);
 
-    const required = serviceTypes[serviceType].cleaners;
-
-    const bookedCount = bookings.reduce((count, b) => {
-      if (b.status !== "Accepted") return count;
-
-      const start = toDateTime(date, time);
-      const end = new Date(start.getTime() + parseInt(b.duration) * 60 * 60 * 1000);
+    return bookings.some((b) => {
+      if (b.status !== "Accepted") return false;
+      if (!b.cleanersAssigned?.includes(cleanerId)) return false;
 
       const bStart = toDateTime(b.date, b.time);
-      const bEnd = new Date(bStart.getTime() + parseInt(b.duration) * 60 * 60 * 1000);
+      const bEnd = new Date(
+        bStart.getTime() + parseInt(b.duration) * 60 * 60 * 1000
+      );
 
-      if (isOverlapping(start, end, bStart, bEnd)) {
-        return count + (b.cleanersAssigned?.length || 0);
-      }
-      return count;
-    }, 0);
-
-    return bookedCount + required <= cleaners.filter((c) => c.available).length;
+      return isOverlapping(start, end, bStart, bEnd);
+    });
   };
 
   /* ==========================
-     ACCEPT BOOKING
+      ACTIONS
   ========================== */
   const acceptBooking = (bookingId) => {
     fetch(`http://localhost:8080/api/bookings/${bookingId}/accept`, {
@@ -105,9 +102,6 @@ export default function CompanyBookings() {
       .catch((err) => console.error("Error accepting booking:", err));
   };
 
-  /* ==========================
-     REJECT BOOKING
-  ========================== */
   const handleReject = (bookingId) => {
     fetch(`http://localhost:8080/api/bookings/${bookingId}/reject`, {
       method: "PUT",
@@ -123,9 +117,6 @@ export default function CompanyBookings() {
       .catch((err) => console.error("Error rejecting booking:", err));
   };
 
-  /* ==========================
-     ASSIGN CLEANERS
-  ========================== */
   const handleAssign = () => {
     fetch(
       `http://localhost:8080/api/bookings/${selectedBooking.id}/assign-cleaners`,
@@ -151,114 +142,140 @@ export default function CompanyBookings() {
       .catch((err) => console.error("Error assigning cleaners:", err));
   };
 
-  const isCleanerBooked = (cleanerId, date, time, duration) => {
-    const start = toDateTime(date, time);
-    const end = new Date(start.getTime() + parseInt(duration) * 60 * 60 * 1000);
-
-    return bookings.some((b) => {
-      if (b.status !== "Accepted") return false;
-      if (!b.cleanersAssigned?.includes(cleanerId)) return false;
-
-      const bStart = toDateTime(b.date, b.time);
-      const bEnd = new Date(bStart.getTime() + parseInt(b.duration) * 60 * 60 * 1000);
-
-      return isOverlapping(start, end, bStart, bEnd);
-    });
-  };
-
   return (
-    <>
-    <div className="cleaner-bookings-page">
+    <div className="company-bookings-page">
       <NavbarCleaner />
 
-      <div className="bookings-container">
-        <h1 className="bookings-title">Booking Requests</h1>
+      {/* HEADER */}
+      <div className="dashboard-header">
+        <div>
+          <h1>Booking Management</h1>
+          <p style={{ margin: 0, opacity: 0.7 }}>
+            Manage requests and assign cleaners.
+          </p>
+        </div>
+        <div>
+          <h1 style={{ fontSize: "1rem", opacity: 0.8 }}>
+            {bookings.length} Total Requests
+          </h1>
+        </div>
+      </div>
 
-        <table className="bookings-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Customer</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Duration</th>
-              <th>Service</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bookings.map((booking) => (
-              <tr key={booking.id}>
-                <td>#{booking.id.toString().padStart(3, "0")}</td>
-                <td>{booking.customer}</td>
-                <td>{booking.date}</td>
-                <td>{booking.time}</td>
-                <td>{booking.duration} hrs</td>
-                <td>{booking.serviceType}</td>
-                <td className={`status-col`}>
-                    <span className={`status-badge ${booking.status.toLowerCase()}`}>
-                      {booking.status}
-                    </span>
-                </td>
-                <td>
-                  {booking.status?.trim().toLowerCase() === "pending" && (
-                    <>
-                      <button
-                        className="accept-btn"
-                        onClick={() => acceptBooking(booking.id)}
-                      >
-                        Accept
-                      </button>
-
-                      <button
-                        className="reject-btn"
-                        onClick={() => handleReject(booking.id)}
-                      >
-                        Reject
-                      </button>
-                    </>
-                  )}
-
-                  {booking.status?.trim().toLowerCase() === "accepted" &&
-                    (booking.cleanersAssigned?.length === 0 ? (
-                      <button
-                        className="assign-btn"
-                        onClick={() => {
-                          setSelectedBooking(booking);
-                          setAssignedCleaners([]);
-                          setShowAssignModal(true);
-                        }}
-                      >
-                        Assign
-                      </button>
-                    ) : (
-                      <em className="assigned">Assigned</em>
-                    ))}
-
-                  {booking.status?.trim().toLowerCase() === "rejected" && (
-                    <em className="rejected">Rejected</em>
-                  )}
-                </td>
+      {/* MAIN CONTENT */}
+      <div className="bookings-body">
+        <div className="table-card">
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Date & Time</th>
+                <th>Duration</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {bookings.length > 0 ? (
+                bookings.map((booking) => (
+                  <tr key={booking.id}>
+                    <td style={{ fontWeight: "bold" }}>#{booking.id}</td>
+                    <td>{booking.customer}</td>
+                    <td>
+                      <div>{booking.date}</div>
+                      <div style={{ fontSize: "12px", color: "#888" }}>
+                        {booking.time}
+                      </div>
+                    </td>
+                    <td>{booking.duration} hrs</td>
+                    <td>{booking.serviceType}</td>
+                    <td>
+                      <span
+                        className={`status-badge ${booking.status?.toLowerCase()}`}
+                      >
+                        {booking.status}
+                      </span>
+                    </td>
+                    <td>
+                      {/* PENDING ACTIONS */}
+                      {booking.status?.trim().toLowerCase() === "pending" && (
+                        <div className="action-buttons">
+                          <button
+                            className="btn-accept"
+                            onClick={() => acceptBooking(booking.id)}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            className="btn-reject"
+                            onClick={() => handleReject(booking.id)}
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+
+                      {/* ACCEPTED ACTIONS (Assign) */}
+                      {booking.status?.trim().toLowerCase() === "accepted" &&
+                        (booking.cleanersAssigned?.length === 0 ? (
+                          <button
+                            className="btn-assign"
+                            onClick={() => {
+                              setSelectedBooking(booking);
+                              setAssignedCleaners([]);
+                              setShowAssignModal(true);
+                            }}
+                          >
+                            Assign Cleaners
+                          </button>
+                        ) : (
+                          <span className="assigned-label">
+                            Cleaners Assigned
+                          </span>
+                        ))}
+
+                      {/* REJECTED LABEL */}
+                      {booking.status?.trim().toLowerCase() === "rejected" && (
+                        <span className="rejected-label">Rejected</span>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="7"
+                    style={{ textAlign: "center", padding: "30px" }}
+                  >
+                    No bookings found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* ==========================
-         ASSIGN MODAL
+           ASSIGN MODAL
       ========================== */}
       {showAssignModal && selectedBooking && (
-        <div className="bookings-modal-overlay">
-          <div className="bookings-modal">
-            <h2>Assign Cleaners</h2>
-            <p>
-              Select exactly {serviceTypes[selectedBooking.serviceType].cleaners} cleaner(s)
-            </p>
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-header">
+              <h2>Assign Cleaners</h2>
+              <p>
+                Service: <strong>{selectedBooking.serviceType}</strong> <br />
+                Required:{" "}
+                <strong>
+                  {serviceTypes[selectedBooking.serviceType]?.cleaners || 1}
+                </strong>{" "}
+                cleaner(s)
+              </p>
+            </div>
 
-            <div className="bookings-cleaner-list">
+            <div className="cleaner-selection-list">
               {cleaners.map((cleaner) => {
                 const booked = isCleanerBooked(
                   cleaner.cleanerId,
@@ -267,60 +284,51 @@ export default function CompanyBookings() {
                   selectedBooking.duration
                 );
 
-                const maxSelected =
-                  assignedCleaners.length >=
-                  serviceTypes[selectedBooking.serviceType].cleaners;
+                const requiredCount =
+                  serviceTypes[selectedBooking.serviceType]?.cleaners || 1;
+                const isSelected = assignedCleaners.includes(cleaner.cleanerId);
+                const isFull = assignedCleaners.length >= requiredCount;
 
                 return (
-                  <div className="bookings-cleaner-item" key={cleaner.cleanerId}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        disabled={
-                          booked ||
-                          !cleaner.available ||
-                          (!assignedCleaners.includes(cleaner.cleanerId) &&
-                            maxSelected)
+                  <label
+                    key={cleaner.cleanerId}
+                    className={`cleaner-option ${
+                      isSelected ? "selected" : ""
+                    } ${booked ? "disabled" : ""}`}
+                  >
+                    <input
+                      type="checkbox"
+                      disabled={booked || (!isSelected && isFull)}
+                      checked={isSelected}
+                      onChange={() => {
+                        if (isSelected) {
+                          setAssignedCleaners(
+                            assignedCleaners.filter(
+                              (id) => id !== cleaner.cleanerId
+                            )
+                          );
+                        } else {
+                          setAssignedCleaners([
+                            ...assignedCleaners,
+                            cleaner.cleanerId,
+                          ]);
                         }
-                        checked={assignedCleaners.includes(cleaner.cleanerId)}
-                        onChange={() => {
-                          if (assignedCleaners.includes(cleaner.cleanerId)) {
-                            setAssignedCleaners(
-                              assignedCleaners.filter(
-                                (id) => id !== cleaner.cleanerId
-                              )
-                            );
-                          } else {
-                            setAssignedCleaners([
-                              ...assignedCleaners,
-                              cleaner.cleanerId,
-                            ]);
-                          }
-                        }}
-                      />
-                      <span>
-                        {cleaner.cleanerName} {booked ? "(Booked)" : ""}
+                      }}
+                    />
+                    <div className="cleaner-info">
+                      <span className="cleaner-name">
+                        {cleaner.cleanerName}
                       </span>
-                    </label>
-                  </div>
+                      {booked && <span className="cleaner-status">Booked</span>}
+                    </div>
+                  </label>
                 );
               })}
             </div>
 
-            <div className="bookings-modal-buttons">
+            <div className="modal-actions">
               <button
-                className="accept-btn"
-                onClick={handleAssign}
-                disabled={
-                  assignedCleaners.length !==
-                  serviceTypes[selectedBooking.serviceType].cleaners
-                }
-              >
-                Confirm Assignment
-              </button>
-
-              <button
-                className="reject-btn"
+                className="btn-cancel"
                 onClick={() => {
                   setShowAssignModal(false);
                   setAssignedCleaners([]);
@@ -328,11 +336,20 @@ export default function CompanyBookings() {
               >
                 Cancel
               </button>
+              <button
+                className="btn-confirm"
+                onClick={handleAssign}
+                disabled={
+                  assignedCleaners.length !==
+                  (serviceTypes[selectedBooking.serviceType]?.cleaners || 1)
+                }
+              >
+                Confirm Assignment
+              </button>
             </div>
           </div>
         </div>
       )}
     </div>
-    </>
   );
 }
