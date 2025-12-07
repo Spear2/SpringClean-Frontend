@@ -106,11 +106,6 @@ export default function CleanerDashboard() {
                     radius={[10, 10, 0, 0]}
                     barSize={40}
                   />
-                  <Legend
-                    wrapperStyle={{
-                      paddingTop: "20px",
-                    }}
-                  />
 
                   {/* 2. ADD A NAME PROP (This is what the legend will display) */}
                   <Bar

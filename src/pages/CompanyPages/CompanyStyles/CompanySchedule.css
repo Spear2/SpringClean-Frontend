@@ -1,165 +1,151 @@
-.cleaner-schedule-page{
-  background: #f5f8fa;
-  min-height: 100vh;
-  font-family: "Poppins", sans-serif;
+/* GLOBAL RESET */
+* {
+  box-sizing: border-box;
 }
 
-/* General page container */
-.schedule-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Schedule title */
-.cleaner-schedule-page .schedule-title {
-  text-align: center;
-  color: #003366;
-  font-size: 2em;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-/* Placeholder for empty schedule */
-.schedule-placeholder {
-  background-color: #fafafa;
-  padding: 40px;
-  text-align: center;
-  color: #666;
-  border: 2px dashed #bbb;
-  border-radius: 10px;
-  width: 80%;
-  margin: 0 auto;
-  font-size: 1.1em;
-}
-
-.schedule-note {
-  text-align: center;
-  margin-top: 15px;
-  color: #00796b;
-}
-
-/* Table container for horizontal scrolling */
-.schedule-table-wrapper {
-  overflow-x: auto;
-}
-
-/* Schedule table styles */
-.schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 10px;
+.company-schedule-page {
+  padding: 0;
+  margin: 0;
+  background-color: #bfdff5; /* Light Blue Background */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  font-family: "Cal Sans", sans-serif;
 }
 
-.schedule-table th {
-  background-color: #188a53;
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-}
-
-.schedule-table td {
-  padding: 14px;
-  text-align: center;
-  border-bottom: 1px solid #e0e0e0;
-  color: #333;
+/* HEADER (Reused from Dashboard) */
+.dashboard-header {
+  margin: 10px 30px 0 30px;
   background-color: #ffffff;
-}
-
-.schedule-table tr:nth-child(even) {
-  background-color: #f3f6fa;
-}
-
-.schedule-table tr:hover {
-  background-color: #e8f0fe;
-  transition: background-color 0.3s ease;
-}
-
-/* Ensure the calendar toolbar is visible */
-.rbc-toolbar {
+  border-radius: 20px;
+  border-top: 4px solid #aae858;
+  color: #1c4274;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 20px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
-/* Button group styling */
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* BODY WRAPPER */
+.schedule-body {
+  padding: 30px;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CALENDAR CARD CONTAINER */
+.calendar-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 25px;
+  border-top: 4px solid #aae858;
+  box-shadow: 0 4px 15px rgba(28, 66, 116, 0.05);
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* =========================================
+   CUSTOMIZING REACT-BIG-CALENDAR STYLES
+   ========================================= */
+
+/* 1. Toolbar (Month/Week/Day Buttons) */
+.rbc-toolbar {
+  margin-bottom: 20px !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Cal Sans", sans-serif;
+  color: #1c4274;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1c4274;
+}
+
 .rbc-btn-group button {
-  background-color: #074d1c; /* default button color */
-  color: #fff;               /* text color */
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  margin: 0 2px;
+  background-color: transparent;
+  color: #1c4274;
+  border: 1px solid #1c4274;
+  border-radius: 8px !important;
+  margin: 0 4px !important;
+  padding: 6px 12px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-weight: bold;
+  transition: all 0.2s;
 }
 
-/* Hover effect for all buttons */
 .rbc-btn-group button:hover {
-  background-color: #0b721c;
-  color: #fff;
+  background-color: #f0f7ff;
 }
 
-/* Today button */
-.rbc-toolbar button.rbc-today {
-  background-color: #0a571c; /* Today button base color */
-  color: #fff;
-}
-
-.rbc-toolbar button.rbc-today:hover {
-  background-color: #0c7a2f; /* Today button hover */
-  color: #fff;
-}
-
-/* Active view button (Month/Week/Day) */
 .rbc-btn-group button.rbc-active {
-  background-color: #0a571c; /* active button base color */
-  color: #fff;
+  background-color: #1c4274;
+  color: white;
+  box-shadow: none;
+  border-color: #1c4274;
 }
 
-.rbc-btn-group button.rbc-active:hover {
-  background-color: #0c7a2f; /* active button hover */
-  color: #fff;
+/* 2. Header Grid (Mon, Tue, Wed...) */
+.rbc-header {
+  padding: 10px 0 !important;
+  font-weight: bold;
+  color: #666;
+  text-transform: uppercase;
+  font-size: 12px;
+  border-bottom: 2px solid #aae858 !important; /* Green Underline */
 }
 
-/* Optional: spacing between button groups */
-.rbc-toolbar .rbc-btn-group + .rbc-btn-group {
-  margin-left: 10px;
+/* 3. The Grid Cells */
+.rbc-day-bg {
+  background-color: white;
 }
 
+.rbc-off-range-bg {
+  background-color: #f9f9f9; /* Grey out previous month days */
+}
 
-/* Optional: Responsive table for mobile */
+.rbc-today {
+  background-color: #f0fdf4 !important; /* Very light green for Today */
+}
+
+/* 4. Events */
+.rbc-event {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 5. Mobile Adjustments */
 @media (max-width: 768px) {
-  .schedule-table thead {
-    display: none;
+  .company-schedule-page {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
   }
 
-  .schedule-table tr {
-    display: block;
-    margin-bottom: 15px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  .dashboard-header {
+    margin: 10px 15px 0 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 
-  .schedule-table td {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 16px;
-    text-align: left;
+  .schedule-body {
+    padding: 15px;
   }
 
-  .schedule-table td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #003366;
+  .rbc-toolbar {
+    flex-direction: column;
+    gap: 10px;
   }
 }
-
