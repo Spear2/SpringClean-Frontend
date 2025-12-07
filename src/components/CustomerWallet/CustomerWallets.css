@@ -1,122 +1,167 @@
-body{
-    font-family: "Nunito", sans-serif;
-}
-.wallet-main-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* align to top */
-  align-items: center;
-  padding: 1rem;
+body {
+  font-family: "Nunito", sans-serif;
+  background: #f5f7fa;
+  margin: 0;
 }
 
+.wallet-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120px;
+}
+
+/* HEADER */
 .wallet-header {
   text-align: center;
-  margin: 140px 0 35px 0; /* adjust spacing from top as needed */
-  font-family: "Nunito", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.wallet-header h1 {
-  color: #1c4274;
-  font-weight: 700;
-  font-size: 2.8rem;
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
-}
-
-.wallet-header span {
-  color: #666;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.wallet-container {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-/* PAYMENT METHOD TABS */
-.wallet-method-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 25px;
-  justify-content: center;
-}
-
-.wallet-tab-btn {
-  padding: 12px 20px;
-  border-radius: 8px;
-  background-color: #28a745;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s ease;
-  font-size: 0.95rem;
-
-}
-
-.wallet-tab-btn:hover {
-  background-color: #218838;
-}
-
-.wallet-tab-btn.active {
-  background-color: #0a571c;
-  color: white;
-}
-
-/* SINGLE BALANCE CARD */
-.wallet-balance-card {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
   margin-bottom: 30px;
 }
 
-.wallet-balance-card h2 {
-  font-size: 1.7rem;
-  margin-bottom: 20px;
-  font-weight: bolder;
+.wallet-header h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #1d3557;
 }
 
-.wallet-amount-display p {
-  color: #616060;
+.wallet-subtitle {
+  color: #555;
+  margin-top: 5px;
 }
 
-.wallet-amount-display h1 {
-  font-size: 2.8rem;
-  margin-top: 10px;
-  color: #083124;
-  font-weight: bolder;
+/* CONTENT LAYOUT */
+.wallet-content {
+  display: flex;
+  gap: 30px;
+  max-width: 1100px;
+  width: 100%;
 }
 
-/* HISTORY TABLE */
-.wallet-history h2 {
+/* LEFT SIDE */
+.wallet-left {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* TABS */
+.wallet-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wallet-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: 0.2s ease;
+}
+
+.wallet-tab img {
+  width: 26px;
+}
+
+.wallet-tab:hover {
+  background: #e8f5e9;
+}
+
+.wallet-tab.active {
+  background: #2a9d8f;
+  color: white;
+}
+
+/* BALANCE CARD */
+.wallet-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.wallet-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wallet-card-header img {
+  width: 38px;
+}
+
+.wallet-balance p {
+  color: #666;
+  margin-top: 20px;
+}
+
+.wallet-balance h1 {
+  margin-top: 5px;
+  font-size: 2.5rem;
+  color: #1b4332;
+}
+
+/* RIGHT SIDE */
+.wallet-right {
+  width: 65%;
+}
+
+.history-title {
   margin-bottom: 15px;
+  font-size: 1.4rem;
 }
 
-.wallet-history p {
-  color: #616060;
+.table-wrapper {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
 
-.wallet-table {
+.history-table {
   width: 100%;
   border-collapse: collapse;
+  background: white;
 }
 
-.wallet-table th,
-.wallet-table td {
-  padding: 12px;
-  text-align: left;
+.history-table th, .history-table td {
+  padding: 14px;
   border-bottom: 1px solid #eee;
 }
 
-.wallet-table tr:hover {
-  background-color: #f8f9fa;
+.history-table tr:hover {
+  background: #f7fafc;
+}
+
+.status {
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status.paid {
+  color: #2a9d8f;
+}
+
+
+/* EMPTY STATE */
+.history-empty {
+  color: #777;
+  padding-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .wallet-content {
+    flex-direction: column;
+  }
+
+  .wallet-left, .wallet-right {
+    width: 100%;
+  }
 }

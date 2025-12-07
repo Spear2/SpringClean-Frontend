@@ -1,146 +1,144 @@
 import { useEffect, useState } from "react";
 import "./CustomerWallets.css";
+import useCustomer from "../../Hooks/useCustomer";
 
 export default function Wallet() {
-const paymentMethods = [
-  { id: "creditCard", label: "Credit Card", icon: "https://cdn-icons-png.flaticon.com/128/8983/8983163.png" },
-  { id: "paypal", label: "PayPal", icon: "https://cdn-icons-png.flaticon.com/128/888/888870.png" },
-  { id: "bankTransfer", label: "Bank Transfer", icon: "https://cdn-icons-png.flaticon.com/128/3135/3135706.png" },
-  { id: "cash", label: "Cash", icon: "https://cdn-icons-png.flaticon.com/128/2331/2331941.png" },
-  { id: "mobileWallet", label: "Mobile Wallet", icon: "https://cdn-icons-png.flaticon.com/128/1796/1796819.png" },
-];
+  const paymentMethods = [
+    { id: "mobileWallet", label: "Mobile Wallet", icon: "https://cdn-icons-png.flaticon.com/128/1796/1796819.png" }
+  ];
 
-  const defaultBalances = {
-    creditCard: 1000000,
-    paypal: 1000000,
-    bankTransfer: 1000000,
-    cash: 1000000,
-    mobileWallet: 1000000,
-  };
+  const customer = useCustomer();
 
-  const [balances, setBalances] = useState(() => {
-    return JSON.parse(localStorage.getItem("walletBalances")) || defaultBalances;
-  });
+  const [balances, setBalances] = useState({ mobileWallet: 0 });
+  const [history, setHistory] = useState([]);
+  const [activeMethod, setActiveMethod] = useState("mobileWallet");
 
-  const [history, setHistory] = useState(() => {
-    return JSON.parse(localStorage.getItem("walletHistory")) || [];
-  });
-
-  const [activeMethod, setActiveMethod] = useState("creditCard");
-
-  // Sync localStorage on change
+  // Fetch balance
   useEffect(() => {
-    localStorage.setItem("walletBalances", JSON.stringify(balances));
-  }, [balances]);
+    if (!customer?.customerId) return;
 
-  useEffect(() => {
-    localStorage.setItem("walletHistory", JSON.stringify(history));
-  }, [history]);
-
-  const deductFromWallet = (method, amount) => {
-    if (balances[method] < amount) {
-      alert("Insufficient wallet balance for " + method);
-      return false;
-    }
-
-    const updatedBalances = {
-      ...balances,
-      [method]: balances[method] - amount,
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/api/wallet/${customer.customerId}/balance`);
+        const data = await res.json();
+        setBalances({ mobileWallet: data.walletBalance });
+      } catch (err) {
+        console.error("Error fetching wallet balance:", err);
+      }
     };
 
-    setBalances(updatedBalances);
+    fetchBalance();
+  }, [customer]);
 
-    const newRecord = {
-      id: Date.now(),
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
-      paymentMethod: method,
-      amount: amount,
-      status: "Success",
+  // Fetch history
+  useEffect(() => {
+    if (!customer?.customerId) return;
+
+    const fetchHistory = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/api/payments/customer/${customer.customerId}`);
+        const data = await res.json();
+
+        const mapped = data.map(tx => ({
+          id: tx.paymentId,
+          date: new Date(tx.paidAt).toLocaleDateString(),
+          time: new Date(tx.paidAt).toLocaleTimeString(),
+          paymentMethod: tx.method,
+          amount: tx.amount,
+          status: tx.status,
+        }));
+
+        setHistory(mapped);
+      } catch (err) {
+        console.error("Error fetching wallet history:", err);
+      }
     };
 
-    setHistory((prev) => [newRecord, ...prev]);
-
-    return true;
-  };
+    fetchHistory();
+  }, [customer]);
 
   return (
-    <>
-    <div className="wallet-main-wrapper">
+    <div className="wallet-wrapper">
 
+      {/* HEADER */}
       <header className="wallet-header">
-        <h1>Customer Wallet</h1>
-        <span>Track your balances and transaction activity.</span>
+        <h1>Wallet</h1>
+        <p className="wallet-subtitle">View your balance & recent activity</p>
       </header>
 
-      <div className="wallet-container">
+      {/* CONTENT WRAPPER */}
+      <div className="wallet-content">
 
-        {/* NAV BUTTONS */}
-        <div className="wallet-method-tabs">
-          {paymentMethods.map((method) => (
-            <button
-              key={method.id}
-              className={`wallet-tab-btn ${
-                activeMethod === method.id ? "active" : ""
-              }`}
-              onClick={() => setActiveMethod(method.id)}
-            >
-              {method.label}
-            </button>
-          ))}
+        {/* Left Section – Balance */}
+        <div className="wallet-left">
+
+          {/* Method Buttons */}
+          <div className="wallet-tabs">
+            {paymentMethods.map(method => (
+              <button
+                key={method.id}
+                className={`wallet-tab ${activeMethod === method.id ? "active" : ""}`}
+                onClick={() => setActiveMethod(method.id)}
+              >
+                <img src={method.icon} alt="" />
+                {method.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Balance Card */}
+          <div className="wallet-card">
+            <div className="wallet-card-header">
+              <img
+                src={paymentMethods.find(m => m.id === activeMethod)?.icon}
+                alt=""
+              />
+              <span>{paymentMethods.find(m => m.id === activeMethod)?.label}</span>
+            </div>
+
+            <div className="wallet-balance">
+              <p>Available Balance</p>
+              <h1>₱ {balances[activeMethod].toLocaleString()}</h1>
+            </div>
+          </div>
+
         </div>
 
-        {/* SINGLE CARD */}
-        <section className="wallet-balance-card">
-            <div className="wallet-card-header">
-                <img
-                src={paymentMethods.find((m) => m.id === activeMethod)?.icon}
-                alt={paymentMethods.find((m) => m.id === activeMethod)?.label}
-                className="wallet-card-icon"
-                />
-                <h2>{paymentMethods.find((m) => m.id === activeMethod)?.label}</h2>
-            </div>
+        {/* Right Section – History */}
+        <div className="wallet-right">
+          <h2 className="history-title">Transaction History</h2>
 
-            <div className="wallet-amount-display">
-                <p>Available Balance</p>
-                <h1>₱ {balances[activeMethod].toLocaleString()}</h1>
-            </div>
-        </section>
-
-        {/* TRANSACTION HISTORY */}
-        <section className="wallet-history">
-          <h2>Transaction History</h2>
-
-          {history.length === 0 && <p>No transactions yet.</p>}
-
-          {history.length > 0 && (
-            <table className="wallet-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Method</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {history.map((tx) => (
-                  <tr key={tx.id}>
-                    <td>{tx.date}</td>
-                    <td>{tx.time}</td>
-                    <td>{tx.paymentMethod}</td>
-                    <td>₱ {tx.amount.toLocaleString()}</td>
-                    <td>{tx.status}</td>
+          {history.length === 0 ? (
+            <p className="history-empty">No transactions yet.</p>
+          ) : (
+            <div className="table-wrapper">
+              <table className="history-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Method</th>
+                    <th>Amount</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {history.map(tx => (
+                    <tr key={tx.id}>
+                      <td>{tx.date}</td>
+                      <td>{tx.time}</td>
+                      <td>{tx.paymentMethod}</td>
+                      <td>₱ {tx.amount.toLocaleString()}</td>
+                      <td className={`status ${tx.status.toLowerCase()}`}>{tx.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
-        </section>
+        </div>
+
       </div>
     </div>
-    </>
   );
 }

@@ -30,6 +30,7 @@ export default function CustomerBookingSummary() {
       }
       const data = await res.json();
       setSummary(data);
+      console.log("Status: ", summary.status);
 
 
     } catch (error) {
@@ -75,6 +76,9 @@ export default function CustomerBookingSummary() {
   };
 
 
+
+
+
   useEffect(() => {
     if (customer && customer.customerId) {
       fetchBookings();
@@ -108,6 +112,7 @@ export default function CustomerBookingSummary() {
 
   const formatCleanerName = (cleaner) =>
   cleaner ? `${cleaner.firstName} ${cleaner.lastName}` : "Not Assigned";
+  
 
   // Filter
   const filteredBookings = summary.filter((b) =>
@@ -124,7 +129,7 @@ export default function CustomerBookingSummary() {
 
       <div className="main-wrapper">
         <header className="settings-header" style={{ textAlign: "left" }}>
-          <button className="btn-back-arrow" onClick={() => navigate("/customer")}>←</button>
+          <button className="cbc-btn-back-arrow" onClick={() => navigate("/customer")}>←</button>
           <h1>Booking History</h1>
           <p>View and manage all your past and upcoming bookings.</p>
         </header>
@@ -165,6 +170,7 @@ export default function CustomerBookingSummary() {
                     setSelectedBookingId(item.bookingId);
                     setShowCancelModal(true);
                   }}
+                  onPay={() => navigate("/customer/payments", { state: { newBooking: item } })}
                   onViewHistory={() => {
                     setSelectedBookingId(item.bookingId);
                     setShowHistoryModal(true);

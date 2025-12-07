@@ -76,14 +76,41 @@ input:focus {
   transform: translateY(0);
 }
 
-.cbf-main-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* align to top */
-  align-items: center;
-  padding: 1rem;
+.cbf-select-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 6px;
 }
+
+.cbf-select-wrapper select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #1c4274;
+  border-radius: 8px;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  appearance: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cbf-select-wrapper select:focus {
+  border-color: #2d5a9e;
+  box-shadow: 0 0 5px rgba(45, 90, 158, 0.3);
+}
+
+.cbf-select-wrapper::after {
+  content: "▼"; /* dropdown arrow */
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: #1c4274;
+  pointer-events: none;
+}
+
 
 .cbf-settings-header {
   text-align: center;
