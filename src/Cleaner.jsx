@@ -3,9 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import CleanerDashboad from "./pages/CleanerPages/CleanerDashboad";
 import CleanerBookings from "./pages/CleanerPages/CleanerBookings";
 import CleanerSchedule from "./pages/CleanerPages/CleanerSchedule";
-import CleanerPayments from "./pages/CleanerPages/CleanerPayments";
-import CleanerProfile from "./pages/CompanyPages/CompanyProfile";
-
+import CleanerEarnings from "./pages/CleanerPages/CleanerEarnings";
+import CleanerProfile from "./pages/CleanerPages/CleanerProfile";
 export default function Cleaner() {
   return (
     <div>
@@ -13,10 +12,9 @@ export default function Cleaner() {
         <Route path="/" element={<CleanerDashboad />} />
         <Route path="bookings" element={<CleanerBookings />} />
         <Route path="schedule" element={<CleanerSchedule />} />
-        <Route path="payments" element={<CleanerPayments />} />
+        <Route path="earnings" element={<CleanerEarnings />} />
         <Route path="profile" element={<CleanerProfile />} />
       </Routes>
     </div>
   );
 }
- 

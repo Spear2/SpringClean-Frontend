@@ -1,8 +1,8 @@
 import React from "react";
 import "./Styles/CleanerBookings.css";
 import { useAuth } from "../../auth/useAuth";
-import { useState } from "react";
 import NavBarCompany_Cleaner from "../../components/Navbar/NavBarCompany_Cleaner";
+import JobDetailsTab from "../../components/JobDetailsTab/JobDetailsTab"; // Make sure path matches your folder structure
 
 export default function CleanerBookings() {
   const assignedJobs = [
@@ -14,7 +14,7 @@ export default function CleanerBookings() {
       address: "245 Cyberdyne Ave, Tech District",
       serviceType: "Deep Cleaning",
       price: "$120",
-      status: "Upcoming",
+      status: "Pending",
       notes: "Please focus on the kitchen grease. The key is under the mat.",
     },
     {
@@ -36,13 +36,13 @@ export default function CleanerBookings() {
       address: "20 Ingram St, Queens",
       serviceType: "Move-out Cleaning",
       price: "$150",
-      status: "Pending",
+      status: "Declined",
       notes: "Apartment is empty. Just need floors and windows done.",
     },
   ];
 
   return (
-    <div className="dashboard-container">
+    <div className="CleanerBookings-container">
       <NavBarCompany_Cleaner />
 
       {/* Header aligned with the cards below */}
@@ -57,55 +57,17 @@ export default function CleanerBookings() {
 
       <div className="booking-list-body">
         {assignedJobs.map((job) => (
-          <div key={job.id} className="job-card">
-            {/* 1. Header: Date & Status */}
-            <div className="job-card-header">
-              <div className="job-date">
-                <span className="date-text">{job.date}</span>
-                <span className="time-text">{job.time}</span>
-              </div>
-              <span className={`status-badge ${job.status.toLowerCase()}`}>
-                {job.status}
-              </span>
-            </div>
-
-            <hr className="divider" />
-
-            {/* 2. Main Details: Address & Service */}
-            <div className="job-details-grid">
-              <div className="detail-group">
-                <label>Location</label>
-                <p className="address-text">{job.address}</p>
-              </div>
-
-              <div className="detail-group">
-                <label>Service Type</label>
-                <p className="service-text">{job.serviceType}</p>
-              </div>
-
-              <div className="detail-group">
-                <label>Customer</label>
-                <p>{job.customerName}</p>
-              </div>
-
-              <div className="detail-group">
-                <label>Payout</label>
-                <p className="price-text">{job.price}</p>
-              </div>
-            </div>
-
-            {/* 3. Footer: Special Instructions */}
-            <div className="job-notes">
-              <label>Special Instructions:</label>
-              <p>"{job.notes}"</p>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="job-actions">
-              <button className="btn-secondary">Decline</button>
-              <button className="btn-primary">Start Job</button>
-            </div>
-          </div>
+          <JobDetailsTab
+            key={job.id} // Key must stay in the map
+            customerName={job.customerName}
+            date={job.date}
+            time={job.time}
+            address={job.address}
+            serviceType={job.serviceType}
+            price={job.price}
+            status={job.status}
+            notes={job.notes}
+          />
         ))}
       </div>
     </div>
