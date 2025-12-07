@@ -89,30 +89,38 @@ export default function BookingForm() {
   };
 
 
-    try {
-      const response = await fetch(`http://localhost:8080/api/bookings/${customer.customerId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(bookingData),
-      });
+      try {
+        const response = await fetch(`http://localhost:8080/api/bookings/${customer.customerId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(bookingData),
+        });
 
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        alert(`${errorMessage}`);
-        throw new Error("Failed to save booking");
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          alert(`${errorMessage}`);
+          throw new Error("Failed to save booking");
+        }
+
+        const savedBooking = await response.json();
+        // Get all existing bookings from localStorage
+        const savedBookings = JSON.parse(localStorage.getItem("currentBookings")) || [];
+
+        // Update the array: remove previous booking with same bookingId (if exists) and add new one
+        const updatedBookings = [
+          ...savedBookings.filter(b => b.bookingId !== savedBooking.bookingId),
+          savedBooking
+        ];
+        localStorage.setItem("currentBookings", JSON.stringify(updatedBookings));
+        // Redirect to payment page with saved booking
+        navigate("/customer/payments", { state: { newBooking: savedBooking } });
+
+      } catch (err) {
+        
       }
-
-      const savedBooking = await response.json();
-      localStorage.setItem("currentBooking", JSON.stringify(savedBooking));
-      // Redirect to payment page with saved booking
-      navigate("/customer/payments", { state: { newBooking: savedBooking } });
-
-    } catch (err) {
-      
-    }
-  };
+    };
 
   
 
@@ -139,16 +147,27 @@ export default function BookingForm() {
 
         <label>
           Type of Cleaning Service:
-          <select name="serviceType" value={formData.serviceType} onChange={handleChange}>
-            <option value="">-- Select Service --</option>
-            {cleaningServices.map((service, index) => (
-              <option key={index} value={service.type}>
-                {service.type} (₱{service.pricePerHour}/hr)
+          <div className="cbf-select-wrapper">
+            <select
+              name="serviceType"
+              value={formData.serviceType}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                -- Select Service --
               </option>
-            ))}
-          </select>
-          {errors.serviceType && <p className="cbf-error-text">{errors.serviceType}</p>}
+              {cleaningServices.map((service, index) => (
+                <option key={index} value={service.type}>
+                  {service.type} — ₱{service.pricePerHour}/hr
+                </option>
+              ))}
+            </select>
+          </div>
+          {errors.serviceType && (
+            <p className="cbf-error-text">{errors.serviceType}</p>
+          )}
         </label>
+
 
         <label>
           Your Address:

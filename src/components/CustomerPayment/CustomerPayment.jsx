@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import useCustomer from "../../Hooks/useCustomer";
 
 export default function CustomerPayment({ onConfirm }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const customer = useCustomer();
 
+  // --- Payment methods ---
   const paymentMethods = [
     {
       id: "creditCard",
@@ -47,29 +50,41 @@ export default function CustomerPayment({ onConfirm }) {
       ],
     },
   ];
-  const { newBooking} = location.state || {};
 
+  // --- Get booking safely ---
+  const bookingId = location.state?.bookingId;
+  const allBookings = JSON.parse(localStorage.getItem("currentBookings")) || [];
+  let newBooking = location.state?.newBooking;
+
+  if (!newBooking && bookingId){
+    newBooking = allBookings.find(b=> b.bookingId === bookingId || null);
+  }
+
+  // --- States ---
+  const [booking, setBooking] = useState(newBooking);
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [formData, setFormData] = useState({});
-  const [amount, setAmount] = useState(newBooking.totalPrice || "");
+  const [amount, setAmount] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   const selectedMethodObj = paymentMethods.find((m) => m.id === selectedMethod);
-  
-    // const { companyCleanerId, cleanerName, cleanerLocation } = location.state || {};
 
-  if (!newBooking) {
-    newBooking = JSON.parse(localStorage.getItem("currentBooking"));
-  }
+  // --- Handlers ---
   const handleSelectMethod = (id) => {
     setSelectedMethod(id);
     setFormData({});
     setErrors({});
   };
 
-  
+  useEffect(() => {
+    if (newBooking){
+      setAmount(newBooking.totalPrice || newBooking.price || "");
+      
+    }
+  }, [newBooking]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -78,15 +93,13 @@ export default function CustomerPayment({ onConfirm }) {
   const validate = () => {
     const newErrors = {};
 
-    if (!amount || isNaN(amount) || Number(amount) <= 0) {
-      newErrors.amount = "Please enter a valid amount.";
-    }
 
     if (!selectedMethod) {
       newErrors.selectedMethod = "Please select a payment method.";
     } else {
       selectedMethodObj.fields.forEach((field) => {
-        if (!formData[field.name] || formData[field.name].trim() === "") {
+        
+        if (!formData[field.name]?.trim()) {
           newErrors[field.name] = `${field.label} is required.`;
         }
       });
@@ -99,48 +112,59 @@ export default function CustomerPayment({ onConfirm }) {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
+
+  const handleConfirmPayment = async () => {
+    
+    if (!customer?.customerId) return;
+
+    const paymentData = {
+      bookingId: newBooking.bookingId,
+      amount: Number(amount),
+      method: selectedMethodObj.label,
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/payments/${customer.customerId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(paymentData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Payment failed");
+      }
+
+      const paymentResult = await response.json();
+
+      // --- Update currentBookings in localStorage ---
+      const savedBookings = JSON.parse(localStorage.getItem("currentBookings")) || [];
+      const updatedBookings = [
+        ...savedBookings.filter((b) => b.bookingId !== newBooking.bookingId),
+        { ...newBooking, payment: paymentResult },
+      ];
+      localStorage.setItem("currentBookings", JSON.stringify(updatedBookings));
+
+      // --- Navigate to summary ---
+      navigate("/customer/bookingSummary", {
+        state: {
+          newBooking,
+          payment: paymentResult,
+        },
+      });
+    } catch (err) {
+      alert("Payment failed. Try again.");
+    }
+  };
 
   const handlePayClick = () => {
     if (validate()) {
       setShowModal(true);
     }
   };
-  const handleConfirmPayment = async () => {
-    
-
-    const paymentData = {
-      bookingId: newBooking.bookingId,
-      amount: Number(amount),
-      method: selectedMethodObj.label
-    };
-
-    try {
-      const response = await fetch("http://localhost:8080/api/payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(paymentData),
-      });
-
-      if (!response.ok){
-        throw new Error("Payment failed");
-        console.log("Payment failed");  
-      }
-      console.log("Payment successful");
-      const paymentResult = await response.json();
-      
-
-      navigate("/customer/bookingSummary", {
-        state: {
-          newBooking,
-          payment: paymentResult
-        }
-      });
-
-    } catch (err) {
-      alert("Payment failed. Try again.");
-    }
-  };
-
 
   const handleCancel = () => setShowModal(false);
 
@@ -181,7 +205,8 @@ export default function CustomerPayment({ onConfirm }) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           aria-invalid={!!errors.amount}
-          aria-describedby={errors.amount ? "amount-error" : undefined} readOnly
+          aria-describedby={errors.amount ? "amount-error" : undefined}
+          readOnly
         />
         {errors.amount && (
           <small id="amount-error" className="cpp-error-message">
@@ -232,7 +257,12 @@ export default function CustomerPayment({ onConfirm }) {
       </section>
 
       {showModal && selectedMethodObj && (
-        <div className="cpp-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-payment-title">
+        <div
+          className="cpp-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-payment-title"
+        >
           <div className="cpp-modal-content">
             <h2 id="confirm-payment-title">Confirm Payment</h2>
             <ul>
