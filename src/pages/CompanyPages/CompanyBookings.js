@@ -56,8 +56,21 @@ export default function CompanyBookings() {
       .catch((err) => console.error("Error loading cleaners:", err));
   }, [loggedInCompany]);
 
-  const toDateTime = (date, time) => new Date(`${date} ${time}`);
+  const toDateTime = (date, time) => {
+  const [year, month, day] = date.split("-");
+  const [hour, minute] = time.split(":");
 
+  return new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute),
+      0,   // seconds
+      0    // milliseconds
+    );
+  };
+  
   const isOverlapping = (startA, endA, startB, endB) =>
     startA < endB && endA > startB;
 
@@ -160,33 +173,39 @@ export default function CompanyBookings() {
   /* ==========================
       AUTO UPDATE STATUS
   ========================== */
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBookings((prev) =>
-        prev.map((b) => {
-          if (!b.date || !b.time) return b;
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setBookings((prev) =>
+          prev.map((b) => {
+            if (!b.date || !b.time) return b;
 
-          const start = toDateTime(b.date, b.time);
-          const end = new Date(
-            start.getTime() + parseInt(b.duration) * 60 * 60 * 1000
-          );
-          const now = new Date();
+            const start = toDateTime(b.date, b.time);
+            const end = new Date(start.getTime() + parseInt(b.duration) * 60 * 60 * 1000);
+            const now = new Date();
 
-          const safeStatus = String(b.status || "").toLowerCase();
-          let newStatus = b.status;
+            const statusLower = String(b.status || "").toLowerCase().trim();
+            let newStatus = b.status;
 
-          if (safeStatus === "accepted" && b.cleanersAssigned?.length > 0) {
-            if (now >= start && now < end) newStatus = "In Progress";
-            else if (now >= end) newStatus = "Completed";
-          }
+            // Move to In Progress
+            if (statusLower === "accepted" && now >= start && now < end) {
+              newStatus = "In Progress";
+              fetch(`http://localhost:8080/api/bookings/${b.id}/in-progress`, { method: "PUT" });
+            }
 
-          return { ...b, status: newStatus };
-        })
-      );
-    }, 60000);
+            // Move to Completed
+            if ((statusLower === "in progress" || statusLower === "accepted") && now >= end) {
+              newStatus = "Completed";
+              fetch(`http://localhost:8080/api/bookings/${b.id}/complete`, { method: "PUT" });
+            }
 
-    return () => clearInterval(interval);
-  }, []);
+            return { ...b, status: newStatus };
+          })
+        );
+      }, 60000);
+
+      return () => clearInterval(interval);
+    }, []);
+
 
   /* ==========================
       ASSIGN CLEANERS
@@ -244,23 +263,24 @@ export default function CompanyBookings() {
             </thead>
             <tbody>
               {bookings.map((booking) => {
-                const status = String(booking.status || "").toLowerCase();
+              const status = String(booking.status || "").toLowerCase();
+              const statusClass = status.trim().replace(/\s+/g, "-");
 
-                return (
-                  <tr key={booking.id}>
-                    <td>#{booking.id}</td>
-                    <td>{booking.customer}</td>
-                    <td>
-                      {booking.date}
-                      <div>{booking.time}</div>
-                    </td>
-                    <td>{booking.duration} hrs</td>
-                    <td>{booking.serviceType}</td>
-                    <td>
-                      <span className={`status-badge ${status.replace(" ", "-")}`}>
-                        {booking.status}
-                      </span>
-                    </td>
+              return (
+                <tr key={booking.id}>
+                  <td>#{booking.id}</td>
+                  <td>{booking.customer}</td>
+                  <td>
+                    {booking.date}
+                    <div>{booking.time}</div>
+                  </td>
+                  <td>{booking.duration} hrs</td>
+                  <td>{booking.serviceType}</td>
+                  <td>
+                    <span className={`status-badge ${statusClass}`}>
+                      {booking.status}
+                    </span>
+                  </td>
                     <td>
                       {status === "paid" && (
                       <div className="action-buttons">
@@ -289,9 +309,11 @@ export default function CompanyBookings() {
                         </button>
                       )}
 
-                      {status === "accepted" && booking.cleanersAssigned?.length > 0 && (
-                        <span className="assigned-label">Assigned</span>
+                      {["accepted", "in progress", "completed"].includes(status) &&
+                        booking.cleanersAssigned?.length > 0 && (
+                          <span className="assigned-label">Assigned</span>
                       )}
+
 
                       {status === "rejected" && <span className="rejected-label">Rejected</span>}
                     </td>
