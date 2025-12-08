@@ -8,7 +8,7 @@ export default function JobDetailsTab({
   serviceType,
   price,
   status,
-  notes,
+  assignedCleaners,
 }) {
   const statusColors = {
     upcoming: "#fbc02d", // Gold/Yellow
@@ -53,13 +53,17 @@ export default function JobDetailsTab({
           <label>Payout</label>
           <p className="price-text">{price}</p>
         </div>
+         <div className="detail-group">
+          <label>Assigned Cleaners</label>
+          {assignedCleaners.map((cleaners) =>(
+            <p className="price-text">{cleaners.cleanerName}</p>
+          ))}
+          
+        </div>
+        
       </div>
 
-      {/* 3. Footer: Special Instructions */}
-      <div className="job-notes">
-        <label>Special Instructions:</label>
-        <p>"{notes}"</p>
-      </div>
+
 
       {/* Action Buttons */}
       <div className="job-status">

@@ -30,7 +30,7 @@ export default function CustomerBookingSummary() {
       }
       const data = await res.json();
       setSummary(data);
-      console.log("Status: ", summary.status);
+      console.log("Status: ", data);
 
 
     } catch (error) {
@@ -162,7 +162,7 @@ export default function CustomerBookingSummary() {
                   status={item.status}
                   date={`${item.date} - ${item.time}`}
                   companyCleaner={item.companyName}
-                  cleaner={formatCleanerName(item.cleaner)}
+                  cleaner={item.assignedCleanerNames}
                   location={item.address}
                   onEdit={() => {
                     setNewDate(item.bookingDate);
@@ -174,6 +174,7 @@ export default function CustomerBookingSummary() {
                     setSelectedBookingId(item.bookingId);
                     setShowCancelModal(true);
                   }}
+
                   onPay={() => navigate("/customer/payments", { state: { newBooking: item } })}
                   onViewHistory={() => {
                     setSelectedBookingId(item.bookingId);

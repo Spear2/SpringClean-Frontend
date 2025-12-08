@@ -1,8 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "../CleanerPages/Styles/CleanerDashboard.css";
 import NavBarCompany_Cleaner from "../../components/Navbar/NavBarCompany_Cleaner";
 import KPI from "../../components/KPI/KPICard";
-import { useAuth } from "../../auth/useAuth";
 import useCleaner from "../../Hooks/useCleaner";
 import BookingTab from "../../components/BookingTab/BookingTab";
 import {
@@ -16,35 +15,60 @@ import {
 } from "recharts";
 
 export default function CleanerDashboard() {
-  const auth = useAuth();
-  const cleaner = useCleaner();
 
-  if (!cleaner) return <p>Loading...</p>;
+  const cleaner = useCleaner();
+  const [cleanerBookings, setCleanerBookings] = useState([]);
+
+  useEffect(() => {
+    if(!cleaner?.cleanerId) return;
+
+    fetch(`http://localhost:8080/api/cleaners/${cleaner.cleanerId}/bookings`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("BOOKINGS:", data);
+        setCleanerBookings(data);
+      })
+      .catch((err) => console.error("Error Fetching Cleaner's Bookings:", err));
+  }, [cleaner?.cleanerId]);
+
+  // -------------------------------
+  // COMPUTE KPI VALUES
+  // -------------------------------
+
+  // KPI 1: Total Earnings (only completed jobs)
+  const totalEarnings = cleanerBookings
+    .filter(b => b.status === "Done" || b.status === "Completed")
+    .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+
+  // KPI 2: Attendance (completed jobs / all)
+  const completedJobs = cleanerBookings.filter(b => b.status === "Done" || b.status === "Completed").length;
+  const attendance = cleanerBookings.length > 0
+    ? Math.round((completedJobs / cleanerBookings.length) * 100)
+    : 0;
+
+  // KPI 3: Pending Jobs (Accepted or Pending)
+  const pendingJobs = cleanerBookings.filter(b => b.status === "Accepted" || b.status === "Pending").length;
 
   const kpiData = [
-    { title: "Total Earnings", info: "$1,250" },
-    { title: "Attendance", info: "95%" },
-    { title: "Pending Jobs", info: "3" },
+    { title: "Total Earnings", info: `₱${totalEarnings.toFixed(2)}` },
+    { title: "Attendance", info: `${attendance}%` },
+    { title: "Pending Jobs", info: pendingJobs },
   ];
 
-  const chartData = [
-    { day: "Mon", jobs: 2 },
-    { day: "Tue", jobs: 5 },
-    { day: "Wed", jobs: 3 },
-    { day: "Thu", jobs: 6 },
-    { day: "Fri", jobs: 4 },
-    { day: "Sat", jobs: 7 },
-    { day: "Sun", jobs: 1 },
-  ];
+  // -------------------------------
+  // WEEKLY CHART → Count bookings by day
+  // -------------------------------
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const pendingBookings = [
-    { id: 1, customer: "John Doe", date: "2024-07-01", status: "Pending" },
-    { id: 2, customer: "Jane Smith", date: "2024-07-03", status: "Pending" },
-    { id: 3, customer: "Bob Johnson", date: "2024-07-05", status: "Pending" },
-    { id: 4, customer: "Alice Brown", date: "2024-07-07", status: "Pending" },
-    { id: 5, customer: "John Cena", date: "2024-07-07", status: "Done" },
-    { id: 6, customer: "John Snow", date: "2024-07-07", status: "Done" },
-  ];
+  const chartData = days.map(day => ({
+    day: day,
+    jobs: cleanerBookings.filter(b => {
+      const date = new Date(b.bookingDate);
+      return date.getDay() === days.indexOf(day);
+    }).length
+  }));
+
+  if (!cleaner) return <p>Loading...</p>;
 
   return (
     <div className="CleanerDashboard-container">
@@ -63,29 +87,28 @@ export default function CleanerDashboard() {
           ))}
         </div>
 
-        {/* BOTTOM: Split Content */}
+        {/* Body Content */}
         <div className="dashboard-content">
-          {/* --- LEFT HALF: Bookings --- */}
+
+          {/* LEFT SIDE: BOOKING LIST */}
           <div className="half-section">
             <h2 className="booking-tab-header">Pending Bookings</h2>
 
-            {/* We add this wrapper so only the list scrolls, header stays fixed */}
             <div className="scrollable-list">
-              {pendingBookings.map((booking, index) => (
+              {cleanerBookings.map((items) => (
                 <BookingTab
-                  key={index}
-                  customer={booking.customer}
-                  date={booking.date}
-                  status={booking.status}
+                  key={items.bookingId}
+                  customer={`${items.customer?.firstName ?? ""} ${items.customer?.lastName ?? ""}`}
+                  date={items.bookingDate}
+                  status={items.status}
                 />
               ))}
             </div>
           </div>
 
-          {/* Vertical Divider Line (Optional) */}
           <div style={{ width: "1px", backgroundColor: "#e0e0e0" }}></div>
 
-          {/* --- RIGHT HALF: Bar Graph --- */}
+          {/* RIGHT SIDE: WEEKLY ACTIVITY CHART */}
           <div className="half-section">
             <h2 className="booking-tab-header">Weekly Activity</h2>
 
@@ -100,16 +123,10 @@ export default function CleanerDashboard() {
                     tick={{ fill: "#666" }}
                   />
                   <Tooltip cursor={{ fill: "transparent" }} />
-                  <Bar
-                    dataKey="jobs"
-                    fill="#1c4274"
-                    radius={[10, 10, 0, 0]}
-                    barSize={40}
-                  />
+                  <Legend />
 
-                  {/* 2. ADD A NAME PROP (This is what the legend will display) */}
                   <Bar
-                    name="Jobs Completed"
+                    name="Jobs Assigned"
                     dataKey="jobs"
                     fill="#1c4274"
                     radius={[10, 10, 0, 0]}
@@ -119,6 +136,7 @@ export default function CleanerDashboard() {
               </ResponsiveContainer>
             </div>
           </div>
+
         </div>
       </div>
     </div>
