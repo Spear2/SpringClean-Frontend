@@ -1,166 +1,152 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Prevent nav items from jumping */
 .navbar-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 65px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
-  padding: 10px 20px;
+  padding: 0 20px;
   background-color: #1c4274;
   color: white;
   z-index: 1000;
-  height: 10%;
 }
 
 .title-link {
   font-size: 2rem;
-  font-family: "Cal Sans", sans-serif;
+  font-weight: 800;
   text-decoration: none;
   color: white;
-  font-weight: 800;
 }
 
+/* ⭐ Fixes the top alignment issue */
 .nav-links {
   display: flex;
-  gap: 20px;
+  align-items: center;   /* <-- Important */
+  gap: 25px;
   font-family: "Nunito", sans-serif;
   font-size: 1.1rem;
 }
 
 .nav-links a {
-  text-decoration: none;
   color: white;
-  transition: color 0.3s ease;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
   color: #aae858;
 }
 
-.nav-links a.focus {
-  color: #aae858;
-}
-/* Dropdown positioned below header - works for all screen sizes */
-.dropdown-menu {
-  position: fixed;
-  top: 60px; /* header height */
-  right: 20px; /* adjust to align with Account link */
-  background-color: rgb(241, 243, 242);
-  color: black;
-  min-width: 150px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  border-radius: 4px;
+/* ----------------- Account Button ----------------- */
+.account-btn {
   display: flex;
-  flex-direction: column;
-  z-index: 1000;
-}
-
-.dropdown-menu .menu-item {
-  padding: 10px;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff22;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
   cursor: pointer;
-  font-family: "Nunito", sans-serif;
-  transition: background-color 0.2s ease;
+  transition: 0.3s ease;
 }
 
-.dropdown-menu .menu-item:hover {
-  background-color: #f4f5f4;
+.account-btn:hover {
+  background: #ffffff33;
 }
 
-.dropdown-menu .sign-out {
-  color: #ef3f30;
-  border-top: 1px solid #ddd;
-}
-
-
-/* 🔽 Hamburger icon (hidden by default) */
-.hamburger {
-  display: none;
-  flex-direction: column;
+.account-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef5ff;
+  color: #1c4274;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  gap: 5px;
+  font-weight: 700;
 }
 
-.hamburger span {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  border-radius: 5px;
+.arrow {
+  transition: transform 0.2s ease;
+}
+.arrow.rotated {
+  transform: rotate(180deg);
 }
 
-/* Dropdown positioned below header - works for all screen sizes */
+/* ------------------ FIXED Dropdown (clean & vertical) ------------------ */
 .dropdown-menu {
   position: fixed;
-  top: 60px; /* header height */
-  right: 20px; /* adjust to align with Account link */
-  background-color: rgb(241, 243, 242);
-  color: black;
-  min-width: 150px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
-  overflow: hidden;
+  top: 70px;
+  right: 20px;
+
+  width: 170px;
+  background: #ffffff;
+  border-radius: 10px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  z-index: 2000;
 }
 
-/* Menu items */
-.dropdown-menu .menu-item {
+.dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Menu items are now VERTICAL */
+.menu-item {
+  display: block;          /* <<< FIXES the row issue */
+  width: 100%;          
+  text-align: left;
+
   padding: 12px 16px;
-  cursor: pointer;
   font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #1c4274;
+  text-decoration: none;   /* <<< removes blue underline */
+
+  cursor: pointer;
+  transition: background 0.2s ease, padding-left 0.2s ease;
 }
 
-/* 🌟 Hover effect */
-.dropdown-menu .menu-item:hover {
-  background-color: #e8f1ff; /* soft light blue highlight */
-  color: #1c4274; /* match your theme color */
-  padding-left: 20px; /* subtle slide animation */
+.menu-item:hover {
+  background: #eef4ff;
+  padding-left: 22px;      /* subtle slide-in */
 }
 
-/* Optional: active/focus effect for keyboard users */
-.dropdown-menu .menu-item:active,
-.dropdown-menu .menu-item:focus {
-  background-color: #dbe8ff;
-  outline: none;
+.sign-out {
+  color: #d3312d !important;
+  border-top: 1px solid #eaeaea;
 }
 
-.dropdown-menu .sign-out {
-  color: #ef3f30;
-  border-top: 1px solid #ddd;
-}
-
-.dropdown-menu .sign-out:hover {
-  background-color: #ffeaea;
-  color: #d12a1a;
+.sign-out:hover {
+  background: #ffe9e9;
+  color: #b8221c !important;
 }
 
 
-/* 📱 Mobile styles */
+/* ----------------- Mobile ----------------- */
 @media (max-width: 768px) {
   .nav-links {
     position: absolute;
-    top: 60px;
+    top: 65px;
     right: 0;
-    background-color: #1c4274;
     width: 100%;
+    background: #1c4274;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    display: none;
     padding: 20px 0;
+    display: none;
   }
 
   .nav-links.open {
@@ -169,7 +155,15 @@
 
   .hamburger {
     display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
   }
 
-  
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+  }
 }

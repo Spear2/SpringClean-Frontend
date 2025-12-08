@@ -164,7 +164,7 @@
   z-index: 3000;
 }
 
-.cbc-odal-content {
+.cbc-modal-content {
   background: #fff;
   padding: 2rem;
   border-radius: 14px;
@@ -236,6 +236,16 @@
 
 .cbc-btn-close {
   background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.cbc-btn-danger {
+  background: #0027e8;
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;

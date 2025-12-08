@@ -63,8 +63,12 @@ export default function CustomerBookingSummary() {
 
   // ---- CANCEL BOOKING ----
   const confirmCancel = async () => {
+    if(!customer || !customer.customerId){
+      console.log("Customer ID: ", customer.customerId)
+      return;
+    }
     try {
-      await fetch(`http://localhost:8080/api/bookings/${selectedBookingId}`, {
+      await fetch(`http://localhost:8080/api/bookings/${selectedBookingId}/${customer.customerId}`, {
         method: "DELETE",
       });
 
@@ -187,15 +191,24 @@ export default function CustomerBookingSummary() {
         <div className="cbc-modal-overlay">
           <div className="cbc-modal-content">
             <h2>Edit Booking</h2>
+
             <label>Date:</label>
-            <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+            <input 
+              type="date" 
+              value={newDate} 
+              onChange={(e) => setNewDate(e.target.value)} 
+            />
 
             <label>Time:</label>
-            <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
+            <input 
+              type="time" 
+              value={newTime} 
+              onChange={(e) => setNewTime(e.target.value)} 
+            />
 
             <div className="cbc-modal-actions">
-              <button onClick={saveEdit}>Save</button>
-              <button onClick={() => setShowEditModal(false)}>Cancel</button>
+              <button className="cbc-btn-save" onClick={saveEdit}>Save</button>
+              <button className="cbc-btn-close" onClick={() => setShowEditModal(false)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -206,9 +219,10 @@ export default function CustomerBookingSummary() {
         <div className="cbc-modal-overlay">
           <div className="cbc-modal-content">
             <h2>Cancel Booking?</h2>
+
             <div className="cbc-modal-actions">
-              <button onClick={confirmCancel}>Yes</button>
-              <button onClick={() => setShowCancelModal(false)}>No</button>
+              <button className="cbc-btn-danger" onClick={confirmCancel}>Yes</button>
+              <button className="cbc-btn-close" onClick={() => setShowCancelModal(false)}>No</button>
             </div>
           </div>
         </div>
