@@ -9,21 +9,15 @@ import useCompany from "../../Hooks/useCompany";
 export default function CompanySchedule() {
   const company = useCompany();
   const [bookings, setBookings] = useState([]);
+  const [view, setView] = useState("month");
+  const [date, setDate] = useState(new Date());
+  const [selectedBooking, setSelectedBooking] = useState(null); // For preview modal
 
-  // 1. SETUP LOCALIZER
-  const locales = {
-    "en-US": require("date-fns/locale/en-US"),
-  };
+  // LOCALIZER
+  const locales = { "en-US": require("date-fns/locale/en-US") };
+  const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales });
 
-  const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales,
-  });
-
-  // 2. FETCH REAL BOOKINGS
+  // FETCH BOOKINGS
   useEffect(() => {
     if (!company?.companyCleanerId) return;
 
@@ -43,40 +37,37 @@ export default function CompanySchedule() {
     fetchBookings();
   }, [company]);
 
-  // 3. CONVERT BOOKINGS TO EVENTS
+  // CONVERT BOOKINGS TO EVENTS
   const events = bookings.map((b) => {
-    // Combine Date + Time strings into a Date Object
-    // Assumption: b.date is "YYYY-MM-DD" and b.time is "HH:mm"
-    // If your API returns differently, adjust the parsing logic below.
     const start = new Date(`${b.date}T${b.time}`);
-    const end = new Date(
-      start.getTime() + parseInt(b.hours || 2) * 60 * 60 * 1000
-    );
-
+    const end = new Date(start.getTime() + parseInt(b.hours || 2) * 60 * 60 * 1000);
     return {
       id: b.bookingId,
       title: `${b.serviceType} - ${b.customerFirstName} ${b.customerLastName}`,
       start,
       end,
-      status: b.status, // We will use this for coloring
-      cleaners: b.assignedCleanerNames || [], // Optional: Show who is assigned
+      status: b.status,
+      cleaners: b.assignedCleanerNames || [],
+      bookingData: b, // keep original booking for preview
     };
   });
 
-  // 4. COLOR CODING LOGIC
+  // EVENT COLOR STYLES
   const eventStyleGetter = (event) => {
-    let backgroundColor = "#1c4274"; // Default Blue (Pending)
-
-    if (event.status === "Accepted") backgroundColor = "#2e7d32"; // Green
-    if (event.status === "Completed") backgroundColor = "#aae858"; // Light Green
-    if (event.status === "Rejected") backgroundColor = "#c62828"; // Red
+    let backgroundColor = "#1c4274"; // Default
+    if (event.status === "Accepted") backgroundColor = "#2e7d32";
+    if (event.status === "Completed") backgroundColor = "#12360e";
+    if (event.status === "Rejected") backgroundColor = "#c62828";
+    if (event.status === "In Progress") backgroundColor = "#f2e6ff";
+    if (event.status === "Paid") backgroundColor = "#d6f0ff";
+    if (event.status === "Cancelled") backgroundColor = "#f0f0f0";
 
     return {
       style: {
         backgroundColor,
         borderRadius: "8px",
         opacity: 0.9,
-        color: event.status === "Completed" ? "#1c4274" : "white", // Text contrast
+        color: ["Completed", "In Progress", "Paid"].includes(event.status) ? "#1c4274" : "white",
         border: "0px",
         display: "block",
         fontSize: "12px",
@@ -89,7 +80,7 @@ export default function CompanySchedule() {
     <div className="company-schedule-page">
       <NavbarCleaner />
 
-      {/* HEADER (Matches Dashboard Style) */}
+      {/* HEADER */}
       <div className="dashboard-header">
         <div>
           <h1>Schedule</h1>
@@ -102,6 +93,7 @@ export default function CompanySchedule() {
         </div>
       </div>
 
+      {/* CALENDAR */}
       <div className="schedule-body">
         <div className="calendar-card">
           <Calendar
@@ -109,22 +101,25 @@ export default function CompanySchedule() {
             events={events}
             startAccessor="start"
             endAccessor="end"
-            style={{ height: 700 }}
             views={["month", "week", "day"]}
-            defaultView="month"
+            view={view}
+            onView={setView}
+            date={date}
+            onNavigate={setDate}
+            style={{ flex: 1, width: "100%", height: "100%" }}
             eventPropGetter={eventStyleGetter}
+            onSelectEvent={(event) => setSelectedBooking(event.bookingData)}
             components={{
               event: ({ event }) => (
                 <div title={event.title}>
-                  <strong>{event.title}</strong>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <strong>{event.title}</strong>
+                    <span className={`status-badge ${event.status.toLowerCase().replace(" ", "-")}`}>
+                      {event.status}
+                    </span>
+                  </div>
                   {event.cleaners.length > 0 && (
-                    <div
-                      style={{
-                        fontSize: "10px",
-                        marginTop: "2px",
-                        opacity: 0.9,
-                      }}
-                    >
+                    <div style={{ fontSize: "10px", marginTop: "2px", opacity: 0.9 }}>
                       {event.cleaners.length} Cleaner(s)
                     </div>
                   )}
@@ -134,6 +129,28 @@ export default function CompanySchedule() {
           />
         </div>
       </div>
+
+      {/* BOOKING PREVIEW MODAL */}
+      {selectedBooking && (
+        <div className="booking-modal" onClick={() => setSelectedBooking(null)}>
+          <div className="booking-modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Booking Details</h2>
+            <p><strong>Customer:</strong> {selectedBooking.customerFirstName} {selectedBooking.customerLastName}</p>
+            <p><strong>Service:</strong> {selectedBooking.serviceType}</p>
+            <p><strong>Date:</strong> {selectedBooking.date}</p>
+            <p><strong>Time:</strong> {selectedBooking.time}</p>
+            <p><strong>Hours:</strong> {selectedBooking.hours || 2}</p>
+            <p>
+              <strong>Status:</strong>{" "}
+              <span className={`status-badge ${selectedBooking.status.toLowerCase().replace(" ", "-")}`}>
+                {selectedBooking.status}
+              </span>
+            </p>
+            <p><strong>Cleaners Assigned:</strong> {selectedBooking.assignedCleanerNames?.join(", ") || "None"}</p>
+            <button onClick={() => setSelectedBooking(null)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

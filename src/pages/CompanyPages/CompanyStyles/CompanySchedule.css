@@ -4,13 +4,14 @@
 }
 
 .company-schedule-page {
-  padding: 0;
-  margin: 0;
-  background-color: #bfdff5; /* Light Blue Background */
-  height: 100vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  height: 100vh; /* full viewport height */
+  padding: 0; 
+  margin: 0; 
+  background-color: #bfdff5; /* Light Blue Background */ 
+  overflow: hidden; 
   font-family: "Cal Sans", sans-serif;
 }
 
@@ -36,24 +37,64 @@
 
 /* BODY WRAPPER */
 .schedule-body {
-  padding: 30px;
   flex: 1;
-  overflow: hidden;
+  min-height: 0; /* crucial for flex children to shrink properly */
+  padding: 20px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
+
 
 /* CALENDAR CARD CONTAINER */
 .calendar-card {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 25px;
-  border-top: 4px solid #aae858;
-  box-shadow: 0 4px 15px rgba(28, 66, 116, 0.05);
-  flex: 1;
-  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;   
+  border-radius: 20px; 
+  padding: 20px; 
+  border-top: 4px solid #aae858; 
 }
 
+
+/* Booking modal */
+.booking-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.booking-modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 90%;
+}
+
+.booking-modal-content button {
+  margin-top: 15px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1c4274;
+  color: white;
+  cursor: pointer;
+}
+
+.booking-modal-content button:hover {
+  background-color: #2e7d32;
+}
 /* =========================================
    CUSTOMIZING REACT-BIG-CALENDAR STYLES
    ========================================= */
@@ -122,8 +163,16 @@
 
 /* 4. Events */
 .rbc-event {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  white-space: normal !important; /* wrap text instead of overlapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.rbc-event-content,
+.rbc-event-label{
+  color: white;
+}
+
 
 /* 5. Mobile Adjustments */
 @media (max-width: 768px) {
