@@ -107,6 +107,26 @@
   color: #c62828;
 }
 
+.status-badge.paid {
+  background-color: #d6f0ff;
+  color: #005b8f;
+}
+
+.status-badge.completed {
+  background-color: #d9f7d6;
+  color: #1c7c1a;
+}
+
+.status-badge.in-progress {
+  background-color: #f2e6ff;
+  color: #5d2fa1;
+}
+
+.status-badge.cancelled {
+  background-color: #f0f0f0;
+  color: #6d6d6d;
+}
+
 /* ACTION BUTTONS */
 .action-buttons {
   display: flex;
