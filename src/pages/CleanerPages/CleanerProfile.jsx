@@ -61,18 +61,18 @@ export default function CleanerProfile() {
 
             <div className="detail-row">
               <label>Email</label>
-              <p>johanne@cleaner.com</p>{" "}
+              <p>{cleaner.email}</p>{" "}
               {/* Replace with dynamic email if available */}
             </div>
 
             <div className="detail-row">
               <label>Phone</label>
-              <p>+1 (555) 019-2834</p>
+              <p>{cleaner.phoneNumber}</p>
             </div>
 
             <div className="detail-row">
               <label>Address</label>
-              <p>123 Clean Street, Metro City</p>
+              <p>{cleaner.address}</p>
             </div>
           </div>
 

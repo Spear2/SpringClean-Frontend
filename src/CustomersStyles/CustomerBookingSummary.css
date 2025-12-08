@@ -84,6 +84,7 @@
   font-size: 1.3rem;
 }
 
+
 .cbc-booking-info p {
   margin: 5px 0;
   font-size: 1rem;
@@ -114,40 +115,42 @@
   font-weight: 600;
   transition: background-color 0.2s ease;
 }
-.cbc-btn-pay{
-  background-color: rgb(254, 198, 86);
-  color: #333;
+.cbc-btn-pay {
+  background: #ffd56b;
+  color: #5a4200;
 }
 
-.cbc-btn-pay:hover{
-  background-color: rgb(246, 181, 52);
+.cbc-btn-pay:hover {
+  background: #f4bf3f;
 }
+
 
 .cbc-btn-edit {
-  background-color: #2d5a9e;
+  background: #2d5a9e;
   color: white;
 }
 
 .cbc-btn-edit:hover {
-  background-color: #1c4274;
+  background: #1c4274;
 }
 
+
 .cbc-btn-cancel {
-  background-color: #d9534f;
+  background: #d9534f;
   color: white;
 }
 
 .cbc-btn-cancel:hover {
-  background-color: #c9302c;
+  background: #c33d38;
 }
 
 .cbc-btn-view {
-  background-color: #195236;
+  background: #195236;
   color: white;
 }
 
 .cbc-btn-view:hover {
-  background-color: #123524;
+  background: #123524;
 }
 
 /* ==============================
@@ -307,4 +310,26 @@
 
 .cbc-summary-list .cbc-no-bookings{
   font-family: "Nunito", sans-serif;
+}
+
+.cbc-cleaner-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.cbc-cleaner-badge {
+  background: #1c4274;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cbc-no-cleaner {
+  color: #777;
+  margin: 5px 0;
+  font-style: italic;
 }
