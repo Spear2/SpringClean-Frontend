@@ -148,6 +148,10 @@ body {
   color: #2a9d8f;
 }
 
+.status.refunded {
+  color: #14e11b;
+}
+
 
 /* EMPTY STATE */
 .history-empty {

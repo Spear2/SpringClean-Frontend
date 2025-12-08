@@ -4,7 +4,7 @@ import useCustomer from "../../Hooks/useCustomer";
 
 export default function Wallet() {
   const paymentMethods = [
-    { id: "mobileWallet", label: "Mobile Wallet", icon: "https://cdn-icons-png.flaticon.com/128/1796/1796819.png" }
+    { id: "mobileWallet", label: "Wallet", icon: "https://cdn-icons-png.flaticon.com/128/1796/1796819.png" }
   ];
 
   const customer = useCustomer();
@@ -56,6 +56,14 @@ export default function Wallet() {
 
     fetchHistory();
   }, [customer]);
+
+  const negativeOrPositive = (status, amount) => {
+    if(status === "Paid"){
+      return <td>₱ -{amount.toLocaleString()}</td>
+    }else{
+      return <td>₱ +{amount.toLocaleString()}</td>
+    }
+  }
 
   return (
     <div className="wallet-wrapper">
@@ -128,7 +136,7 @@ export default function Wallet() {
                       <td>{tx.date}</td>
                       <td>{tx.time}</td>
                       <td>{tx.paymentMethod}</td>
-                      <td>₱ {tx.amount.toLocaleString()}</td>
+                      {negativeOrPositive(tx.status, tx.amount)}
                       <td className={`status ${tx.status.toLowerCase()}`}>{tx.status}</td>
                     </tr>
                   ))}
