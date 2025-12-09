@@ -1,11 +1,10 @@
-h1{
+h1 {
   font-size: 60px;
 }
 
-span{
+span {
   font-size: 25px;
   font-family: "Nunito", sans-serif;
-
 }
 
 .top-content {
@@ -16,28 +15,29 @@ span{
 }
 
 .top-content h1 {
-  font-size: 3rem;        /* Bigger, like booking summary */
+  font-size: 3rem;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .top-content span {
-  font-size: 1.25rem;     /* Slightly bigger, clearer */
+  font-size: 1.25rem;
   color: #333;
   font-family: "Nunito", sans-serif;
 }
 
 .chp-card-wrapper {
   display: flex;
-  flex-wrap: wrap;             
-  justify-content: center;     
-  align-items: flex-start;     
-  gap: 20px;                   
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
 }
 
+/* --- CARD CONTAINER --- */
 .chp-card-container {
-  width: 300px;         
-  height: 350px;        
+  width: 300px;
+  height: 350px;
   background-color: white;
   border: 2px solid #1c4274;
   border-radius: 10px;
@@ -49,12 +49,14 @@ span{
   font-family: "Nunito", sans-serif;
   padding: 0;
   margin: 10px;
+  /* IMPORTANT: needed for overlay positioning */
+  position: relative;
 }
 
 .cleaner-img {
   width: 100%;
-  height: 150px;            
-  object-fit: cover;       
+  height: 150px;
+  object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
@@ -65,13 +67,15 @@ span{
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
 }
 
 .chp-card-content h2 {
   font-size: 18px;
   font-family: "Nunito", sans-serif;
   color: #1c4274;
-  margin: 8px 0 4px 0;      
+  margin: 8px 0 4px 0;
   font-weight: 700;
 }
 
@@ -87,7 +91,7 @@ span{
   color: white;
   border-radius: 20px;
   padding: 8px 25px;
-  margin: 25px auto 12px auto; 
+  margin: 25px auto 12px auto;
   cursor: pointer;
   font-size: 1.2rem;
   width: fit-content;
@@ -98,20 +102,80 @@ span{
   background-color: #2d5a9e;
 }
 
-.btn-viewhistory{
+.btn-viewhistory {
   align-content: flex-end;
   background-color: #1c4274;
   color: white;
   border-radius: 20px;
   padding: 8px 25px;
-  margin: 25px auto 12px auto; 
+  margin: 25px auto 12px auto;
   cursor: pointer;
   font-size: 1.2rem;
   width: fit-content;
   transition: background-color 0.2s ease;
 }
 
-.btn-viewhistory:hover{
+.btn-viewhistory:hover {
   background-color: #2d5a9e;
 }
 
+/* =========================================
+   HOVER OVERLAY STYLES
+   ========================================= */
+
+.chp-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 66, 116, 0.96); /* Dark Blue Overlay */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease-in-out;
+  z-index: 10;
+}
+
+/* Show on Hover */
+.chp-card-container:hover .chp-card-overlay {
+  opacity: 1;
+}
+
+/* Overlay Typography */
+.chp-card-overlay h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #aae858; /* Green Accent Title */
+}
+
+.chp-card-overlay p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #f0f0f0;
+  margin-bottom: 20px;
+}
+
+/* Overlay Button */
+.chp-card-overlay button {
+  background-color: #aae858;
+  color: #1c4274;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.chp-card-overlay button:hover {
+  transform: scale(1.05);
+  background-color: #9bd64e;
+}
