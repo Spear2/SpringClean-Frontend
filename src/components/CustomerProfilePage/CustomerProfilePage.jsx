@@ -28,7 +28,9 @@ export default function CustomerProfile() {
       email: customer.email,
       phoneNumber: customer.phoneNumber,
       address: customer.address,
-      photo: customer.photo || "https://cdn-icons-png.flaticon.com/512/219/219970.png"
+      photo:
+        customer.photo ||
+        "https://cdn-icons-png.flaticon.com/512/219/219970.png",
     });
     setIsEditing(true);
   };
@@ -87,7 +89,7 @@ export default function CustomerProfile() {
     navigate("/customer");
   };
 
- return (
+  return (
     <>
       <div className="top-content">
         <h1>Manage Profile</h1>
@@ -96,7 +98,6 @@ export default function CustomerProfile() {
 
       <div className="ccpr-profile-page-container">
         <div className="ccpr-profile-layout">
-
           {/* LEFT SIDE IMAGE */}
           <div className="ccpr-profile-left">
             <div className="ccpr-profile-image-box">
@@ -159,24 +160,29 @@ export default function CustomerProfile() {
         {isEditing && (
           <div className="ccpr-modal-overlay">
             <div className="ccpr-uniform-box">
-
               <div className="ccpr-profile-layout">
-
                 {/* LEFT EDIT IMAGE */}
                 <div className="ccpr-profile-left">
                   <div className="ccpr-profile-image-box">
-                    <img src={editData.photo} alt="Edit" className="ccpr-profile-image" />
+                    <img
+                      src={editData.photo}
+                      alt="Edit"
+                      className="ccpr-profile-image"
+                    />
                   </div>
                   <label className="ccpr-upload-label">
                     Change Photo
-                    <input type="file" accept="image/*" onChange={handlePhotoChange} />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoChange}
+                    />
                   </label>
                 </div>
 
                 {/* RIGHT EDIT FIELDS */}
                 <div className="ccpr-profile-right">
                   <div className="ccpr-profile-fields">
-
                     <div className="ccpr-field-row">
                       <div className="ccpr-field-item">
                         <label>First Name</label>
@@ -184,7 +190,10 @@ export default function CustomerProfile() {
                           type="text"
                           value={editData.firstName}
                           onChange={(e) =>
-                            setEditData({ ...editData, firstName: e.target.value })
+                            setEditData({
+                              ...editData,
+                              firstName: e.target.value,
+                            })
                           }
                         />
                       </div>
@@ -195,7 +204,10 @@ export default function CustomerProfile() {
                           type="text"
                           value={editData.lastName}
                           onChange={(e) =>
-                            setEditData({ ...editData, lastName: e.target.value })
+                            setEditData({
+                              ...editData,
+                              lastName: e.target.value,
+                            })
                           }
                         />
                       </div>
@@ -219,7 +231,10 @@ export default function CustomerProfile() {
                           type="tel"
                           value={editData.phoneNumber}
                           onChange={(e) =>
-                            setEditData({ ...editData, phoneNumber: e.target.value })
+                            setEditData({
+                              ...editData,
+                              phoneNumber: e.target.value,
+                            })
                           }
                         />
                       </div>
@@ -232,7 +247,10 @@ export default function CustomerProfile() {
                           type="text"
                           value={editData.address}
                           onChange={(e) =>
-                            setEditData({ ...editData, address: e.target.value })
+                            setEditData({
+                              ...editData,
+                              address: e.target.value,
+                            })
                           }
                         />
                       </div>
@@ -240,17 +258,23 @@ export default function CustomerProfile() {
                   </div>
 
                   <div className="ccpr-profile-buttons">
-                    <button className="ccpr-edit-btn" onClick={handleSave}>
+                    <button
+                      className="ccpr-edit-btn"
+                      onClick={handleSave}
+                      style={{ fontFamily: "Cal Sans" }}
+                    >
                       Save Changes
                     </button>
-                    <button className="ccpr-back-btn" onClick={handleCancel}>
+                    <button
+                      className="ccpr-back-btn"
+                      onClick={handleCancel}
+                      style={{ fontFamily: "Cal Sans" }}
+                    >
                       Cancel
                     </button>
                   </div>
-
                 </div>
               </div>
-
             </div>
           </div>
         )}

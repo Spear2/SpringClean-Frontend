@@ -4,7 +4,11 @@ import useCustomer from "../../Hooks/useCustomer";
 
 export default function Wallet() {
   const paymentMethods = [
-    { id: "mobileWallet", label: "Wallet", icon: "https://cdn-icons-png.flaticon.com/128/1796/1796819.png" }
+    {
+      id: "mobileWallet",
+      label: "Wallet",
+      icon: "https://cdn-icons-png.flaticon.com/128/1796/1796819.png",
+    },
   ];
 
   const customer = useCustomer();
@@ -19,7 +23,9 @@ export default function Wallet() {
 
     const fetchBalance = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/api/wallet/${customer.customerId}/balance`);
+        const res = await fetch(
+          `http://localhost:8080/api/wallet/${customer.customerId}/balance`
+        );
         const data = await res.json();
         setBalances({ mobileWallet: data.walletBalance });
       } catch (err) {
@@ -36,10 +42,12 @@ export default function Wallet() {
 
     const fetchHistory = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/api/payments/customer/${customer.customerId}`);
+        const res = await fetch(
+          `http://localhost:8080/api/payments/customer/${customer.customerId}`
+        );
         const data = await res.json();
 
-        const mapped = data.map(tx => ({
+        const mapped = data.map((tx) => ({
           id: tx.paymentId,
           date: new Date(tx.paidAt).toLocaleDateString(),
           time: new Date(tx.paidAt).toLocaleTimeString(),
@@ -58,16 +66,22 @@ export default function Wallet() {
   }, [customer]);
 
   const negativeOrPositive = (status, amount) => {
-    if(status === "Paid"){
-      return <td>₱ -{amount.toLocaleString()}</td>
-    }else{
-      return <td>₱ +{amount.toLocaleString()}</td>
-    }
-  }
+    const isPayment = status === "Paid";
+
+    // Apply different classes for payment (debit) vs. refill (credit)
+    const className = isPayment ? "amount-debit" : "amount-credit";
+    const sign = isPayment ? "₱ -" : "₱ +";
+
+    return (
+      <td className={className}>
+        {sign}
+        {amount.toLocaleString()}
+      </td>
+    );
+  };
 
   return (
     <div className="wallet-wrapper">
-
       {/* HEADER */}
       <header className="wallet-header">
         <h1>Wallet</h1>
@@ -76,16 +90,16 @@ export default function Wallet() {
 
       {/* CONTENT WRAPPER */}
       <div className="wallet-content">
-
         {/* Left Section – Balance */}
         <div className="wallet-left">
-
           {/* Method Buttons */}
           <div className="wallet-tabs">
-            {paymentMethods.map(method => (
+            {paymentMethods.map((method) => (
               <button
                 key={method.id}
-                className={`wallet-tab ${activeMethod === method.id ? "active" : ""}`}
+                className={`wallet-tab ${
+                  activeMethod === method.id ? "active" : ""
+                }`}
                 onClick={() => setActiveMethod(method.id)}
               >
                 <img src={method.icon} alt="" />
@@ -98,10 +112,12 @@ export default function Wallet() {
           <div className="wallet-card">
             <div className="wallet-card-header">
               <img
-                src={paymentMethods.find(m => m.id === activeMethod)?.icon}
+                src={paymentMethods.find((m) => m.id === activeMethod)?.icon}
                 alt=""
               />
-              <span>{paymentMethods.find(m => m.id === activeMethod)?.label}</span>
+              <span>
+                {paymentMethods.find((m) => m.id === activeMethod)?.label}
+              </span>
             </div>
 
             <div className="wallet-balance">
@@ -109,7 +125,6 @@ export default function Wallet() {
               <h1>₱ {balances[activeMethod].toLocaleString()}</h1>
             </div>
           </div>
-
         </div>
 
         {/* Right Section – History */}
@@ -121,6 +136,7 @@ export default function Wallet() {
           ) : (
             <div className="table-wrapper">
               <table className="history-table">
+                {/* Fixed missing <thead> tag */}
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -131,13 +147,15 @@ export default function Wallet() {
                   </tr>
                 </thead>
                 <tbody>
-                  {history.map(tx => (
+                  {history.map((tx) => (
                     <tr key={tx.id}>
                       <td>{tx.date}</td>
                       <td>{tx.time}</td>
                       <td>{tx.paymentMethod}</td>
                       {negativeOrPositive(tx.status, tx.amount)}
-                      <td className={`status ${tx.status.toLowerCase()}`}>{tx.status}</td>
+                      <td className={`status ${tx.status.toLowerCase()}`}>
+                        {tx.status}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -145,7 +163,7 @@ export default function Wallet() {
             </div>
           )}
         </div>
-
+        {/* Closing div for wallet-right */}
       </div>
     </div>
   );
