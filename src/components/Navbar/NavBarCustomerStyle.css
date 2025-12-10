@@ -11,7 +11,7 @@
   padding: 0 20px;
   background-color: #1c4274;
   color: white;
-  z-index: 1000;
+  z-index: 1;
 }
 
 .title-link {
@@ -24,7 +24,7 @@
 /* ⭐ Fixes the top alignment issue */
 .nav-links {
   display: flex;
-  align-items: center;   /* <-- Important */
+  align-items: center; /* <-- Important */
   gap: 25px;
   font-family: "Nunito", sans-serif;
   font-size: 1.1rem;
@@ -106,15 +106,15 @@
 
 /* Menu items are now VERTICAL */
 .menu-item {
-  display: block;          /* <<< FIXES the row issue */
-  width: 100%;          
+  display: block; /* <<< FIXES the row issue */
+  width: 100%;
   text-align: left;
 
   padding: 12px 16px;
   font-family: "Nunito", sans-serif;
   font-size: 0.95rem;
   color: #1c4274;
-  text-decoration: none;   /* <<< removes blue underline */
+  text-decoration: none; /* <<< removes blue underline */
 
   cursor: pointer;
   transition: background 0.2s ease, padding-left 0.2s ease;
@@ -122,7 +122,7 @@
 
 .menu-item:hover {
   background: #eef4ff;
-  padding-left: 22px;      /* subtle slide-in */
+  padding-left: 22px; /* subtle slide-in */
 }
 
 .sign-out {
@@ -134,7 +134,6 @@
   background: #ffe9e9;
   color: #b8221c !important;
 }
-
 
 /* ----------------- Mobile ----------------- */
 @media (max-width: 768px) {

@@ -6,6 +6,7 @@ import "../../CustomersStyles/CustomerHomePage.css";
 
 export default function CustomerHomePage() {
   const [companyCleaner, setCompanyCleaner] = useState([]);
+
   const navigate = useNavigate();
 
   // Added 'desc' property to each object
@@ -94,9 +95,11 @@ export default function CustomerHomePage() {
 
       <div className="main-wrapper">
         {/* Page Header */}
-        <header className="settings-header">
+        <header className="BookNow-header">
           <div className="top-content">
-            <h1>Book Now!</h1>
+            <h1 style={{ fontFamily: "Cal Sans", letterSpacing: "1px" }}>
+              Book Now!
+            </h1>
             <span>Trusted professionals ready to make your home shine.</span>
           </div>
           <button className="btn-viewhistory" onClick={handleViewHistory}>
