@@ -43,6 +43,12 @@
   flex-direction: column;
 }
 
+.scrollable-list {
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 5px;
+}
+
 /* TABLE CARD */
 .table-card {
   background-color: #ffffff;

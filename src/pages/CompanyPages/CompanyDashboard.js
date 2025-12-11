@@ -49,9 +49,10 @@ export default function CompanyDashboard() {
 
   // Mock Revenue Calculation (Assuming avg $120 per booking if price is missing)
   const totalRevenue = bookings.reduce(
-    (acc, curr) => acc + (curr.price || 120),
-    0
+  (acc, curr) => acc + ((curr.price || 120) * 0.20),
+  0
   );
+
 
   const kpiData = [
     { title: "Total Revenue", info: `₱${totalRevenue.toLocaleString()}` },
