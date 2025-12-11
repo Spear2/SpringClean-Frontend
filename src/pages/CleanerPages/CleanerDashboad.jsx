@@ -18,6 +18,9 @@ export default function CleanerDashboard() {
 
   const cleaner = useCleaner();
   const [cleanerBookings, setCleanerBookings] = useState([]);
+  const [summary, setSummary] = useState(null);
+    const [earnings, setEarnings] = useState([]);
+    const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if(!cleaner?.cleanerId) return;
@@ -25,7 +28,7 @@ export default function CleanerDashboard() {
     fetch(`http://localhost:8080/api/cleaners/${cleaner.cleanerId}/bookings`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("BOOKINGS:", data);
+
         setCleanerBookings(data);
       })
       .catch((err) => console.error("Error Fetching Cleaner's Bookings:", err));
@@ -49,11 +52,7 @@ export default function CleanerDashboard() {
   // KPI 3: Pending Jobs (Accepted or Pending)
   const pendingJobs = cleanerBookings.filter(b => b.status === "Accepted" || b.status === "Pending").length;
 
-  const kpiData = [
-    { title: "Total Earnings", info: `₱${totalEarnings.toFixed(2)}` },
-    { title: "Attendance", info: `${attendance}%` },
-    { title: "Pending Jobs", info: pendingJobs },
-  ];
+  
 
   // -------------------------------
   // WEEKLY CHART → Count bookings by day
@@ -67,6 +66,48 @@ export default function CleanerDashboard() {
       return date.getDay() === days.indexOf(day);
     }).length
   }));
+
+  
+  
+    useEffect(() => {
+      if (!cleaner || !cleaner.cleanerId) return;
+  
+      const fetchEarnings = async () => {
+        try {
+          // Fetch summary
+          const summaryRes = await fetch(
+            `http://localhost:8080/api/earnings/cleaner/${cleaner.cleanerId}/summary`
+          );
+          const summaryData = await summaryRes.json();
+          setSummary(summaryData);
+  
+          // Fetch detailed earnings
+          const earningsRes = await fetch(
+            `http://localhost:8080/api/earnings/cleaner/${cleaner.cleanerId}`
+          );
+          const earningsData = await earningsRes.json();
+          setEarnings(earningsData);
+  
+          setLoading(false);
+        } catch (err) {
+          console.error("Error fetching earnings:", err);
+          setLoading(false);
+        }
+      };
+  
+      fetchEarnings();
+    }, [cleaner?.cleanerId]);
+  
+    const formatCurrency = (amount) => {
+      return `₱${amount.toFixed(2)}`;
+    };
+    const kpiData = summary
+  ? [
+      { title: "Total Earnings", info: `${formatCurrency(summary.totalEarnings)}` },
+      { title: "Attendance", info: `${attendance}%` },
+      { title: "Pending Jobs", info: pendingJobs },
+    ]
+  : [];
 
   if (!cleaner) return <p>Loading...</p>;
 

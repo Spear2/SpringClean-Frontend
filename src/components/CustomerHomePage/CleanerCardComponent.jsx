@@ -8,6 +8,7 @@ export default function CleanerCardComponent({
   loc,
   rate,
   img,
+  count,
   cleanerCount, // <--- New Prop for the count
 }) {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function CleanerCardComponent({
         <h2>{name}</h2>
         <p>📍 {loc}</p>
         <p>⭐ {rate} / 5.0</p>
+        <span className="stat-rate">Rating ({count} Reviews)</span>
       </div>
 
       {/* --- HIDDEN OVERLAY (Hover State) --- */}

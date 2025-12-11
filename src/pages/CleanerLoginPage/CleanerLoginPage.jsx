@@ -29,7 +29,6 @@ const CleanerLoginPage = () => {
 
       if (response.ok) {
         alert("Login Successfully");
-        console.log("Cleaner Login Successful:", data);
 
         // Accept both backend possibilities: cleanerId or id
         login({

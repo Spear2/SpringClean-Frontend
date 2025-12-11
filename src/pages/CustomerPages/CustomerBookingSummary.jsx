@@ -100,9 +100,14 @@ export default function CustomerBookingSummary() {
   }, [newBooking, customer]);
 
   // Filter logic is correct
-  const filteredBookings = summary.filter((b) =>
-    filterStatus === "All" ? true : b.status === filterStatus
-  );
+  const filteredBookings = summary
+    .filter(b => filterStatus === "All" || b.status === filterStatus)
+    .sort((a, b) => {
+      const dateA = new Date(`${a.date} ${a.time}`);
+      const dateB = new Date(`${b.date} ${b.time}`);
+      return dateA - dateB;
+    });
+
 
   if (!customer) return <p>Loading customer...</p>;
   if (loading) return <p>Loading bookings...</p>;
@@ -138,8 +143,8 @@ export default function CustomerBookingSummary() {
               <option value="Accepted">Accepted</option>{" "}
               {/* Correct status name based on company flow */}
               <option value="Paid">Paid</option>
-              <option value="Assigned">Assigned</option>
-              <option value="In-progress">In Progress</option>
+              <option value="Accepted">Accepted</option>
+              <option value="In progress">In Progress</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
               <option value="Rejected">Rejected</option>{" "}

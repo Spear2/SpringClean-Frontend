@@ -201,7 +201,7 @@ export default function CompanyBookings() {
             return { ...b, status: newStatus };
           })
         );
-      }, 60000);
+      }, 5000);
 
       return () => clearInterval(interval);
     }, []);
@@ -234,6 +234,8 @@ export default function CompanyBookings() {
       })
       .catch((err) => console.error("Error assigning cleaners:", err));
   };
+
+  
 
   return (
     <div className="company-bookings-page">

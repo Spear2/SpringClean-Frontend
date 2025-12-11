@@ -1,57 +1,90 @@
 import { useState, useEffect } from "react";
 import "./Reviews.css";
+import useCustomer from "../../Hooks/useCustomer";
 
-export default function Review({ cleaners = [], companies = [] }) {
-  const [reviewFor, setReviewFor] = useState("company"); // company | cleaner
-  const [cleanerId, setCleanerId] = useState("");
+export default function ReviewPage() {
+  const customer = useCustomer();
+  const [reviewFor, setReviewFor] = useState("company"); 
   const [companyId, setCompanyId] = useState("");
+  const [cleanerId, setCleanerId] = useState("");
   const [rating, setRating] = useState(0);
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const [reviews, setReviews] = useState(() => {
-    return JSON.parse(localStorage.getItem("customerReviews")) || [];
-  });
+  const [companies, setCompanies] = useState([]);
+  const [cleaners, setCleaners] = useState([]);
+  const [customerReviews, setCustomerReviews] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("customerReviews", JSON.stringify(reviews));
-  }, [reviews]);
+    fetch("http://localhost:8080/api/company-cleaners")
+      .then((res) => res.json())
+      .then((data) => setCompanies(data))
+      .catch(console.error);
 
-  const handleSubmit = (e) => {
+    fetch("http://localhost:8080/api/cleaners") 
+      .then((res) => res.json())
+      .then((data) => setCleaners(data))
+      .catch(console.error);
+  }, []);
+
+
+  useEffect(() => {
+    if (!customer?.customerId) return;
+
+    fetch(`http://localhost:8080/api/reviews/customer/${customer.customerId}`)
+      .then((res) => res.json())
+      .then((data) => setCustomerReviews(data))
+      .catch(console.error);
+  }, [customer]);
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (rating === 0) {
-      alert("Please select a star rating.");
-      return;
+    if (!rating) {
+      return alert("Please select a star rating.");
+    }
+    if (!text.trim()) {
+      return alert("Please enter your review.");
     }
 
-    if (text.trim() === "") {
-      alert("Please enter your review or complaint.");
-      return;
-    }
-
-    const newReview = {
-      id: Date.now(),
+    const formData = new FormData();
+    const reviewData = {
       reviewFor,
-      cleanerId: reviewFor === "cleaner" ? cleanerId : null,
-      companyId: reviewFor === "company" ? companyId : null,
+      companyId: reviewFor === "company" ? Number(companyId) : null,
+      cleanerId: reviewFor === "cleaner" ? Number(cleanerId) : null,
       rating,
       text,
-      file: file ? URL.createObjectURL(file) : null,
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
+      customerId: customer.customerId,
     };
 
-    setReviews((prev) => [newReview, ...prev]);
-    setSubmitted(true);
+    formData.append("data", new Blob([JSON.stringify(reviewData)], { type: "application/json" }));
+    if (file) formData.append("file", file);
 
-    // Reset
+    const res = await fetch("http://localhost:8080/api/reviews", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      alert("Error submitting review.");
+      return;
+    }else{
+      alert("Reviews Submitted");
+    }
+
+    setSubmitted(true);
     setRating(0);
     setText("");
     setFile(null);
     setCleanerId("");
     setCompanyId("");
+
+    // Reload reviews
+    fetch(`http://localhost:8080/api/reviews/customer/${customer.customerId}`)
+      .then((res) => res.json())
+      .then((data) => setCustomerReviews(data));
   };
 
   return (
@@ -63,8 +96,7 @@ export default function Review({ cleaners = [], companies = [] }) {
       </header>
 
       <form className="review-form" onSubmit={handleSubmit}>
-        
-        {/* Select Company or Cleaner */}
+
         <select
           className="review-select"
           value={reviewFor}
@@ -74,7 +106,7 @@ export default function Review({ cleaners = [], companies = [] }) {
           <option value="cleaner">Cleaner</option>
         </select>
 
-        {/* Company Selection */}
+        {/* Company selection */}
         {reviewFor === "company" && (
           <select
             className="review-select"
@@ -83,14 +115,14 @@ export default function Review({ cleaners = [], companies = [] }) {
           >
             <option value="">Select Company</option>
             {companies.map((co) => (
-              <option key={co.id} value={co.id}>
-                {co.name}
+              <option key={co.companyCleanerId} value={co.companyCleanerId}>
+                {co.companyName}
               </option>
             ))}
           </select>
         )}
 
-        {/* Cleaner Selection */}
+        {/* Cleaner selection */}
         {reviewFor === "cleaner" && (
           <select
             className="review-select"
@@ -99,14 +131,14 @@ export default function Review({ cleaners = [], companies = [] }) {
           >
             <option value="">Select Cleaner</option>
             {cleaners.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
+              <option key={c.cleanerId} value={c.cleanerId}>
+                {c.cleanerName}
               </option>
             ))}
           </select>
         )}
 
-        {/* Star Rating */}
+        {/* Stars */}
         <div className="star-rating">
           {[1, 2, 3, 4, 5].map((star) => (
             <span
@@ -119,49 +151,43 @@ export default function Review({ cleaners = [], companies = [] }) {
           ))}
         </div>
 
-        {/* Review Text */}
         <textarea
           className="review-text"
           rows="5"
-          placeholder="Write your review or complaint..."
+          placeholder="Write your review..."
           value={text}
           onChange={(e) => setText(e.target.value)}
         ></textarea>
 
-        {/* File Upload */}
         <label className="attachment-label">
           Attach Image (optional)
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
+          <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
         </label>
 
-        {/* Submit Button */}
         <button className="review-submit-btn">Submit</button>
       </form>
 
-      {/* Success Message */}
       {submitted && (
         <div className="review-success">
           <p>Thank you! Your review has been submitted.</p>
         </div>
       )}
 
-      {/* Review History */}
+      {/* ======================== */}
+      {/*      REVIEW HISTORY      */}
+      {/* ======================== */}
       <section className="review-history">
         <h2>Your Previous Reviews</h2>
-        {reviews.length === 0 && <p>No reviews submitted yet.</p>}
 
-        {reviews.map((r) => (
+        {customerReviews.length === 0 && <p>No reviews submitted yet.</p>}
+
+        {customerReviews.map((r) => (
           <div className="review-card" key={r.id}>
-            
             <div className="review-top">
               <strong>
                 {r.reviewFor === "company"
-                  ? `Company Review (ID: ${r.companyId})`
-                  : `Cleaner Review (ID: ${r.cleanerId})`}
+                  ? `Company: ${r.company?.companyName}`
+                  : `Cleaner: ${r.cleaner?.cleanerName}`}
               </strong>
 
               <span className="review-date">
@@ -170,14 +196,18 @@ export default function Review({ cleaners = [], companies = [] }) {
             </div>
 
             <div className="review-stars">
-              {"★".repeat(r.rating)}
+              {"★".repeat(r.rating)}{" "}
               {"☆".repeat(5 - r.rating)}
             </div>
 
             <p className="review-text-display">{r.text}</p>
 
-            {r.file && (
-              <img src={r.file} alt="attachment" className="review-img" />
+            {r.imageUrl && (
+              <img
+                src={r.imageUrl}
+                alt="attachment"
+                className="review-img"
+              />
             )}
           </div>
         ))}

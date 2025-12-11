@@ -10,6 +10,7 @@ export default function CleanerBookings() {
 
   const cleaner = useCleaner();
   const [cleanerBookings, setCleanerBookings] = useState([]);
+  const [onGoingJobs, setOnGoingJobs] = useState();
   
   useEffect(() => {
     if(!cleaner || !cleaner.cleanerId){
@@ -26,7 +27,12 @@ export default function CleanerBookings() {
     })
   }, [cleaner?.cleanerId])
 
-  
+   useEffect(() => {
+      const completedCount = cleanerBookings.filter(
+        (booking) => booking.status !== "Completed"
+      ).length;
+      setOnGoingJobs(completedCount);
+    }, [cleanerBookings]);
 
   return (
     <div className="CleanerBookings-container">
@@ -38,7 +44,7 @@ export default function CleanerBookings() {
           <h1>Bookings</h1>
         </div>
         <div>
-          <h1 style={{ opacity: 0.5 }}>{cleanerBookings.length} Jobs Assigned</h1>
+          <h1 style={{ opacity: 0.5 }}>{onGoingJobs} Jobs Assigned</h1>
         </div>
       </div>
 
