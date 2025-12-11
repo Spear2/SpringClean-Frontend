@@ -249,6 +249,7 @@ export default function CompanyBookings() {
         <h1>{bookings.length} Total Requests</h1>
       </div>
 
+    <div className="scrollable-list">
       <div className="bookings-body">
         <div className="table-card">
           <table className="styled-table">
@@ -326,6 +327,7 @@ export default function CompanyBookings() {
           </table>
         </div>
       </div>
+    </div>
 
       {/* ==========================
            ASSIGN MODAL
