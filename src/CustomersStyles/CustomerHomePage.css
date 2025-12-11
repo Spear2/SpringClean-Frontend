@@ -120,6 +120,13 @@
   font-weight: 500;
 }
 
+.stat-rate{
+  font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    font-family: sans-serif;
+}
+
 .chp-card-content p {
   font-size: 1rem;
   color: #555;

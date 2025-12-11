@@ -77,13 +77,36 @@ export default function CustomerHomePage() {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/company-cleaners")
-      .then((res) => res.json())
-      .then((data) => setCompanyCleaner(data))
-      .catch((err) => {
-        console.error("Error Fetching cleaners: ", err);
-      });
+    const fetchData = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/company-cleaners");
+        const companies = await res.json();
+
+        // Fetch rating for each companyCleaner
+        const companiesWithRatings = await Promise.all(
+          companies.map(async (com) => {
+            const ratingRes = await fetch(
+              `http://localhost:8080/api/reviews/company/${com.companyCleanerId}/rating`
+            );
+            const ratingData = await ratingRes.json();
+
+            return {
+              ...com,
+              avgRating: ratingData.avgRating || 0,
+              totalReviews: ratingData.totalReviews || 0,
+            };
+          })
+        );
+
+        setCompanyCleaner(companiesWithRatings);
+      } catch (err) {
+        console.error("Error fetching cleaners:", err);
+      }
+    };
+
+    fetchData();
   }, []);
+
 
   const handleViewHistory = () => {
     navigate("/customer/bookingSummary");
@@ -110,20 +133,17 @@ export default function CustomerHomePage() {
         {/* Cleaner Cards */}
         <div className="chp-card-wrapper">
           {companyCleaner.map((com) =>
-            cleaners.map((cleaner, i) =>
-              // Ensure your ID matching logic is correct here (using index 'i' vs ID)
-              com.companyCleanerId == i ? (
-                <CleanerCardComponent
-                  key={com.companyCleanerId}
-                  index={com.companyCleanerId}
-                  name={com.companyName}
-                  loc={cleaner.loc}
-                  rate={cleaner.rate}
-                  img={cleaner.img}
-                  desc={cleaner.desc} // <--- PASSING DESCRIPTION HERE
-                />
-              ) : null
-            )
+            <CleanerCardComponent
+              key={com.companyCleanerId}
+              index={com.companyCleanerId}
+              name={com.companyName}
+              loc={com.location}            // real location from DB
+              rate={com.avgRating}
+              count={com.totalReviews}          // real rating
+              img={com.imageUrl}            // real company image
+              desc={com.description}        // real description from DB
+              totalReviews={com.totalReviews}
+            />
           )}
         </div>
       </div>

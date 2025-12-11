@@ -9,9 +9,9 @@ export default function BookingForm() {
   const customer = useCustomer();
 
   const cleaningServices = [
-    { type: "Basic", pricePerHour: 200 },
-    { type: "Standard", pricePerHour: 350 },
-    { type: "Premium", pricePerHour: 500 },
+    { type: "Basic", pricePerHour: 450 },
+    { type: "Standard", pricePerHour: 750 },
+    { type: "Premium", pricePerHour: 1000 },
   ];
   // ✅ formData initialized safely
   const [formData, setFormData] = useState({
@@ -53,12 +53,18 @@ export default function BookingForm() {
     const newErrors = {};
     if (!formData.date) newErrors.date = "Please select a date.";
     if (!formData.time) newErrors.time = "Please select a time.";
-    if (!formData.hours) newErrors.hours = "Please enter duration in hours.";
-    if (!formData.minutes) newErrors.minutes = "Please enter duration in minutes.";
+    // if (!formData.hours) newErrors.hours = "Please enter duration in hours.";
+    // if (!formData.minutes) newErrors.minutes = "Please enter duration in minutes.";
     if (!formData.address) newErrors.address = "Please enter your address.";
     if (!formData.serviceType) {
       newErrors.serviceType = "Please select a cleaning service.";
     }
+
+      // NEW — allow booking less than 1 hour
+  if (!formData.hours && !formData.minutes) {
+    newErrors.hours = "Please enter at least 1 minute or 1 hour.";
+    newErrors.minutes = "Please enter at least 1 minute or 1 hour.";
+  }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

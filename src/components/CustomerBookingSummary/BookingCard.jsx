@@ -58,13 +58,13 @@ export default function BookingCard({
         </>
       )}
 
-      {normalized === "Assigned" && (
-        <button className="cbc-btn-view" onClick={onViewHistory}>View Details</button>
+      {/* {normalized === "Accepted" && (
+        // <button className="cbc-btn-view" onClick={onViewHistory}>View Details</button>
       )}
 
-      {(normalized === "In-progress" || normalized === "Completed") && (
-        <button className="cbc-btn-view" onClick={onViewHistory}>View History</button>
-      )}
+      {(normalized === "In Progress" || normalized === "Completed") && (
+        // <button className="cbc-btn-view" onClick={onViewHistory}>View History</button>
+      )} */}
     </div>
 
   </div>
