@@ -9,72 +9,33 @@ export default function CustomerHomePage() {
 
   const navigate = useNavigate();
 
-  // Added 'desc' property to each object
-  const cleaners = [
-    {
-      name: "Sparkle PH",
-      loc: "Quezon City",
-      rate: 4.8,
-      img: "https://missouripoisoncenter.org/wp-content/uploads/2021/07/windex.jpg",
-      desc: "Specialists in deep residential cleaning and sanitization. We make your home sparkle like new.",
-    },
-    {
-      name: "MaidEasy Services",
-      loc: "Makati City",
-      rate: 4.7,
-      img: "https://www.constructionplacements.com/wp-content/uploads/2024/02/House-Cleaner-Tips-for-Finding-the-Right-One.jpg",
-      desc: "Convenient and reliable maid services for busy professionals in Makati. Condo cleaning experts.",
-    },
-    {
-      name: "CleanWave Inc.",
-      loc: "Cebu City",
-      rate: 4.9,
-      img: "https://t4.ftcdn.net/jpg/04/12/59/01/360_F_412590144_1OMbFP4AKKQt6stlYPhhPlwdV0L0gOUX.jpg",
-      desc: "Industrial and commercial cleaning solutions. We handle the tough jobs so you don't have to.",
-    },
-    {
-      name: "FreshSpace Cleaners",
-      loc: "Davao City",
-      rate: 4.6,
-      img: "https://www.pristinehome.com.au/wp-content/uploads/2018/11/Benefits-of-Having-Your-Home-Cleaned-by-a-Professional-Cleaner.jpg",
-      desc: "Eco-friendly cleaning using non-toxic products. Safe for pets and children.",
-    },
-    {
-      name: "LinisPro",
-      loc: "Pasig City",
-      rate: 4.5,
-      img: "https://crewcare.co.nz/admin_assets/blog/debunking-stereotypes_.jpg",
-      desc: "Affordable and efficient standard cleaning for apartments and small offices.",
-    },
-    {
-      name: "Kintab Cleaning Co.",
-      loc: "Taguig City",
-      rate: 4.8,
-      img: "https://media.istockphoto.com/id/1350701180/photo/woman-cleaning-floor-with-mop.jpg?s=612x612&w=0&k=20&c=xZBxsNd-qIFKOcyMywRGIV2u9bp-HuWZSAk_OaWwzKc=",
-      desc: "Premium floor polishing and upholstery care. We restore the shine to your home.",
-    },
-    {
-      name: "EcoLinis Solutions",
-      loc: "Iloilo City",
-      rate: 4.9,
-      img: "https://1clean.co.uk/wp-content/uploads/2023/05/What-is-domestic-cleaning-article-Main-Image-1024x576.webp",
-      desc: "Sustainable cleaning practices for the environmentally conscious homeowner.",
-    },
-    {
-      name: "Maid in Manila",
-      loc: "Manila",
-      rate: 4.4,
-      img: "https://sparklehomecleaning.co.uk/wp-content/uploads/2024/02/Regular_domestic_cleaning_services.webp",
-      desc: "Traditional housekeeping services with a modern touch. Reliable and trustworthy.",
-    },
-    {
-      name: "Pristine Homes PH",
-      loc: "Baguio City",
-      rate: 4.7,
-      img: "https://plus.unsplash.com/premium_photo-1664910214915-b89e63fcb72e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2xlYW5lcnN8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000",
-      desc: "Specialized in move-in and move-out cleaning for vacation homes and rentals.",
-    },
+    // 1. Define your image array at the top of your component
+  const cleaningImages = [
+    "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800",
+  "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800",
+  "https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800",
+  "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=800",
+  "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800",
+  "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800",
+  "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=800",
+  "https://images.unsplash.com/photo-1607827448387-a67db1383b59?w=800",
+  "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?w=800",
+  "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800",
+  "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?w=800",
+  "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800",
+  "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=800",
+  "https://images.unsplash.com/photo-1603712725038-dc0ee6c4fc78?w=800",
+  "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800",
+  "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=800",
+  "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800",
+  "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800",
+  "https://images.unsplash.com/photo-1603712725038-dc0ee6c4fc78?w=800"
   ];
+
+  // 2. Helper function to get image by index (consistent assignment)
+  const getImageByIndex = (index) => {
+    return cleaningImages[index % cleaningImages.length];
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +45,7 @@ export default function CustomerHomePage() {
 
         // Fetch rating for each companyCleaner
         const companiesWithRatings = await Promise.all(
-          companies.map(async (com) => {
+          companies.map(async (com, index) => {
             const ratingRes = await fetch(
               `http://localhost:8080/api/reviews/company/${com.companyCleanerId}/rating`
             );
@@ -94,6 +55,7 @@ export default function CustomerHomePage() {
               ...com,
               avgRating: ratingData.avgRating || 0,
               totalReviews: ratingData.totalReviews || 0,
+              img: getImageByIndex(index),
             };
           })
         );
@@ -140,9 +102,9 @@ export default function CustomerHomePage() {
               loc={com.location}            // real location from DB
               rate={com.avgRating}
               count={com.totalReviews}          // real rating
-              img={com.imageUrl}            // real company image
               desc={com.description}        // real description from DB
               totalReviews={com.totalReviews}
+              img={com.img}
             />
           )}
         </div>

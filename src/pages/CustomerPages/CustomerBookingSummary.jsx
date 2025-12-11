@@ -116,7 +116,7 @@ export default function CustomerBookingSummary() {
     <>
       <HomeBar />
 
-      <div className="main-wrapper cbc-booking-page">
+      <div className="main-wrappers cbc-booking-page">
         {" "}
         {/* Added cbc-booking-page class to main wrapper */}
         <header className="cbc-page-header">

@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Users } from "lucide-react"; // Optional: Icon for visual flair
+
 
 export default function CleanerCardComponent({
   index,
@@ -13,6 +14,26 @@ export default function CleanerCardComponent({
 }) {
   const navigate = useNavigate();
 
+  const [companyCleaners, setCompanyCleaners] = useState([]);
+
+  useEffect(() => {
+    const fetchCleaners = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:8080/api/company-cleaners/${index}/cleaners`
+        );
+        const cleaners = await res.json();
+        setCompanyCleaners(cleaners);
+      } catch (err) {
+        console.error("Error fetching company cleaners:", err);
+      }
+    };
+
+    if (index) {
+      fetchCleaners();
+    }
+  }, [index]);
+
   const handleBookingClick = () => {
     navigate("/customer/booking", {
       state: {
@@ -22,6 +43,14 @@ export default function CleanerCardComponent({
       },
     });
   };
+
+  const navigateToReviewPage = () =>{
+    navigate("/customer/preview", {
+      state: {
+        companyCleanerId: index,
+      },
+    })
+  }
 
   return (
     <div className="chp-card-container">
@@ -50,14 +79,17 @@ export default function CleanerCardComponent({
               lineHeight: "1",
             }}
           >
-            {cleanerCount || 0}
+            {companyCleaners.length || 0}
           </h1>
           <span style={{ fontSize: "1rem", fontWeight: "bold" }}>
             Cleaners Available
           </span>
         </div>
 
-        <button onClick={handleBookingClick}>Book Now</button>
+        <div style={{display:"flex"}}>
+          <button onClick={handleBookingClick}>Book Now</button>
+          <button onClick={navigateToReviewPage}>Reviews</button>
+        </div>
       </div>
     </div>
   );

@@ -20,7 +20,11 @@ export default function BookingCard({
         Company: <strong>{companyCleaner}</strong>
       </h3>
 
-      <p><strong>Status:</strong> {normalized}</p>
+      <p className="status">Status:
+        <strong className={`status-${normalized.toLowerCase()}`}> 
+          {normalized}
+        </strong> 
+      </p>
       <p><strong>Date:</strong> {date}</p>
 
       <div className="cbc-cleaner-section">

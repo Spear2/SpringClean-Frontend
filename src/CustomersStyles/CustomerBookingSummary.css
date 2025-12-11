@@ -1,9 +1,9 @@
 /* --- Global Page Wrapper --- */
-.main-wrapper {
+.main-wrappers {
   background-color: #f0f7ff; /* Consistent light blue background */
   min-height: 100vh;
   font-family: "Nunito", sans-serif;
-  padding: 0;
+  padding: 70px 20px 20px;
 }
 
 /* ==============================
@@ -148,6 +148,18 @@
   gap: 12px;
 }
 
+.cbc-cleaner-badge{
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  background: #40cf61ec;
+  margin-right: 10px;
+}
+
+
+
 /* Status Badges (You should define a separate style for each status in BookingCard) */
 .cbc-status-badge {
   padding: 5px 10px;
@@ -155,29 +167,48 @@
   font-weight: bold;
   font-size: 0.8rem;
   text-transform: uppercase;
+  
 }
+
 
 /* Example Status Styles (For BookingCard component use) */
 .status-pending {
   background-color: #fff3e0;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
   color: #ff9800;
 }
 .status-accepted {
   background-color: #e3f2fd;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
   color: #2196f3;
 }
 .status-paid {
   background-color: #e8f5e9;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
   color: #4caf50;
 }
 .status-completed {
   background-color: #d4edda;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
   color: #28a745;
 }
 .status-cancelled,
 .status-rejected {
-  background-color: #fce4ec;
-  color: #e91e63;
+  background-color: #fae6e8;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
+  color: #e91e25;
+}
+
+.status-inprogress{
+  background-color: #ffff5c2f;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
+  color: #FFBF00;
 }
 
 /* ==============================
@@ -275,9 +306,9 @@
 }
 
 /* Modal Content and Overlay are fine as is */
-.cbc-modal-overlay {
+/* .cbc-modal-overlay { */
   /* ... */
-}
-.cbc-modal-content {
+/* } */
+/* .cbc-modal-content { */
   /* ... */
-}
+/* } */
