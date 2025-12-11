@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users } from "lucide-react"; // Optional: Icon for visual flair
-
 
 export default function CleanerCardComponent({
   index,
@@ -44,13 +43,13 @@ export default function CleanerCardComponent({
     });
   };
 
-  const navigateToReviewPage = () =>{
+  const navigateToReviewPage = () => {
     navigate("/customer/preview", {
       state: {
         companyCleanerId: index,
       },
-    })
-  }
+    });
+  };
 
   return (
     <div className="chp-card-container">
@@ -85,10 +84,27 @@ export default function CleanerCardComponent({
             Cleaners Available
           </span>
         </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <button
+            onClick={handleBookingClick}
+            style={{ fontFamily: "Nunito", flex: 1 }}
+          >
+            Book
+          </button>
 
-        <div style={{display:"flex"}}>
-          <button onClick={handleBookingClick}>Book Now</button>
-          <button onClick={navigateToReviewPage}>Reviews</button>
+          <button
+            onClick={navigateToReviewPage}
+            style={{ fontFamily: "Nunito", flex: 1 }}
+          >
+            Reviews
+          </button>
         </div>
       </div>
     </div>
