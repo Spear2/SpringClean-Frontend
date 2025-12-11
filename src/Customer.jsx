@@ -8,7 +8,7 @@ import CustomerProfilePage from "./pages/CustomerPages/CustomerProfilePage";
 import CustomerSettingsPage from "./pages/CustomerPages/CustomerSettingsPage";
 import CustomerWallet from "./pages/CustomerPages/CustomerWallet";
 import CustomerReviews from "./pages/CustomerPages/CustomerReviews";
-
+import CustomerFeedback from "./pages/CustomerPages/CustomerFeedback";
 export default function Customer() {
   return (
     <Routes>
@@ -20,6 +20,7 @@ export default function Customer() {
       <Route path="settings" element={<CustomerSettingsPage />} />
       <Route path="wallet" element={<CustomerWallet />} />
       <Route path="reviews" element={<CustomerReviews />} />
+      <Route path="preview" element={<CustomerFeedback />} />
     </Routes>
   );
 }

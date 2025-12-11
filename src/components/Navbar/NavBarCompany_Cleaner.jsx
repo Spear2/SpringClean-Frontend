@@ -30,7 +30,7 @@ export default function NavBarCompany_Cleaner() {
             <Link to="/cleaner/bookings">Bookings</Link>
           </li>
           <li>
-            <Link to="/cleaner/schedule">Schedule</Link>
+            <Link to="/cleaner/reviews">Reviews</Link>
           </li>
           <li>
             <Link to="/cleaner/earnings">Earnings</Link>

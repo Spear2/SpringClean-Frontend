@@ -34,6 +34,10 @@ export default function CleanerBookings() {
       setOnGoingJobs(completedCount);
     }, [cleanerBookings]);
 
+    const payoutCalculation = (amount) =>{
+      return amount *.08;
+    }
+
   return (
     <div className="CleanerBookings-container">
       <NavBarCompany_Cleaner />

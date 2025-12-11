@@ -50,8 +50,8 @@ export default function JobDetailsTab({
         </div>
 
         <div className="detail-group">
-          <label>Payout</label>
-          <p className="price-text">{price}</p>
+          <label>Total Payment</label>
+          <p className="price-text">₱ {price}</p>
         </div>
          <div className="detail-group">
           <label>Assigned Cleaners</label>
